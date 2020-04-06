@@ -12,13 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule)
   },
   {
-    path: 'dashboard',
-    loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+    path: 'tabs',
+    loadChildren: () => import('./pages/tabs/tabs.module').then( m => m.TabsPageModule)
   },
-  {
-    path: 'visit-history',
-    loadChildren: () => import('./pages/visit-history/visit-history.module').then( m => m.VisitHistoryPageModule)
-  },
+
 ];
 
 @NgModule({
