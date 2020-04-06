@@ -5,7 +5,7 @@ import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabsPage,
     children: [
       {
@@ -15,13 +15,13 @@ const routes: Routes = [
       {
         path: 'visit-history',
         loadChildren: () => import('../../pages/visit-history/visit-history.module').then( m => m.VisitHistoryPageModule)
+      },
+      {
+        path: '',
+        redirectTo: '/tabs/dashboard',
+        pathMatch: 'full'
       }
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/tabs/dashboard',
-    pathMatch: 'full'
   }
 ];
 
