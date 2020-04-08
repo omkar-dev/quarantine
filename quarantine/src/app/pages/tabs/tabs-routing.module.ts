@@ -17,6 +17,10 @@ const routes: Routes = [
         loadChildren: () => import('../../pages/visit-history/visit-history.module').then( m => m.VisitHistoryPageModule)
       },
       {
+        path: 'nearby',
+        loadChildren: () => import('../../pages/nearby/nearby.module').then( m => m.NearbyPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/dashboard',
         pathMatch: 'full'
