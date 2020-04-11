@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HelpLineService } from 'src/app/help-line.service';
+import { HelpLineService } from '../../services/help-line/help-line.service';
 
 @Component({
   selector: 'app-helpline',
