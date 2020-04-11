@@ -72,7 +72,7 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    debugger;
+    //debugger;
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
       success => console.log('Location Permission granted',success),
       err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
@@ -98,7 +98,8 @@ export class LoginPage implements OnInit {
       coordinates:this.location
     }
     console.log(this.verificationCode)
-    
+    this.router.navigate(['/tabs'])
+
   }
   goToSignUp(){
     this.router.navigate(['/signup'])

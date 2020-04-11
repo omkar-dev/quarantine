@@ -18,7 +18,8 @@ const routes: Routes = [
   {
     path: 'helpline',
     loadChildren: () => import('./pages/helpline/helpline.module').then( m => m.HelplinePageModule)
-  },  {
+  },
+  {
     path: 'notification',
     loadChildren: () => import('./pages/notification/notification.module').then( m => m.NotificationPageModule)
   }

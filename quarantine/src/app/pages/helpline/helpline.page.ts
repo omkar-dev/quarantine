@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HelpLineService } from 'src/app/help-line.service';
 
 @Component({
   selector: 'app-helpline',
@@ -7,9 +8,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HelplinePage implements OnInit {
 
-  constructor() { }
+  constructor(private helplineservice:HelpLineService  ) { }
+  Helpline:string;
+  Helpline_id:number;
+  Helpline_name:string;
+  Helpline_no:number;
+  Helpline_line:number;
+
 
   ngOnInit() {
   }
 
+
+  GetHelpLine(){
+    this.helplineservice.getHelpline().subscribe((data)=>
+    {
+      var anyData=<any>data;
+      this.GetHelpLine=anyData.data;
+    }
+    )
+  }
+
 }
+
+
+
+
+
+
+
+
+
