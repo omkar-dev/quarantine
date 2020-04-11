@@ -2,18 +2,47 @@
 
 <ion-header  class="header">
   <ion-toolbar  padding color="todoprimay">
-    <ion-title  padding margin style="text-align:center;font-size:20px;" >Select Language</ion-title>
+    <ion-title  padding margin style="text-align:center;font-size:20px;" *ngIf="!languageSelected">Select Language</ion-title>
+    <ion-title  padding margin style="text-align:center;font-size:20px;" *ngIf="languageSelected">Login</ion-title>
 
   </ion-toolbar>
 </ion-header>
 
 <ion-content    mode="ios">
-    <ion-item button  lines="none" style="--background: #E4ECFD;color: #6C7A92" *ngFor="let language of languages"  [routerLink]="['/tabs']">
+
+  <div class="languageSelect" *ngIf="!languageSelected">
+    
+    <ion-item button  lines="none" style="--background: #E4ECFD;color: #6C7A92" *ngFor="let language of languages;let i = index" 
+      (click)="goToLogin(i)">
         <ion-label style="padding:1.78vh; " >{{language}}        </ion-label>
 
         <ion-icon solt="end"  style="color:#5EC4BA;font-weight: bolder;"name="checkmark"></ion-icon>
         &nbsp;        &nbsp;
       </ion-item>
-   
+  </div>
+  <div class="container">
+    <form *ngIf="languageSelected">
+     <div class="form-group">
+       <ion-item>
+       <ion-label >Email Id:</ion-label>
+         <ion-input name="email" id="email"  #email="ngModel"  [(ngModel)]="emailid" email required></ion-input>
+       </ion-item>
+       <p *ngIf="!email.valid &&(email.touched|| email.dirty)">Enter a valid email id</p>
+       
+       <ion-item id="otp">
+          <ion-label>verification code :</ion-label>
+         <ion-input [(ngModel)]="vc1" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,1)" #v1></ion-input>
+         <ion-input [(ngModel)]="vc2" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,2)" #v2></ion-input>
+         <ion-input [(ngModel)]="vc3" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,3)" #v3></ion-input>
+         <ion-input [(ngModel)]="vc4" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,4)" #v4></ion-input>
+         <ion-input [(ngModel)]="vc5" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,5)" #v5></ion-input>
+         <ion-input [(ngModel)]="vc6" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,6)" #v6></ion-input>
+ 
+       </ion-item>
+     </div>
+     <ion-button (click)="Login()">Login</ion-button>
+     <ion-button (click)="goToSignUp()" >Signup</ion-button>
+    </form>
+  </div>
 </ion-content>
  
