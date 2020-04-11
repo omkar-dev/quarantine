@@ -19,7 +19,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
   declarations: [AppComponent],
   entryComponents: [],
 
-  imports: [BrowserModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule,HttpClientModule],
   providers: [
     StatusBar,
     HelpLineService,
