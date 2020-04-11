@@ -1,9 +1,12 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>dashboard</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <div *ngIf="role=='medical'">
+    <ion-list *ngFor="let message of messages">
+      <ion-label>
+        <p>{{ message.Message }}</p>
+        <p>{{ message.timestamp }}</p>
+      </ion-label>
+    </ion-list>
+  </div>
 
+  <ion-button [routerLink]="['/helpline']" >Helpline</ion-button>
 </ion-content>
