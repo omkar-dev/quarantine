@@ -1,5 +1,7 @@
 {
   "name": "quarantine",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
