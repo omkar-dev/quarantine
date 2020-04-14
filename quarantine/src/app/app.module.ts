@@ -14,18 +14,29 @@ import { HelpLineService } from './services/help-line/help-line.service';
 import { FormsModule } from '@angular/forms';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { InAppReview } from '@ionic-native/in-app-review/ngx';
+
+import { FeedbackComponent } from './components/feedback/feedback.component';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, FeedbackComponent],
+  entryComponents: [ FeedbackComponent ],
 
-  imports: [BrowserModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule,HttpClientModule],
+  imports: [
+    BrowserModule, 
+    IonicModule.forRoot(), 
+    IonicStorageModule.forRoot(), 
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
+  ],
   providers: [
     StatusBar,
     HelpLineService,
     SplashScreen,
     AndroidPermissions,
     Geolocation,
+    InAppReview,
 
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy  }
   ],
