@@ -11,8 +11,8 @@ import * as moment from 'moment';
 })
 export class AppRatingService {
 
-  private askRating
-  private askRatingdays
+  private askRating;
+  private askRatingdays;
   
   constructor(
     private alertCtrl: AlertController,
@@ -22,28 +22,23 @@ export class AppRatingService {
     // private translateService : TranslateService
     ) { }
 
-  getrating()
-  {
-    // this.askRating=askrating;
-    // this.askRatingdays=askRatingdays;
+  getrating() {
+    this.askRating = true;
+    this.askRatingdays = 30;
     // this.translateService.get("RATINTXT").subscribe(val=>{
-      // this.checkDays().then(check=>{     //returns true if current date is after 30 days of stored date in storage 
-        // console.log(check,'checkcondition')
-      
-  // if(this.askRating && check){
-      // this.saveDate();
-      if(this.platform.is("android")){
-        this.AndroidRating('Rate Us');
-      }
-      else if(this.platform.is("ios") ){
-          this.IosRating('Rate Us')
-      }
-
-    // }
-      //  this.gotoAlert(val)
-  // })
+    this.checkDays().then(check=>{     //returns true if current date is after 30 days of stored date in storage 
+      if(this.askRating && check){
+          this.saveDate();
+          if(this.platform.is("android")){
+            this.AndroidRating('Rate Us');
+          }
+          else if(this.platform.is("ios") ){
+              this.IosRating('Rate Us')
+          }
+        }
+      //this.gotoAlert(val)
+    })
 // })
-   
   }
 
  async AndroidRating(msg){
@@ -69,7 +64,6 @@ export class AppRatingService {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
           }
         }, {
           text: 'Rate Now',
