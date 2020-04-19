@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx'
 import { Router } from '@angular/router';
-
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -32,13 +32,17 @@ export class LoginPage implements OnInit {
   vc5="";
   vc6="";
   location;
+  lang: string;
 
     
     constructor(private storage:Storage,
       private androidPermissions: AndroidPermissions,
     private geolocation: Geolocation,
-    private router:Router
-    ) { }
+    private router:Router,public translate: TranslateService
+    ) {     this.lang = 'en';
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
+  }
 
   ngOnInit() {
     this.languages=[
@@ -50,14 +54,16 @@ export class LoginPage implements OnInit {
       'Marathi',
       'Tamil',
       'Telgu'  ]
-
+         
 // LoginForm=new FormGroup({
 //   email:new FormControl("",[Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
 //   ])
 // })
 
   }
-
+  switchLanguage() {
+    this.translate.use(this.lang);
+  }
   getGeoLoc() {
 // debugger;
     this.geolocation.getCurrentPosition().then((resp) => {

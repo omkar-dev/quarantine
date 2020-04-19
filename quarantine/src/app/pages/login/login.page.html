@@ -4,7 +4,7 @@
   <ion-toolbar  padding color="todoprimay">
     <ion-title  padding margin style="text-align:center;font-size:20px;" *ngIf="!languageSelected">Select Language</ion-title>
     <ion-title  padding margin style="text-align:center;font-size:20px;" *ngIf="languageSelected">Login</ion-title>
-
+        
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +14,14 @@
     
     <ion-item button  lines="none" style="--background: #E4ECFD;color: #6C7A92" *ngFor="let language of languages;let i = index" 
       (click)="goToLogin(i)">
-        <ion-label style="padding:1.78vh; " >{{language}}        </ion-label>
+        <ion-label style="padding:1.78vh; " >{{language}}   
+          <ion-label>Language</ion-label>
+          <ion-select [(ngModel)]="lang" (ionChange)="switchLanguage()">
+              <ion-option value="en">English</ion-option>
+              <ion-option value="ta">Tamizh (தமிழ்)</ion-option>
+          </ion-select>
+        
+        </ion-label>
 
         <ion-icon solt="end"  style="color:#5EC4BA;font-weight: bolder;"name="checkmark"></ion-icon>
         &nbsp;        &nbsp;
