@@ -24,11 +24,14 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
     this.storage.set('role', 'medical')
-      .then(res => console.log('role set'));
+      .then(res => {
+        console.log(res);
+        this.storage.get('role').then(role => {
+          this.role = role;
+        });
+      });
 
-    this.storage.get('role').then(role => {
-      this.role = role;
-    });
+    
   }
 
 }

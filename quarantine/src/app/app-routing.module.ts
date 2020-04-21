@@ -22,7 +22,12 @@ const routes: Routes = [
   {
     path: 'notification',
     loadChildren: () => import('./pages/notification/notification.module').then( m => m.NotificationPageModule)
-  },  {
+  },
+  {
+    path: 'can-help',
+    loadChildren: () => import('./pages/can-help/can-help.module').then( m => m.CanHelpPageModule)
+  },{
+    
     path: 'help',
     loadChildren: () => import('./pages/help/help.module').then( m => m.HelpPageModule)
   }
