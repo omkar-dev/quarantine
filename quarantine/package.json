@@ -78,8 +78,7 @@
       "cordova-plugin-geolocation": {},
       "cordova-plugin-android-permissions": {},
       "com.omarben.inappreview": {},
-      "cordova-plugin-fcm-with-dependecy-updated": {}
-    }
+      "cordova-plugin-fcm-with-dependecy-updated": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
