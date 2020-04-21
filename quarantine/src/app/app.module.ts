@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { InAppReview } from '@ionic-native/in-app-review/ngx';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 import { FeedbackComponent } from './components/feedback/feedback.component';
 
@@ -37,6 +38,7 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
     AndroidPermissions,
     Geolocation,
     InAppReview,
+    FCM,
 
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy  }
   ],

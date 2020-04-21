@@ -7,6 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationPage implements OnInit {
 
+  notifications = [
+    {
+      title: 'First notification',
+      timestamp: 'time'
+    },
+    {
+      title: 'Second notification',
+      timestamp: 'time'
+    }
+  ];
+
   constructor() { }
 
   ngOnInit() {

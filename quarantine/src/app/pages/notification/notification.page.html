@@ -5,5 +5,12 @@
 </ion-header>
 
 <ion-content>
-
+  <div >
+    <ion-list *ngFor="let notification of notifications">
+      <ion-label>
+        <p>{{ notification.title }}</p>
+        <p>{{ notification.timestamp }}</p>
+      </ion-label>
+    </ion-list>
+  </div>
 </ion-content>
