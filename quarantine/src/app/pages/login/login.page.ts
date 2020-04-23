@@ -5,6 +5,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx'
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -22,8 +23,8 @@ export class LoginPage implements OnInit {
   languages: string[];
   login:boolean=false;
   LoginForm:FormGroup;
-  languageSelected:boolean=false
-  verificationCode;
+  languageSelected:boolean;
+  
   email=""
   vc1="";
   vc2="";
@@ -31,14 +32,18 @@ export class LoginPage implements OnInit {
   vc4="";
   vc5="";
   vc6="";
+  
   location;
   lang: string;
+  emailid:string;
+  logoAnimation: boolean = false;
+  verificationCode:string;
 
     
     constructor(private storage:Storage,
       private androidPermissions: AndroidPermissions,
     private geolocation: Geolocation,
-    private router:Router,public translate: TranslateService
+    private router:Router,public translate: TranslateService, private navCtrl: NavController
     ) {     this.lang = 'en';
     this.translate.setDefaultLang('en');
     this.translate.use('en');
@@ -89,21 +94,38 @@ export class LoginPage implements OnInit {
     );
     this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION,this.androidPermissions.PERMISSION.BLUETOOTH_ADMIN]);
     this.getGeoLoc()
+
+    this.storage.get("language").then(res=>{
+      console.log("response in ionViewWillEnter",res)
+      if(res){
+        this.languageSelected = res;
+      }
+    })
+
   }
   goToLogin(index){
     this.languageSelected=true;
-    // this.storage
+    // this.storag
 
+this.storage.set("language",this.languageSelected).then((res)=>{
+  console.log("Response",res);
+ 
+  
+})
   }
   Login(){
+ 
     // this.verificationCode=this.LoginForm.controls
-    this.verificationCode=this.vc1+this.vc2+this.vc3+this.vc4+this.vc5+this.vc6
+    this.verificationCode=this.vc1+this.vc2+this.vc3+this.vc4+this.vc5+this.vc6;
+   
     let verificationRequestBody={
       email:this.email,
       verificationCode:this.verificationCode,
       coordinates:this.location
     }
-    console.log(this.verificationCode)
+    console.log("Verifivation",this.verificationCode);
+    console.log("Email",this.emailid)
+
     this.router.navigate(['/tabs'])
 
   }
