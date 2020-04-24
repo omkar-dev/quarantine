@@ -1,4 +1,4 @@
-<ion-content>
+<!-- <ion-content>
   <div *ngIf="role=='medical'">
     <ion-list *ngFor="let message of messages">
       <ion-label>
@@ -11,4 +11,93 @@
   <ion-button [routerLink]="['/helpline']" >Helpline</ion-button>
   <ion-button [routerLink]="['/help']" >Help Section</ion-button>
 
+</ion-content> -->
+
+<ion-content>
+  <div class="main">
+    <div class="banner">
+      <img src="../../../assets/banner.svg" alt="">
+    </div>
+
+    <div class="dailyTask">
+      <h4>Daily Task</h4>
+      <div class="current">
+        <h5>Current Quest</h5>
+        <div class="progress">
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="newMessage">
+      <div class="title">
+        <h4>New Messages</h4>
+        <a href="javascript:void(0)">See all</a>
+      </div>
+      <div class="msgBody">
+        <ion-item button lines="full">
+          <ion-avatar slot="start">
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+          </ion-avatar>
+          <ion-label>
+            <h4>Vikas Sharma</h4>
+            <p>Lorem ipsum dolor sit amet, consetetur
+              elitr, sed diamt</p>
+          </ion-label>
+          <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+        </ion-item>
+        <ion-item button lines="full">
+          <ion-avatar slot="start">
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+          </ion-avatar>
+          <ion-label>
+            <h4>Vikas Sharma</h4>
+            <p>Lorem ipsum dolor sit amet, consetetur
+              elitr, sed diamt</p>
+          </ion-label>
+          <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+        </ion-item>
+      </div>
+    </div>
+
+    <div class="list">
+      <ion-item lines="none">
+        <ion-thumbnail slot="start">
+          <img src="../../../assets//scooter.svg">
+        </ion-thumbnail>
+        <ion-label>Food Request</ion-label>
+        <ion-icon slot="end" src="assets/arrow.svg"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-thumbnail slot="start">
+          <img src="../../../assets//ppl.svg">
+        </ion-thumbnail>
+        <ion-label>Help Lines No</ion-label>
+        <ion-icon slot="end" src="assets/arrow.svg"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-thumbnail slot="start">
+          <img src="../../../assets//donate.svg">
+        </ion-thumbnail>
+        <ion-label>Donation</ion-label>
+        <ion-icon slot="end" src="assets/arrow.svg"></ion-icon>
+      </ion-item>
+
+    </div>
+  </div>
+
+
+
+
+
+  <!-- <div *ngIf="role=='medical'">
+    <ion-list *ngFor="let message of messages">
+      <ion-label>
+        <p>{{ message.Message }}</p>
+        <p>{{ message.timestamp }}</p>
+      </ion-label>
+    </ion-list>
+  </div> -->
+
+  <!-- <ion-button [routerLink]="['/helpline']">Helpline</ion-button> -->
 </ion-content>
