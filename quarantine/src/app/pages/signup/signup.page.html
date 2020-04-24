@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>signup</ion-title>
   </ion-toolbar>
@@ -39,7 +39,7 @@
         <ion-radio slot="start"></ion-radio>
       </ion-item>
     </ion-radio-group>
-  </ion-list>
+  </ion-list> -->
     <!-- <ion-list>
       <ion-item lines="none" *ngFor="let checkbox of checkboxData">
         <ion-checkbox [(ngModel)]="checkbox.selected" (click)="checkboxClick(checkbox)"></ion-checkbox>
@@ -54,9 +54,9 @@
         <ion-label> None of the above</ion-label>
       </ion-item> -->
     <!-- </ion-list> -->
-   <ion-button (click)="onSubmit()">Continue</ion-button>
+   <!-- <ion-button (click)="onSubmit()">Continue</ion-button> -->
   <!-- </form> -->
-  </div>
+  <!-- </div>
 
   <section class="bottomPopup popup_section" *ngIf="bottomPopup"> 
     <div class="overly"></div>
@@ -111,4 +111,59 @@
 
     </div>
   </section>
+</ion-content> -->
+
+
+<!-- SHIVANG CODE -->
+<ion-content>
+<img class="home-logo" src="../../../assets/logo-home.svg">
+  <h5>Who we are</h5>
+  <ion-row>
+    <ion-col size="3" class="active" (click)="selectType('others')" [class.active]="others">
+      <div class="img_section">
+        <img src="../../../assets/other_ppl.svg" alt="">
+      </div>
+      <p>Others</p>
+    </ion-col>
+    <ion-col size="3" (click)="selectType('medical')" [class.active]="medical">
+      <div class="img_section">
+        <img src="../../../assets/medical.svg" alt="">
+      </div>
+      <p>Medical</p>
+    </ion-col>
+    <ion-col size="3" (click)="selectType('grocery')" [class.active]="grocery">
+      <div class="img_section">
+        <img src="../../../assets/grossery.svg" alt="">
+      </div>
+      <p>Grocery </p>
+    </ion-col>
+  </ion-row>
+
+  <div class="ion-padding">
+    <ion-item class="email-box" lines="none">
+      <ion-icon src="../../../assets/mail-logo.svg" color="dark"></ion-icon>
+      <ion-input  [(ngModel)]="email" placeholder="Enter your email address"></ion-input>
+    </ion-item>
+
+    <ion-item class="email-box" lines="none">
+      <ion-icon src="../../../assets/user.svg" color="dark"></ion-icon>
+      <ion-input [(ngModel)]="fullName" placeholder="Full Name"></ion-input>
+    </ion-item>
+    <ion-item class="email-box" lines="none">
+      <ion-icon src="../../../assets/location.svg" color="dark"></ion-icon>
+      <ion-input [(ngModel)]="location" placeholder="Location"></ion-input>
+      <ion-icon src="../../../assets/my-location.svg" color="dark"></ion-icon>
+    </ion-item>
+
+    <ion-button (click)="signUp()" expand="block">Sign Up
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-button>
+
+    <div class="already_sectin">
+      <a href="">Already use Asana? <span>Log In</span></a>
+    </div>
+  </div>
+
+
+
 </ion-content>
