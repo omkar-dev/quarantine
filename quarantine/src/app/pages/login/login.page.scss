@@ -1,21 +1,133 @@
-ion-content {
-    --background: #E4ECFD ;
-    --color: #727991;
-    text-align: center
-}
+// ion-content {
+//     --background: #E4ECFD ;
+//     --color: #727991;
+//     text-align: center
+// }
 
-.container{
+// .container{
+//     margin-left: auto;
+//     margin-right: auto;
+//     max-width: 420px;
+    
+//     #otp{
+//         ion-input{
+//         max-width: 20%;
+//         margin-right: 4%;
+//         border-bottom:1px solid rgb(175, 170, 170);
+//         text-align: center;
+//         }
+//     }
+// }
+
+//new css
+
+
+// ion-content {
+//     /* --background: #E4ECFD ;
+//     --color: #727991;
+//     text-align: center */
+// }
+
+.container {
     margin-left: auto;
     margin-right: auto;
     max-width: 420px;
-    
-    #otp{
-        ion-input{
-        max-width: 20%;
-        margin-right: 4%;
-        border-bottom:1px solid rgb(175, 170, 170);
-        text-align: center;
+
+    #otp {
+        ion-input {
+            max-width: 20%;
+            margin-right: 4%;
+            border-bottom: 1px solid rgb(175, 170, 170);
+            text-align: center;
         }
+    }
+}
+
+.home-logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
+    margin-top: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    top: 0;
+    transition: 0.5s ease all;
+    transform: translateY(20px);
+
+    &.active {
+        opacity: 1;
+        transform: translateY(-90px);
+    }
+}
+
+.email-box {
+    --padding-start: 0;
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+    margin-top: 50px;
+    font-size: 13px;
+    border-bottom: 1px solid #2B2B2B;
+}
+
+.ion-padding {
+    padding-left: 40px;
+    padding-right: 40px;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-self: center;
+    align-items: center;
+
+    .mid {
+        position: relative;
+        width: 100%;
+
+        .after_show {
+            opacity: 0;
+            transition: 0.7s ease all 0.6s;
+        }
+
+        &.active {
+            .after_show {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.email-logo-box {
+    width: 19px;
+    padding: 6px;
+    height: 32px;
+}
+
+ion-button {
+    margin: 23px 0;
+    --border-radius: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+    --background: #504DE4;
+    --background-activated: #504DE4;
+    --background-focused: #504DE4;
+    --padding-start: 0;
+    --padding-end: 0;
+}
+
+.google_bgn {
+    --background: #fff;
+    --background-activated: #fff;
+    --background-focused: #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.38);
+    color: #0B0D0D;
+
+    .google-logo {
+        margin-right: 10px;
+        position: absolute;
+        left: 20px;
+        top: 11px;
     }
 }
 
@@ -30,4 +142,25 @@ ion-content {
 ion-slides{
     margin:50px;
     position: relative;
+}
+
+
+
+
+.account_text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 30px;
+    text-align: center;
+
+}
+
+ion-text {
+    font-size: 13px;
+}
+
+.ripple-parent {
+    position: relative;
+    overflow: hidden;
 }

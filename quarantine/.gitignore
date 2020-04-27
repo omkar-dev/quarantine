@@ -102,3 +102,17 @@ dist
 
 # TernJS port file
 .tern-port
+
+
+#plugin
+plugins/
+
+#platforms
+platforms/  
+
+#resources
+resources/
+
+
+#www
+www/

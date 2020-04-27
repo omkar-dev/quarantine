@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ username }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" [routerLink]="['/notification']">
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+      <ion-button color="secondary" (click)="openMenu($event)">
+        <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="dashboard">
+        <ion-icon name="home-outline"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="visit-history">
+        <ion-icon name="analytics-outline"></ion-icon>
+        <ion-label>Tracker</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="nearby">
+        <ion-icon name="location-outline"></ion-icon>
+        <ion-label>Nearby</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

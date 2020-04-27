@@ -1,9 +1,29 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>VisitHistory</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0" 
+  src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJwe1EZjDG5zsRaYxkjY_tpF0&key=AIzaSyCEibeFAFYEpG6xh4eq8R_F_BQxba2XcQc" allowfullscreen>
+</iframe>
+
+<ion-button (click)="startTracking()">Track Me!</ion-button>
+<ion-button (click)="stopTracking()">Stop Tracking</ion-button>
+
+<ion-list>
+  <ion-list-header>Previous tracking</ion-list-header>
+    <ion-item  *ngFor="let location of locationsArray">
+      {{location.city}} - {{location.country}}
+    </ion-item>
+    
+</ion-list>
 
 </ion-content>
+<!-- AIzaSyCEibeFAFYEpG6xh4eq8R_F_BQxba2XcQc -->

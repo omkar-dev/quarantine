@@ -1,0 +1,120 @@
+<ion-content>
+  <div class="main">
+    <ion-segment [(ngModel)]="tabPart">
+      <ion-segment-button value="medical">
+        <ion-label>Medical</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="grocery">
+        <ion-label>Grocery</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div [ngSwitch]="tabPart" class="tabBody">
+      <div class="searchBar">
+        <ion-searchbar mode="ios" placeholder="Search by text"></ion-searchbar>
+        <ion-icon src="assets/awesome-filter.svg"></ion-icon>
+      </div>
+      <div *ngSwitchCase="'medical'">
+
+        <ion-item button lines="none">
+          <ion-avatar slot="start">
+            <img src="../../../assets/mediacal.png">
+          </ion-avatar>
+          <ion-label>
+            <h4>Sachin Medical Store</h4>
+            <p>
+              <ion-icon src="assets/material-location-on.svg"></ion-icon> Tijuana, B.C., Mexico
+            </p>
+            <p>
+              <ion-icon src="assets/time.svg"></ion-icon> 9AM- 7PM
+            </p>
+          </ion-label>
+          <ion-button slot="end"  (click)="onchat()">Chat</ion-button>
+        </ion-item>
+
+        <ion-item button lines="none">
+          <ion-avatar slot="start">
+            <img src="../../../assets/mediacal.png">
+          </ion-avatar>
+          <ion-label>
+            <h4>Sachin Medical Store</h4>
+            <p>
+              <ion-icon src="assets/material-location-on.svg"></ion-icon> Tijuana, B.C., Mexico
+            </p>
+            <p>
+              <ion-icon src="assets/time.svg"></ion-icon> 9AM- 7PM
+            </p>
+          </ion-label>
+          <ion-button slot="end" (click)="onchat()">Chat</ion-button>
+        </ion-item>
+
+        <ion-item button lines="none">
+          <ion-avatar slot="start">
+            <img src="../../../assets/mediacal.png">
+          </ion-avatar>
+          <ion-label>
+            <h4>Sachin Medical Store</h4>
+            <p>
+              <ion-icon src="assets/material-location-on.svg"></ion-icon> Tijuana, B.C., Mexico
+            </p>
+            <p>
+              <ion-icon src="assets/time.svg"></ion-icon> 9AM- 7PM
+            </p>
+          </ion-label>
+          <ion-button slot="end"  (click)="onchat()" >Chat</ion-button>
+        </ion-item>
+
+        <ion-item button lines="none">
+          <ion-avatar slot="start">
+            <img src="../../../assets/mediacal.png">
+          </ion-avatar>
+          <ion-label>
+            <h4>Sachin Medical Store</h4>
+            <p>
+              <ion-icon src="assets/material-location-on.svg"></ion-icon> Tijuana, B.C., Mexico
+            </p>
+            <p>
+              <ion-icon src="assets/time.svg"></ion-icon> 9AM- 7PM
+            </p>
+          </ion-label>
+          <ion-button slot="end"  (click)="onchat()">Chat</ion-button>
+        </ion-item>
+      </div>
+
+
+      <div *ngSwitchCase="'grocery'">
+        <ion-item button lines="none">
+          <ion-avatar slot="start">
+            <img src="../../../assets/mediacal.png">
+          </ion-avatar>
+          <ion-label>
+            <h4>Sachin Medical Store</h4>
+            <p>
+              <ion-icon src="assets/material-location-on.svg"></ion-icon> Tijuana, B.C., Mexico
+            </p>
+            <p>
+              <ion-icon src="assets/time.svg"></ion-icon> 9AM- 7PM
+            </p>
+          </ion-label>
+          <ion-button slot="end"  (click)="onchat()">Chat</ion-button>
+        </ion-item>
+
+        <ion-item button lines="none">
+          <ion-avatar slot="start">
+            <img src="../../../assets/mediacal.png">
+          </ion-avatar>
+          <ion-label>
+            <h4>Sachin Medical Store</h4>
+            <p>
+              <ion-icon src="assets/material-location-on.svg"></ion-icon> Tijuana, B.C., Mexico
+            </p>
+            <p>
+              <ion-icon src="assets/time.svg"></ion-icon> 9AM- 7PM
+            </p>
+          </ion-label>
+          <ion-button slot="end"  (click)="onchat()">Chat</ion-button>
+        </ion-item>
+      </div>
+    </div>
+  </div>
+</ion-content>

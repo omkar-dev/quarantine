@@ -91,9 +91,29 @@ validation_messages = {
 
   selectType(type)
   {
-    this.type=type;
-    this.others=this.grocery=this.medical=false;
-    type=='others'?this.others=true:(type=='medical'?this.medical=true:this.grocery=true)
+
+    if(type=='others')
+    {
+        this.type = 'others'
+        this.others = true
+        this.grocery = false
+        this.medical = false
+
+    }
+    else if (type =='medical')
+    {
+        this.type = 'medical'
+       this.medical=true
+       this.others = false
+       this.grocery = false
+    }
+    else if(type == 'grocery')
+    {
+        this.type = 'grocery'
+        this.grocery = true   
+        this.others = false
+        this.medical = false 
+ }
     console.log("selected type : ",this.type)
   }
 
