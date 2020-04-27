@@ -129,8 +129,23 @@ ion-button {
         left: 20px;
         top: 11px;
     }
-
 }
+
+.slideClass{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 1000;
+    color: var(--ion-color-primary);
+}
+
+ion-slides{
+    margin:50px;
+    position: relative;
+}
+
+
+
 
 .account_text {
     position: absolute;

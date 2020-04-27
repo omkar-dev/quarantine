@@ -73,7 +73,7 @@ validation_messages = {
     this.signupForm=this.formBuilder.group({
       emailAddress: [this.email, Validators.compose([Validators.maxLength(30), Validators.pattern('[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})'), Validators.required])],
       name: [this.name, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
-      locality:[this.locality, Validators.compose([Validators.maxLength(250), Validators.required])],
+      locality:[this.location, Validators.compose([Validators.maxLength(250), Validators.required])],
     })
     this.shopForm=this.formBuilder.group({
       shopName: [this.shop_name, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
@@ -91,6 +91,7 @@ validation_messages = {
 
   selectType(type)
   {
+
     if(type=='others')
     {
         this.type = 'others'
@@ -118,6 +119,7 @@ validation_messages = {
 
   signUp()
   {
+    this.router.navigate(['/tabs'])
     console.log("Details", this.email, this.fullName, this.location, this.type)
   }
 
