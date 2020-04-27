@@ -23,14 +23,30 @@ export class VisitHistoryPage implements OnInit {
   backgroundLocObject: BackgroundGeolocationResponse;
   locationData: any;
   locationsArray = []
+  startTrack: boolean = true;
+  buttonText: string = "Track me";
+  latitude: number;
+  longitude: any;
+  combinedLatLong: string;
+  mapUrl: string;
 
   constructor(private nativeGeocoder: NativeGeocoder,private localNotifications : LocalNotifications,public geolocation : Geolocation,public zone : NgZone,private http: HttpClient, private backgroundGeolocation: BackgroundGeolocation) { }
 
   ngOnInit() {
   }
 
+  ionViewWillEnter()
+  {
+    this.latitude = 40.7127837;
+    this.longitude = -74.0059413
+    this.combinedLatLong = this.latitude+","+this.longitude
+    this.mapUrl = "https://www.google.com/maps/embed/v1/place?q=40.7127837,-74.0059413&amp;key=AIzaSyCEibeFAFYEpG6xh4eq8R_F_BQxba2XcQc"
+    console.log("combined",this.combinedLatLong)
+  }
+
   startTracking()
   {
+    console.log("inside start")
          // Background Tracking
 
          const config: BackgroundGeolocationConfig = {
@@ -108,8 +124,16 @@ this.nativeGeocoder.reverseGeocode(lat, long, options)
 
   stopTracking()
   {
+    console.log("inside stop")
     this.backgroundGeolocation.stop();
     // this.watch.unsubscribe();
   }
+
+ checkButton()
+ {
+   this.startTrack = !this.startTrack
+   this.startTrack ? (this.buttonText = "Track Me") && this.stopTracking() : (this.buttonText = "Stop Tracking") && this.startTracking()
+  console.log("startTrack",this.startTrack,this.buttonText)
+ }
 
 }

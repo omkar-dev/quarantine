@@ -26,6 +26,8 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { BackgroundGeolocation } from "@ionic-native/background-geolocation/ngx";
+import { SafePipeModule } from 'safe-pipe';
+
 
 
 export function createTranslateLoader(http: HttpClient){ 
@@ -40,6 +42,7 @@ export function createTranslateLoader(http: HttpClient){
   imports: [BrowserModule, IonicModule.forRoot(),
     IonicStorageModule.forRoot(), AppRoutingModule,HttpClientModule,
     FormsModule,
+    SafePipeModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

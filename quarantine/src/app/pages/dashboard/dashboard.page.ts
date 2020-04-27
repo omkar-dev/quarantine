@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +21,7 @@ export class DashboardPage implements OnInit {
     }
   ];
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage,private router : Router) { }
 
   ngOnInit() {
     this.storage.set('role', 'medical')
@@ -32,6 +33,12 @@ export class DashboardPage implements OnInit {
       });
 
     
+  }
+
+
+  goToHelpline()
+  {
+      this.router.navigateByUrl('/helpline')
   }
 
 }

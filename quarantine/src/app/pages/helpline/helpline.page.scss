@@ -1,0 +1,107 @@
+ion-header {
+    [slot="end"] {
+        padding: 6px 15px 0;
+
+        ion-icon {
+            font-size: 23px;
+        }
+    }
+
+    ion-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #3C3C59;
+        text-align: left;
+
+        img {
+            vertical-align: middle;
+            margin-top: -3px;
+            margin-right: 3px;
+        }
+
+        ion-icon {
+            vertical-align: middle;
+            margin-top: -2px;
+        }
+    }
+}
+
+.header-md::after {
+    display: none;
+}
+
+.main {
+    padding: 16px;
+
+    h4 {
+        font-weight: bold;
+        font-size: 16px;
+        color: #4e4de6;
+        margin: 0 0 15px;
+    }
+
+    .helpLine {
+        padding: 0px 10px;
+        background: #ffffff;
+        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
+        border-radius: 11px;
+        overflow: hidden;
+
+        ion-item {
+            border-bottom: 1px solid rgba(132, 146, 162, 0.3);
+
+            h4 {
+                font-size: 14px;
+                color: #3C3C59;
+                margin: 0;
+            }
+
+            p {
+                font-weight: normal;
+                font-size: 13px;
+                text-align: left;
+                color: #909ca1;
+
+            }
+
+            ion-icon {
+                font-size: 33px;
+            }
+        }
+    }
+
+    .donate {
+        margin-top: 20px;
+
+        ion-item {
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
+            background: #ffffff;
+            border-radius: 6px;
+
+            ion-avatar {
+                --border-radius: 0 !important;
+                overflow: visible !important;
+                width: auto !important;
+                height: auto !important;
+            }
+
+            ion-label {
+                h4 {
+                    margin: 0;
+                    font-weight: bold;
+                    font-size: 14px;
+                    color: #3c3c59;
+                }
+
+                p {
+                    margin: 0;
+                    font-weight: normal;
+                    font-size: 13px;
+                    color: #909ca1;
+                }
+            }
+        }
+    }
+
+
+}
