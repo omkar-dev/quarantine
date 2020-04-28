@@ -17,7 +17,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class VisitHistoryPage implements OnInit {
   data: any;
-  public watch: any;    
+  public watch: any;  
+  subscription : any;
   public lat: number = 0;
   public lng: number = 0;
   backgroundLocObject: BackgroundGeolocationResponse;
@@ -89,7 +90,7 @@ export class VisitHistoryPage implements OnInit {
 
 
   this.watch = this.geolocation.watchPosition();
-this.watch.subscribe((data) => {
+this.subscription = this.watch.subscribe((data) => {
  this.zone.run(() => {
       this.lat =  data.coords.latitude
       this.lng =  data.coords.longitude
@@ -126,7 +127,7 @@ this.nativeGeocoder.reverseGeocode(lat, long, options)
   {
     console.log("inside stop")
     this.backgroundGeolocation.stop();
-    // this.watch.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
  checkButton()
