@@ -37,6 +37,10 @@ const routes: Routes = [
   {
     path: 'need-help',
     loadChildren: () => import('./pages/need-help/need-help.module').then( m => m.NeedHelpPageModule)
+  },
+  {
+    path: 'posts',
+    loadChildren: () => import('./pages/posts/posts.module').then( m => m.PostsPageModule)
   }
 
 
