@@ -33,6 +33,14 @@ const routes: Routes = [
   },  {
     path: 'chat',
     loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'need-help',
+    loadChildren: () => import('./pages/need-help/need-help.module').then( m => m.NeedHelpPageModule)
+  },
+  {
+    path: 'posts',
+    loadChildren: () => import('./pages/posts/posts.module').then( m => m.PostsPageModule)
   }
 
 

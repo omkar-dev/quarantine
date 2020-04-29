@@ -1,6 +1,6 @@
 
 
-<ion-content [fullscreen]="true">
+<!-- <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Blank</ion-title>
@@ -25,5 +25,33 @@
     
 </ion-list>
 
-</ion-content>
+</ion-content> -->
 <!-- AIzaSyCEibeFAFYEpG6xh4eq8R_F_BQxba2XcQc -->
+
+
+<ion-content>
+  <!-- <iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0" 
+  [src]="mapUrl | safe: 'resourceUrl'" allowfullscreen>
+</iframe> -->
+
+<img src="../../../assets/mapImage.jpg" alt="">
+
+</ion-content>
+
+<div class="bottomContent">
+  <ion-button (click)="checkButton()">
+    <ion-icon src="assets/ion-pluse.svg"></ion-icon> {{buttonText}}
+  </ion-button>
+  <div class="list">
+    <ion-item *ngFor="let location of locationsArray" lines="none" no-padding class="no-padding">
+      <img src="../../../assets/location_1.svg" slot="start" alt="">
+      <ion-label>{{location.city}}</ion-label>
+      <div class="time" slot="end">23 Min ago</div>
+    </ion-item>
+  </div>
+</div>
+
+
