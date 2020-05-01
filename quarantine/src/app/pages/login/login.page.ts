@@ -74,9 +74,17 @@ export class LoginPage implements OnInit {
 // })
 
   }
-  switchLanguage() {
+
+  switchLanguage(lang) {
+    this.languageSelected=true;
+    // this.storag
+this.storage.set("language",this.languageSelected).then((res)=>{
+  console.log("Response",res);
+});
     this.translate.use(this.lang);
   }
+
+  
   getGeoLoc() {
 // debugger;
     this.geolocation.getCurrentPosition().then((resp) => {
@@ -111,16 +119,9 @@ export class LoginPage implements OnInit {
     })
 
   }
-  goToLogin(index){
-    this.languageSelected=true;
-    // this.storag
 
-this.storage.set("language",this.languageSelected).then((res)=>{
-  console.log("Response",res);
- 
-  
-})
-  }
+
+
   Login(){
  
     // this.verificationCode=this.LoginForm.controls
@@ -137,10 +138,14 @@ this.storage.set("language",this.languageSelected).then((res)=>{
     this.router.navigate(['/tabs'])
 
   }
+
+
   goToSignUp(){
     console.log('signup')
     this.router.navigate(['/signup'])
   }
+
+
   Input(e, number) {
     console.log(e, 'event')
     let reg = /^\d+$/;

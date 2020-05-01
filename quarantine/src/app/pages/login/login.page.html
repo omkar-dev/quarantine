@@ -59,7 +59,22 @@
 
 
 <ion-content mode="ios">
-  <div class="ion-padding">
+
+    <div *ngIf="!languageSelected" class="languageSelect" >
+    
+        <ion-item button  lines="none" style="--background: #E4ECFD;color: #6C7A92" *ngFor="let language of languages;let i = index" 
+          (click)="switchLanguage(language)">
+            <ion-label style="padding:1.78vh; " >{{language}}   
+            </ion-label>
+            <ion-icon solt="end"  style="color:#5EC4BA;font-weight: bolder;"name="checkmark"></ion-icon>
+            &nbsp;        &nbsp;
+          </ion-item>
+      </div>
+
+
+
+
+  <div *ngIf="languageSelected" class="ion-padding">
     <div class="mid" [class.active]="logoAnimation">
       <img class="home-logo" src="../../../assets/logo-home.svg" [class.active]="logoAnimation">
       <div class="after_show">
