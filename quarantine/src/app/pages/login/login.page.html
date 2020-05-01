@@ -69,15 +69,14 @@
         </ion-item>
         <p *ngIf="!email.valid &&(email.touched|| email.dirty)">Enter a valid email id</p>
 
-        <ion-button expand="block">{{'Log In'|translate}}
-        <ion-button expand="block" (click)="Login()">Log In
+        <ion-button expand="block" (click)="Login()">{{'Log In'|translate}}
           <ion-ripple-effect></ion-ripple-effect>
         </ion-button>
         <ion-button expand="block" class="google_bgn ripple-parent" (click)="GoogleLogin()">
 
           <ion-ripple-effect></ion-ripple-effect>
           <ion-icon src="../../../assets/google-icon.svg" slot="start" class="google-logo"></ion-icon>
-         {{ 'Log in with Google'|translate}}
+         {{ 'Log in with Google'|translate }}
         </ion-button>
       </div>
     </div>
