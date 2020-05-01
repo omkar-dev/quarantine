@@ -116,54 +116,71 @@
 
 <!-- SHIVANG CODE -->
 <ion-content>
-<img class="home-logo" src="../../../assets/logo-home.svg">
-  <h5>Who we are</h5>
-  <ion-row>
-    <ion-col size="3" class="active" (click)="selectType('others')" [class.active]="others">
-      <div class="img_section">
-        <img src="../../../assets/other_ppl.svg" alt="">
+  <img class="home-logo" src="../../../assets/logo-home.svg">
+    <h5>Who we are</h5>
+    <ion-row>
+      <ion-col size="3" class="active" (click)="selectType('others')" [class.active]="others">
+        <div class="img_section">
+          <img src="../../../assets/other_ppl.svg" alt="">
+        </div>
+        <p>Others</p>
+      </ion-col>
+      <ion-col size="3" (click)="selectType('medical')" [class.active]="medical">
+        <div class="img_section">
+          <img src="../../../assets/medical.svg" alt="">
+        </div>
+        <p>Medical</p>
+      </ion-col>
+      <ion-col size="3" (click)="selectType('grocery')" [class.active]="grocery">
+        <div class="img_section">
+          <img src="../../../assets/grossery.svg" alt="">
+        </div>
+        <p>Grocery </p>
+      </ion-col>
+    </ion-row>
+  <form [formGroup]="signupForm">
+  
+    <div class="ion-padding">
+      <ion-item class="email-box" lines="none">
+        <ion-icon src="../../../assets/mail-logo.svg" color="dark"></ion-icon>
+        <ion-input   placeholder="Enter your email address" formControlName="emailAddress"></ion-input>
+      </ion-item>
+      <div *ngFor="let validation of validation_messages.emailAddress">
+          <p *ngIf="signupForm.get('emailAddress').hasError(validation.type) && (signupForm.get('emailAddress').dirty || signupForm.get('emailAddress').touched)">
+            {{validation.message}}
+          </p>
+        </div>
+      <ion-item class="email-box" lines="none">
+        <ion-icon src="../../../assets/user.svg" color="dark"></ion-icon>
+        <ion-input  placeholder="Full Name" formControlName="name"></ion-input>
+      </ion-item>
+      <div *ngFor="let validation of validation_messages.name">
+          <p *ngIf="signupForm.get('name').hasError(validation.type) && (signupForm.get('name').dirty || signupForm.get('name').touched)">
+            {{validation.message}}
+          </p>
+        </div>
+      <ion-item class="email-box" lines="none">
+        <ion-icon src="../../../assets/location.svg" color="dark"></ion-icon>
+        <ion-input placeholder="Location" formControlName="locality"></ion-input>
+        <ion-icon src="../../../assets/my-location.svg" color="dark"></ion-icon>
+      </ion-item>
+      <div *ngFor="let validation of validation_messages.locality">
+          <p *ngIf="signupForm.get('locality').hasError(validation.type) && (signupForm.get('locality').dirty || signupForm.get('locality').touched)">
+            {{validation.message}}
+          </p>
+        </div>
+  
+      <ion-button (click)="signUp()" expand="block">Sign Up
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+  
+      <div class="already_sectin">
+        <a href="">Already use Asana? <span>Log In</span></a>
       </div>
-      <p>Others</p>
-    </ion-col>
-    <ion-col size="3" (click)="selectType('medical')" [class.active]="medical">
-      <div class="img_section">
-        <img src="../../../assets/medical.svg" alt="">
-      </div>
-      <p>Medical</p>
-    </ion-col>
-    <ion-col size="3" (click)="selectType('grocery')" [class.active]="grocery">
-      <div class="img_section">
-        <img src="../../../assets/grossery.svg" alt="">
-      </div>
-      <p>Grocery </p>
-    </ion-col>
-  </ion-row>
-
-  <div class="ion-padding">
-    <ion-item class="email-box" lines="none">
-      <ion-icon src="../../../assets/mail-logo.svg" color="dark"></ion-icon>
-      <ion-input  [(ngModel)]="email" placeholder="Enter your email address"></ion-input>
-    </ion-item>
-
-    <ion-item class="email-box" lines="none">
-      <ion-icon src="../../../assets/user.svg" color="dark"></ion-icon>
-      <ion-input [(ngModel)]="fullName" placeholder="Full Name"></ion-input>
-    </ion-item>
-    <ion-item class="email-box" lines="none">
-      <ion-icon src="../../../assets/location.svg" color="dark"></ion-icon>
-      <ion-input [(ngModel)]="location" placeholder="Location"></ion-input>
-      <ion-icon src="../../../assets/my-location.svg" color="dark"></ion-icon>
-    </ion-item>
-
-    <ion-button (click)="signUp()" expand="block">Sign Up
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-button>
-
-    <div class="already_sectin">
-      <a href="">Already use Asana? <span>Log In</span></a>
     </div>
-  </div>
-
-
-
-</ion-content>
+  </form>
+  
+  
+  
+  </ion-content>
+  

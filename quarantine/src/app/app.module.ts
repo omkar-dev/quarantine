@@ -21,6 +21,15 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import { BackgroundGeolocation } from "@ionic-native/background-geolocation/ngx";
+import { SafePipeModule } from 'safe-pipe';
+
+
+
 export function createTranslateLoader(http: HttpClient){ 
   return new TranslateHttpLoader(http, './assets/language_selection/', '.json')
 }
@@ -33,6 +42,7 @@ export function createTranslateLoader(http: HttpClient){
   imports: [BrowserModule, IonicModule.forRoot(),
     IonicStorageModule.forRoot(), AppRoutingModule,HttpClientModule,
     FormsModule,
+    SafePipeModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -49,7 +59,11 @@ export function createTranslateLoader(http: HttpClient){
     Geolocation,
     InAppReview,
     FCM,
-
+    GooglePlus,
+    NativeStorage,
+    LocalNotifications,
+    NativeGeocoder,
+    BackgroundGeolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy  }
   ],
   bootstrap: [AppComponent]

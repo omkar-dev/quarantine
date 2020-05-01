@@ -5,7 +5,10 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx'
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { NavController } from '@ionic/angular';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+
+import { NavController, LoadingController, Platform, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -36,11 +39,16 @@ export class LoginPage implements OnInit {
   location;
   lang: string;
   emailid:string;
-  logoAnimation: boolean = false;
+  logoAnimation: boolean = true; 
   verificationCode:string;
 
     
-    constructor(private storage:Storage,
+    constructor(    private googlePlus: GooglePlus,
+      private nativeStorage: NativeStorage,
+      public loadingController: LoadingController,
+      private platform: Platform,
+      public alertController: AlertController,
+      private storage:Storage,
       private androidPermissions: AndroidPermissions,
     private geolocation: Geolocation,
     private router:Router,public translate: TranslateService, private navCtrl: NavController
@@ -130,6 +138,7 @@ this.storage.set("language",this.languageSelected).then((res)=>{
 
   }
   goToSignUp(){
+    console.log('signup')
     this.router.navigate(['/signup'])
   }
   Input(e, number) {
@@ -164,5 +173,40 @@ this.storage.set("language",this.languageSelected).then((res)=>{
       if (number == 6) { this.vc6 = '' }
 
     }
+  }
+
+  async GoogleLogin(){
+    const loading = await this.loadingController.create({
+      message: 'Please wait...'
+    });
+    this.presentLoading(loading);
+    this.googlePlus.login({
+      'scopes': '', // optional - space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
+      'webClientId': '1079162340930-gfdqdmgdiktb3brqnqro4822s55m03aj.apps.googleusercontent.com', // optional - clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+      'offline': true, // Optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
+      })
+      .then(user => {
+        console.log(user,'user data')
+        //save user data on the native storage
+        this.nativeStorage.setItem('google_user', {
+          name: user.displayName,
+          email: user.email,
+          picture: user.imageUrl
+        })
+        .then(() => {
+          console.log('logged in');
+          // this.login=true;
+           this.router.navigate(["/tabs"]);
+        }, (error) => {
+          console.log(error);
+        })
+        loading.dismiss();
+      }, err => {
+        console.log(err);
+      })
+  }
+
+  async presentLoading(loading) {
+    return await loading.present();
   }
 }
