@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
@@ -22,7 +23,31 @@ const routes: Routes = [
   {
     path: 'notification',
     loadChildren: () => import('./pages/notification/notification.module').then( m => m.NotificationPageModule)
+  },
+  {
+    path: 'can-help',
+    loadChildren: () => import('./pages/can-help/can-help.module').then( m => m.CanHelpPageModule)
+  },{
+    
+    path: 'help',
+    loadChildren: () => import('./pages/help/help.module').then( m => m.HelpPageModule)
+  },
+  {
+    path: 'chat',
+    loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'need-help',
+    loadChildren: () => import('./pages/need-help/need-help.module').then( m => m.NeedHelpPageModule)
+  },
+  {
+    path: 'posts',
+    loadChildren: () => import('./pages/posts/posts.module').then( m => m.PostsPageModule)
   }
+
+
+
+
 
 ];
 

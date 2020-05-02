@@ -32,6 +32,9 @@ export class SignupPage implements OnInit {
   selectedCheckbox;
   checkboxData=['Are you a Medical Owner','Are you a Grocery Owner','None of the above']
 
+  fullName : String
+  location : String
+
 validation_messages = {
     'name': [
       { type: 'required', message: 'Name is required' },
@@ -55,6 +58,11 @@ validation_messages = {
       { type: 'required', message: 'Shop Locality details required' },
     ]
   }
+  type: any;
+  others: boolean=true;
+  medical: boolean;
+  grocery: boolean;
+  flag: any;
     
     constructor(private formBuilder: FormBuilder,
       private router:Router) { }
@@ -65,7 +73,7 @@ validation_messages = {
     this.signupForm=this.formBuilder.group({
       emailAddress: [this.email, Validators.compose([Validators.maxLength(30), Validators.pattern('[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})'), Validators.required])],
       name: [this.name, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
-      locality:[this.locality, Validators.compose([Validators.maxLength(250), Validators.required])],
+      locality:[this.location, Validators.compose([Validators.maxLength(250), Validators.required])],
     })
     this.shopForm=this.formBuilder.group({
       shopName: [this.shop_name, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
@@ -79,6 +87,40 @@ validation_messages = {
     this.bottomPopup= this.selectedCheckbox!= 2?true:false;
     this.bottomPopup==false?this.router.navigate(['/dashboard']):null;
     }
+  }
+
+  selectType(type)
+  {
+
+    if(type=='others')
+    {
+        this.type = 'others'
+        this.others = true
+        this.grocery = false
+        this.medical = false
+
+    }
+    else if (type =='medical')
+    {
+        this.type = 'medical'
+       this.medical=true
+       this.others = false
+       this.grocery = false
+    }
+    else if(type == 'grocery')
+    {
+        this.type = 'grocery'
+        this.grocery = true   
+        this.others = false
+        this.medical = false 
+ }
+    console.log("selected type : ",this.type)
+  }
+
+  signUp()
+  {
+    this.router.navigate(['/tabs'])
+    console.log("Details", this.email, this.fullName, this.location, this.type)
   }
 
 }

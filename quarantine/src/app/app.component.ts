@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FCM } from '@ionic-native/fcm/ngx';
+import { Router } from '@angular/router';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -13,6 +15,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    private fcm: FCM,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -21,6 +25,23 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      this.fcm.getToken().then(token => {
+        console.log(token);
+      });
+
+      this.fcm.onTokenRefresh().subscribe(token => {
+        console.log(token);
+      });
+
+      this.fcm.onNotification().subscribe(data => {
+        console.log(data);
+        if (data.wasTapped) {
+          this.router.navigate(['notification']);
+        } else {
+          this.router.navigate(['notification']);
+        }
+      });
     });
   }
 

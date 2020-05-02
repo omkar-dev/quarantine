@@ -5,6 +5,9 @@
       <ion-button color="secondary" [routerLink]="['/notification']">
         <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
       </ion-button>
+      <ion-button color="secondary" (click)="openMenu($event)">
+        <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

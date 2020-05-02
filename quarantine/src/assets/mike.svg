@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="37" height="37" viewBox="0 0 37 37">
+  <defs>
+    <filter id="Rectangle_34" x="0" y="0" width="37" height="37" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="0.5" result="blur"/>
+      <feFlood flood-opacity="0.302"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_1" data-name="Group 1" transform="translate(-2517.5 -1636.5)">
+    <g id="Group_147" data-name="Group 147" transform="translate(2210 1627)">
+      <g transform="matrix(1, 0, 0, 1, 307.5, 9.5)" filter="url(#Rectangle_34)">
+        <rect id="Rectangle_34-2" data-name="Rectangle 34" width="34" height="34" rx="17" transform="translate(1.5 1.5)" fill="#fff"/>
+      </g>
+      <path id="Subtraction_3" data-name="Subtraction 3" d="M5.394,29.421A17,17,0,1,1,29.579,5.564,17,17,0,0,0,5.4,29.42Z" transform="translate(309 11)" fill="rgba(255,255,255,0.72)"/>
+    </g>
+    <g id="Group_148" data-name="Group 148" transform="translate(5982 1269)">
+      <path id="Path_96" data-name="Path 96" d="M-3451.514,386.065a5.128,5.128,0,0,0,5.489,5.221,5.284,5.284,0,0,0,5.623-5.221" fill="none" stroke="#3c3c59" stroke-linecap="round" stroke-width="1"/>
+      <path id="Path_97" data-name="Path 97" d="M-3445.958,391.286v3.7" fill="#3c3c59" stroke="#3c3c59" stroke-linecap="round" stroke-width="1"/>
+      <g id="Rectangle_82" data-name="Rectangle 82" transform="translate(-3449 377)" fill="#3c3c59" stroke="#3c3c59" stroke-width="1">
+        <rect width="6" height="12" rx="3" stroke="none"/>
+        <rect x="0.5" y="0.5" width="5" height="11" rx="2.5" fill="none"/>
+      </g>
+    </g>
+  </g>
+</svg>
