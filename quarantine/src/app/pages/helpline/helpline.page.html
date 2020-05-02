@@ -61,30 +61,25 @@
     <h4>Helpline Number for Coronavirus</h4>
 
     <div class="helpLine">
-      <ion-item lines="none">
+      <ion-item *ngFor="let help of helpLineArray" lines="none">
         <ion-label>
-          <h4>Central Helpline</h4>
-          <p>+91-11-23978046 </p>
+          <h4>{{help.helpline_name}}</h4>
+          <p>{{help.helpline_no}} </p>
         </ion-label>
-        <ion-icon slot="end" src="assets/callIcon.svg"></ion-icon>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label>
-          <h4>Central Helpline</h4>
-          <p>+91-11-23978046 </p>
-        </ion-label>
-        <ion-icon slot="end" src="assets/callIcon.svg"></ion-icon>
-      </ion-item>
-    </div>
+        <!-- <ion-icon slot="end" src="assets/callIcon.svg"></ion-icon> -->
+      <img slot="end" (click)="openDialer(help.helpline_no)" src="assets/callIcon.svg">
 
+      </ion-item>
+    </div><br><br>
+    <h4>Donate - </h4>
     <div class="donate">
-      <ion-item button lines="none">
+      <ion-item *ngFor="let donate of donationsArray" button lines="none">
         <ion-avatar slot="start">
           <img src="../../../assets/donate.svg">
         </ion-avatar>
         <ion-label>
-          <h4>Donation</h4>
-          <p>PM fund <a href="">Click here ></a></p>
+          <!-- <h4>{{donate.donation_id}}</h4> -->
+          <p>{{donate.donation_name}}</p>
         </ion-label>
       </ion-item>
     </div>
