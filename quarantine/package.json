@@ -37,6 +37,7 @@
     "@mauron85/cordova-plugin-background-geolocation": "^3.1.0",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
+    "call-number": "^1.0.1",
     "com.omarben.inappreview": "0.0.6",
     "cordova-android": "^8.1.0",
     "cordova-plugin-android-permissions": "1.0.2",
@@ -122,7 +123,8 @@
       },
       "cordova-plugin-nativestorage": {},
       "cordova-plugin-local-notification": {},
-      "cordova-plugin-nativegeocoder": {}
+      "cordova-plugin-nativegeocoder": {},
+      "mx.ferreyra.callnumber": {}
     },
     "platforms": [
       "android"

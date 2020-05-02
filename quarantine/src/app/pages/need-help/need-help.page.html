@@ -18,25 +18,25 @@
         <img src="../../../assets/post.svg">
       </ion-avatar>
       <ion-label>
-        <h4>{{'View your all Post'|}}</h4>
+        <h4>{{'View your all Post' | translate }}</h4>
       </ion-label>
       <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
     </ion-item>
-    <h4>{{'I need help for'|translate}}</h4>
+    <h4>{{'I need help for' | translate}}</h4>
     <div class="blogList">
       <div class="blog" [class.active]="req.show" *ngFor="let req of helpRequestArray; let i=index;" {{(click)="selectReq(req,i)"|translate}}>
         <img src="../../../assets/{{req.imgUrl}}" alt="">
-        <p>{'{request.name'|translate}}</p>
+        <p>{{'request.name' | translate}}</p>
       </div>
     </div>
 
     <div class="form_system">
       <div class="col">
-        <ion-label>{{'Help Info'|translate}}</ion-label>
+        <ion-label>{{ 'Help Info' | translate}}</ion-label>
         <ion-textarea {{[(ngModel)]="helpText"|translate}} {{placeholder="Please type your help info"|translate}}></ion-textarea>
       </div>
       <div class="col">
-        <ion-label>{{'How Can we contact you'|translate}}</ion-label>
+        <ion-label>{{ 'How Can we contact you' |translate}}</ion-label>
         <ion-input [(ngModel)]="contactNo" {{placeholder="Please type your contact number"|translate}}></ion-input>
       </div>
       <div class="col">
