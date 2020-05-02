@@ -23,7 +23,21 @@
    "Don’t have account ":"ఖాతా లేదు ?",
    "Notifications":"నోటిఫికేషన్ల" ,
    "Yesterday":"నిన్న",
-   "Please don't say that":"தயவுசெய்து அதைச் சொல்லாதீர்கள்"
+   "Please don't say that":"దయచేసి అలా అనకండి",
+   "View your all Post":"మీ అన్ని పోస్ట్‌ను చూడండి",
+   "I need help for":"నాకు సహాయం కావాలి",
+   "request.name":"అభ్యర్థన పేరు",
+   "Help Info":"సహాయం సమాచారం",
+   "Please type your help info":"దయచేసి మీ సహాయ సమాచారాన్ని టైప్ చేయండి",
+   "How Can we contact you":"మేము మిమ్మల్ని ఎలా సంప్రదించగలం",
+   "Please type your contact number":"దయచేసి మీ సంప్రదింపు సంఖ్యను టైప్ చేయండి",
+   "Where are you located":"మీరు ఎక్కడ ఉన్నారు",
+   "detectLocation()":"స్థానాన్ని గుర్తించండి()",
+   "selectReq":"అభ్యర్థన ఎంచుకోండి",
+   "notif.message":"నోటిఫికేషన్ సందేశం",
+   "Lorem ipsum dolor sit amet":"లోరెం ఇప్సమ్ క్యారెట్లు",
+   "Central Helpline":"సెంట్రల్ హెల్ప్‌లైన్"
+
    
 
 

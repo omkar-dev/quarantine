@@ -11,7 +11,21 @@
     "Don’t have account ":"खाता नहीं है?",
    "Notifications":"सूचना",
    "Yesterday":"बिता कल",
-   "Please don't say that":"कृपया ऐसा मत कहो"
+   "Please don't say that":"कृपया ऐसा मत कहो",
+   "View your all Post":"अपनी सभी पोस्ट देखें",
+   "I need help for":"मुझे इसके लिए मदद चाहिए",
+   "request.name":"अनुरोध नाम",
+   "Help Info":"सहायता जानकारी",
+   "Please type your help info":"कृपया अपनी सहायता जानकारी टाइप करें",
+   "helpText":"मदद पाठ",
+   "How Can we contact you":"हम आपसे कैसे संपर्क कर सकते हैं",
+   "Please type your contact number":"कृपया अपना संपर्क नंबर लिखें",
+   "Where are you located":"आप कहां स्थित हैं",
+   "detectLocation()":"स्थान का पता लगाएं",
+   "selectReq":"अनुरोध का चयन करें",
+   "notif.message":"अधिसूचना संदेश",
+   "Lorem ipsum dolor sit amet":"Lorem ipsum गाजर",
+   "Central Helpline":"केंद्रीय हेल्पलाइन"
    
 
 }
