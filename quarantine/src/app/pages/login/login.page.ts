@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl,Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx'
@@ -7,8 +7,10 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-
+import { catchError } from 'rxjs/operators';
+import { Device } from '@ionic-native/device/ngx';
 import { NavController, LoadingController, Platform, AlertController } from '@ionic/angular';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +30,6 @@ export class LoginPage implements OnInit {
   LoginForm:FormGroup;
   languageSelected:boolean;
   
-  email=""
   vc1="";
   vc2="";
   vc3="";
@@ -41,6 +42,7 @@ export class LoginPage implements OnInit {
   emailid:string;
   logoAnimation: boolean = true; 
   verificationCode:string;
+  showVC: boolean = false;
 
     
     constructor(    private googlePlus: GooglePlus,
@@ -51,7 +53,8 @@ export class LoginPage implements OnInit {
       private storage:Storage,
       private androidPermissions: AndroidPermissions,
     private geolocation: Geolocation,
-    private router:Router,public translate: TranslateService, private navCtrl: NavController
+    private router:Router,public translate: TranslateService, private navCtrl: NavController,
+    private http: HttpClient, private device: Device
     ) {     this.lang = 'en';
     this.translate.setDefaultLang('en');
     this.translate.use('en');
@@ -67,11 +70,6 @@ export class LoginPage implements OnInit {
       'Marathi',
       'Tamil',
       'Telgu'  ]
-         
-// LoginForm=new FormGroup({
-//   email:new FormControl("",[Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-//   ])
-// })
 
   }
 
@@ -121,27 +119,49 @@ this.storage.set("language",this.languageSelected).then((res)=>{
   }
 
 
-
-  Login(){
- 
-    // this.verificationCode=this.LoginForm.controls
-    this.verificationCode=this.vc1+this.vc2+this.vc3+this.vc4+this.vc5+this.vc6;
-   
-    let verificationRequestBody={
-      email:this.email,
-      verificationCode:this.verificationCode,
-      coordinates:this.location
-    }
-    console.log("Verifivation",this.verificationCode);
-    console.log("Email",this.emailid)
-
-    this.router.navigate(['/tabs'])
-
+  onLogin() {
+    let params = new HttpParams();
+    params = params.append('user_name', 'omkaxr');
+    params = params.append('email', this.emailid);
+    params = params.append('attempt', '2');
+    this.http.get(
+      'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
+      {params: params, responseType: 'text'}
+    )
+    .pipe(
+      catchError(e => {
+        this.showAlert('User Not found');
+        throw new Error(e.error);
+      })
+    )
+    .subscribe(response => {
+      if (response === 'Otp Send') {
+        this.showVC = true;
+      }
+    });
   }
 
+  verifyCode() {
+    let params = new HttpParams();
+    params = params.append('user_code', this.verificationCode);
+    params = params.append('email', this.emailid);
+    params = params.append('attempt', '2');
+    this.http.get('https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code', { params: params } )
+      .pipe(
+        catchError(e => {
+          this.showAlert('Wrong OTP! Try Again!');
+          this.vc1 = this.vc2 = this.vc3 = this.vc4 = this.vc5 = this.vc6 = "";
+          throw new Error(e.error);
+        })
+        )
+        .subscribe(response => {
+          this.router.navigate(['/tabs']);
+          this.showVC = false;
+          console.log(this.device.uuid);
+      })
+  }
 
   goToSignUp(){
-    console.log('signup')
     this.router.navigate(['/signup'])
   }
 
@@ -213,5 +233,14 @@ this.storage.set("language",this.languageSelected).then((res)=>{
 
   async presentLoading(loading) {
     return await loading.present();
+  }
+
+  async showAlert(msg) {
+    const alert = await this.alertController.create({
+      message: msg,
+      header: 'Error',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 }

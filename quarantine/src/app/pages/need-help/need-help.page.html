@@ -33,11 +33,11 @@
     <div class="form_system">
       <div class="col">
         <ion-label>{{ 'Help Info' | translate}}</ion-label>
-        <ion-textarea [(ngModel)]="{{helpText |translate}}" placeholder="{{Please type your help info|translate}}"></ion-textarea>
+        <ion-textarea [(ngModel)]="helpText" placeholder="{{ 'helpText' | translate}}"></ion-textarea>
       </div>
       <div class="col">
         <ion-label>{{ 'How Can we contact you' |translate}}</ion-label>
-        <ion-input [(ngModel)]="contactNo" placeholder="{{Please type your contact number|translate}}"></ion-input>
+        <ion-input [(ngModel)]="contactNo" placeholder="{{ 'contactNo' | translate}}"></ion-input>
       </div>
       <div class="col">
         <ion-label>{{'Where are you located'|translate}}</ion-label>

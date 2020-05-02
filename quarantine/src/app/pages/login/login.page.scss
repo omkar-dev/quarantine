@@ -43,6 +43,15 @@
     }
 }
 
+#otp {
+    ion-input {
+        max-width: 20%;
+        margin-right: 4%;
+        border-bottom: 1px solid rgb(175, 170, 170);
+        text-align: center;
+    }
+}
+
 .home-logo {
     display: block;
     margin-left: auto;
