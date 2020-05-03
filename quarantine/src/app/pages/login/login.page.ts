@@ -3,13 +3,13 @@ import { FormGroup } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx'
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { catchError } from 'rxjs/operators';
 import { Device } from '@ionic-native/device/ngx';
-import { NavController, LoadingController, Platform, AlertController } from '@ionic/angular';
+import { NavController, LoadingController, Platform, AlertController, IonSlides } from '@ionic/angular';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
@@ -24,6 +24,7 @@ export class LoginPage implements OnInit {
   @ViewChild('v4', { static: false }) myInput4;
   @ViewChild('v5', { static: false }) myInput5;
   @ViewChild('v6', { static: false }) myInput6;
+  @ViewChild("mySlider", { static: false }) onboardingSlides: IonSlides;
 
   languages: string[];
   login:boolean=false;
@@ -43,21 +44,28 @@ export class LoginPage implements OnInit {
   logoAnimation: boolean = true; 
   verificationCode:string;
   showVC: boolean = false;
+  showOnboard: boolean = true;
+  previouChecksUrl: string;
+  StorageLoaded: boolean;
 
     
-    constructor(    private googlePlus: GooglePlus,
-      private nativeStorage: NativeStorage,
-      public loadingController: LoadingController,
-      private platform: Platform,
-      public alertController: AlertController,
-      private storage:Storage,
-      private androidPermissions: AndroidPermissions,
-    private geolocation: Geolocation,
-    private router:Router,public translate: TranslateService, private navCtrl: NavController,
-    private http: HttpClient, private device: Device
-    ) {     this.lang = 'en';
+  constructor (    
+    private googlePlus: GooglePlus, private nativeStorage: NativeStorage, public loadingController: LoadingController,
+    private platform: Platform, public alertController: AlertController, private storage:Storage, private device: Device,
+    private androidPermissions: AndroidPermissions, private geolocation: Geolocation, private router:Router,
+    public translate: TranslateService, private navCtrl: NavController, private http: HttpClient
+  ) {    
+    this.lang = 'en';
     this.translate.setDefaultLang('en');
     this.translate.use('en');
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.previouChecksUrl = event.url;
+        if (this.previouChecksUrl) {
+          this.languageSelected = true;
+        }
+      }
+    });
   }
 
   ngOnInit() {
@@ -73,12 +81,19 @@ export class LoginPage implements OnInit {
 
   }
 
+  StorageLoadtrue(): any {
+    this.StorageLoaded = true;
+  }
+
   switchLanguage(lang) {
     this.languageSelected=true;
+    this.StorageLoaded = false;
     // this.storag
-this.storage.set("language",this.languageSelected).then((res)=>{
-  console.log("Response",res);
-});
+    this.storage.set("language",this.languageSelected).then((res)=>{
+      console.log("Response",res);
+    });
+    this.languageSelected = true;
+    this.showOnboard = false;
     this.translate.use(this.lang);
   }
 
@@ -109,19 +124,32 @@ this.storage.set("language",this.languageSelected).then((res)=>{
     this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION,this.androidPermissions.PERMISSION.BLUETOOTH_ADMIN]);
     this.getGeoLoc()
 
-    this.storage.get("language").then(res=>{
-      console.log("response in ionViewWillEnter",res)
-      if(res){
-        this.languageSelected = res;
+    // language
+    this.StorageLoaded = false;
+    setTimeout(this.StorageLoadtrue(), 300);
+    this.storage.get('language').then(s => {
+      if (!s) {
+        this.languageSelected = false;
+      }
+      else {
+        this.languageSelected = true;
+        this.StorageLoaded = false;
+      }
+    });
+    this.storage.get('OnboardingShown').then(s => {
+      if (s) {
+        this.showOnboard = false;
+      } else {
+        this.showOnboard = true;
+        this.StorageLoaded = false;
       }
     })
 
   }
 
-
   onLogin() {
     let params = new HttpParams();
-    params = params.append('user_name', 'omkaxr');
+    params = params.append('user_name', '');
     params = params.append('email', this.emailid);
     params = params.append('attempt', '2');
     this.http.get(
@@ -157,8 +185,31 @@ this.storage.set("language",this.languageSelected).then((res)=>{
         .subscribe(response => {
           this.router.navigate(['/tabs']);
           this.showVC = false;
-          console.log(this.device.uuid);
+          this.storeVerifiedAccount();
       })
+  }
+
+  storeVerifiedAccount() {
+    this.storage.get('VerifiedAccounts').then(verifiedAccounts => {
+      if(verifiedAccounts){
+        console.log(verifiedAccounts)              
+        let verifiedAccount = {
+          'deviceId': this.device.uuid,
+          'emailId': this.emailid
+        }
+        verifiedAccounts[verifiedAccounts.length] = verifiedAccount;
+        this.storage.set('VerifiedAccounts', verifiedAccounts);
+      }
+      else{
+        let verifiedAccount = {
+          'deviceId': this.device.uuid,
+          'emailId': this.emailid
+        }
+        verifiedAccounts = [];
+        verifiedAccounts[0] = verifiedAccount
+        this.storage.set('VerifiedAccounts', verifiedAccounts);
+      }
+    });
   }
 
   goToSignUp(){
@@ -243,4 +294,29 @@ this.storage.set("language",this.languageSelected).then((res)=>{
     });
     alert.present();
   }
+
+  async SlideOnTimeOut() {
+    setTimeout(() => {
+      this.onboardingSlides.slideNext();
+    }, await this.getTime())
+  }
+
+  async getTime() {
+    let i:any;
+    let time = [15000, 21500, 21000, 20500];
+    await this.onboardingSlides.getActiveIndex().then((data) => {
+      i = data;
+    })
+    return time[i];
+  }
+
+  goToLogin() {
+    this.showOnboard = false;
+    this.storage.set('OnboardingShown', true); //SETTING KEY TO TRUE, ONCE THE INITIAL ROOT PAGE IS SHOWN.
+  }
+
+  ionViewDidLeave() {
+    this.StorageLoaded = false;
+  }
+
 }
