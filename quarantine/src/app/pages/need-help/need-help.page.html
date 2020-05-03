@@ -4,7 +4,7 @@
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-      <ion-title><img src="../../../assets/ios-help-circle.svg" alt=""> I Need Help</ion-title>
+      <ion-title><img src="../../../assets/ios-help-circle.svg" alt="">{{'Need_Help' | translate}}</ion-title>
       <div slot="end">
         <ion-icon src="assets/material-notifications.svg"></ion-icon>
       </div>
@@ -18,6 +18,7 @@
         <img src="../../../assets/post.svg">
       </ion-avatar>
       <ion-label>
+
         <h4>{{'View your all Post' | translate }}</h4>
       </ion-label>
       <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
@@ -26,23 +27,25 @@
     <div class="blogList">
       <div class="blog" [class.active]="req.show" *ngFor="let req of helpRequestArray; let i=index;" (click)="selectReq(req,i)">
         <img src="../../../assets/{{req.imgUrl}}" alt="">
+
         <p>{{req.name }}</p>
       </div>
     </div>
 
     <div class="form_system">
       <div class="col">
-        <ion-label>{{ 'Help Info' | translate}}</ion-label>
-        <ion-textarea [(ngModel)]="helpText" placeholder="Please type your help info"></ion-textarea>
+        <ion-label>{{'Help Info'|translate}}</ion-label>
+        <ion-textarea [(ngModel)]="helpText" placeholder="{{'Please type your help info' | translate}}"></ion-textarea>
       </div>
       <div class="col">
-        <ion-label>{{ 'How Can we contact you' |translate}}</ion-label>
-        <ion-input [(ngModel)]="contactNo" placeholder="Please type your contact number|translate"></ion-input>
+        <ion-label>{{'How Can we contact you'|translate}}</ion-label>
+        <ion-input [(ngModel)]="contactNo" placeholder="{{'Please type your contact number' | translate}}"></ion-input>
       </div>
       <div class="col">
-        <ion-label>{{'Where are you located'|translate}}</ion-label>
-        <ion-input placeholder="Please type your location" [(ngModel)]="location">
-          <img   (click)="detectLocation()" src="assets/material-my-location.svg"></ion-input>
+        <ion-label>{{'Where are you located'| translate}}</ion-label>
+        <ion-input placeholder="{{'Please type your location' | translate}}" [(ngModel)]="location">
+          <img    (click)="detectLocation()" src="assets/material-my-location.svg"></ion-input>
+
           <!-- <ion-icon src="assets/material-my-location.svg"></ion-icon>  // commented as icon doesnt accept click events--> 
       </div>
     </div>
