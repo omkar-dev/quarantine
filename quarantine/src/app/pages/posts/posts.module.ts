@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { PostsPageRoutingModule } from './posts-routing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { PostsPage } from './posts.page';
 
@@ -13,6 +14,7 @@ import { PostsPage } from './posts.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    TranslateModule,
     PostsPageRoutingModule
   ],
   declarations: [PostsPage]

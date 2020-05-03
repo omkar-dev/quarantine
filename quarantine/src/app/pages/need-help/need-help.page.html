@@ -13,20 +13,22 @@
 
   <div class="main">
 
-    <ion-item button lines="none">
+    <ion-item (click)="gotoPost()" button lines="none">
       <ion-avatar slot="start">
         <img src="../../../assets/post.svg">
       </ion-avatar>
       <ion-label>
-        <h4>{{'View your all Post'| translate}}</h4>
+
+        <h4>{{'View your all Post' | translate }}</h4>
       </ion-label>
       <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
     </ion-item>
-    <h4>{{'I need help for'|translate}}</h4>
+    <h4>{{'I need help for' | translate}}</h4>
     <div class="blogList">
       <div class="blog" [class.active]="req.show" *ngFor="let req of helpRequestArray; let i=index;" (click)="selectReq(req,i)">
         <img src="../../../assets/{{req.imgUrl}}" alt="">
-        <p>{{req.name}}</p>
+
+        <p>{{req.name }}</p>
       </div>
     </div>
 
@@ -43,6 +45,7 @@
         <ion-label>{{'Where are you located'| translate}}</ion-label>
         <ion-input placeholder="{{'Please type your location' | translate}}" [(ngModel)]="location">
           <img    (click)="detectLocation()" src="assets/material-my-location.svg"></ion-input>
+
           <!-- <ion-icon src="assets/material-my-location.svg"></ion-icon>  // commented as icon doesnt accept click events--> 
       </div>
     </div>
