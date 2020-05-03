@@ -1,0 +1,18 @@
+[{
+    "resolve" : true,
+    "delete"  : true,
+    "help_id" : 1,
+    "user_id": 0,
+    "help_for" : "Food Request",
+    "help_info" : "Need some groceries urgently"
+    },
+    {
+        "resolve" : false,
+        "delete" : true,
+        "help_id" : 1,
+        "user_id": 0,
+        "help_for" : "Job Layoff",
+        "help_info" : "Looking for Job in IT"
+    }
+    ]
+    

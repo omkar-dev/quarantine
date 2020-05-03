@@ -13,7 +13,7 @@
 
   <div class="main">
 
-    <ion-item button lines="none">
+    <ion-item (click)="gotoPost()" button lines="none">
       <ion-avatar slot="start">
         <img src="../../../assets/post.svg">
       </ion-avatar>
@@ -26,18 +26,18 @@
     <div class="blogList">
       <div class="blog" [class.active]="req.show" *ngFor="let req of helpRequestArray; let i=index;" (click)="selectReq(req,i)">
         <img src="../../../assets/{{req.imgUrl}}" alt="">
-        <p>{{request.name }}</p>
+        <p>{{req.name }}</p>
       </div>
     </div>
 
     <div class="form_system">
       <div class="col">
         <ion-label>{{ 'Help Info' | translate}}</ion-label>
-        <ion-textarea [(ngModel)]="helpText" placeholder="{{ 'helpText' | translate}}"></ion-textarea>
+        <ion-textarea [(ngModel)]="helpText" placeholder="Please type your help info"></ion-textarea>
       </div>
       <div class="col">
         <ion-label>{{ 'How Can we contact you' |translate}}</ion-label>
-        <ion-input [(ngModel)]="contactNo" placeholder="{{ 'contactNo' | translate}}"></ion-input>
+        <ion-input [(ngModel)]="contactNo" placeholder="Please type your contact number|translate"></ion-input>
       </div>
       <div class="col">
         <ion-label>{{'Where are you located'|translate}}</ion-label>
