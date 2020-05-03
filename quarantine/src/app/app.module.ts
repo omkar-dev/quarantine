@@ -28,7 +28,7 @@ import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@io
 import { BackgroundGeolocation } from "@ionic-native/background-geolocation/ngx";
 import { SafePipeModule } from 'safe-pipe';
 import { CallNumber } from '@ionic-native/call-number/ngx';
-
+import { Device } from '@ionic-native/device/ngx';
 
 
 export function createTranslateLoader(http: HttpClient){ 
@@ -66,6 +66,7 @@ export function createTranslateLoader(http: HttpClient){
     NativeGeocoder,
     CallNumber,
     BackgroundGeolocation,
+    Device,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy  }
   ],
   bootstrap: [AppComponent]
