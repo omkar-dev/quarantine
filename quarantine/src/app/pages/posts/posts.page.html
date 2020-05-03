@@ -12,23 +12,23 @@
   </ion-header>
 
   <div class="main">
-    <ion-item lines="none">
+    <ion-item *ngFor="let post of postsArray" lines="none">
       <div slot="start">
         <ion-avatar>
           <img src="../../../assets/kitchen.svg">
         </ion-avatar>
       </div>
       <ion-label>
-        <h3>Food Requests</h3>
-        <p>Lorem ipsum dolor sit amet</p>
+        <h3>{{post.help_for}}</h3>
+        <p>{{post.help_info}}</p>
         <div class="btn_group">
-          <ion-button>Resolve</ion-button>
-          <ion-button>Delete</ion-button>
+          <ion-button (click)="resolve(post)">Resolve</ion-button>
+          <ion-button (click)="delete(post)">Delete</ion-button>
         </div>
       </ion-label>
     </ion-item>
 
-    <ion-item lines="none">
+    <!-- <ion-item lines="none">
       <div slot="start">
         <ion-avatar>
           <img src="../../../assets/kitchen.svg">
@@ -74,7 +74,7 @@
         <h3>Medical Help</h3>
         <p>Lorem ipsum dolor sit amet</p>
       </ion-label>
-    </ion-item>
+    </ion-item> -->
   </div>
 
   <!-- <div class="no_post">
@@ -82,3 +82,4 @@
     <p>No Post Yet</p>
   </div> -->
 </ion-content>
+
