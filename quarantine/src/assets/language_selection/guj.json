@@ -7,5 +7,35 @@
 
     "Default Label1":"મૂળભૂત  ચિઠ્ઠી ",
 
-    "help line number":"સહાયતા  નંબર"
+    "help line number":"સહાયતા  નંબર",
+
+    "current quest":"વર્તમાન શોધ",
+    "New Messages":"નવા સંદેશા",
+    "See all":"બધા જુઓ",
+    "Food Request":"ફૂડ વિનંતી",
+    "Log In":"પ્રવેશ કરો",
+    "help":"મદદ",
+    "Submit":"સબમિટ",
+    "i need help":"મારે મદદ ની જરૂર છે",
+    "Log in with Google":"ગૂગલ સાથે લ inગ ઇન કરો",
+    "Don’t have account ":" ખાતું નથી ?",
+    "Notifications":"સૂચનાઓ" ,
+    "Yesterday":"ગઇકાલે",
+    "Please don't say that":"મહેરબાની કરીને તે કહો નહીં",
+    "View your all Post":"તમારી બધી પોસ્ટ જુઓ",
+    "I need help for":"મારે માટે મદદની જરૂર છે",
+    "request.name":"વિનંતી નામ",
+    "Help Info":"સહાય માહિતી",
+    "Please type your help info":"કૃપા કરીને તમારી સહાય માહિતી લખો",
+    "helpText":"હેલ્પ ટેક્સ્ટ",
+    "How Can we contact you":"અમે તમારો સંપર્ક કેવી રીતે કરી શકીએ",
+    "Please type your contact number":"કૃપા કરી તમારો સંપર્ક નંબર લખો",
+    "Where are you located":"તમે ક્યાં સ્થિત છો?",
+    "detectLocation()":"સ્થાન શોધો",
+    "selectReq":"વિનંતી પસંદ કરો",
+    "notif.message":"સૂચના સંદેશ",
+    "Lorem ipsum dolor sit amet":"કેટલાક Lorem Ipsum ગાજર",
+    "Central Helpline":"સેન્ટ્રલ હેલ્પલાઇન"
+    
+
 }

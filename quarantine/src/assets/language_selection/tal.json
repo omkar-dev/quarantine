@@ -13,5 +13,36 @@
 
 
    "help lin no ":
-  " உதவி எண்"
+  " உதவி எண்",
+
+  "current quest":"தற்போதைய தேடல்",
+  "New Messages":"புதிய செய்திகள்",
+  "See all":"அனைத்தையும் பார்",
+  "Food Request":"உணவு கோரிக்கை",
+  "Log In":"உள்நுழைய",
+  "help":"உதவி",
+  "Submit":"சமர்ப்பிக்கவும்",
+  "i  need help  ":"எனக்கு உதவி தேவை",
+  "Log in with Google":"Google உடன் உள்நுழைக",
+  "Don’t have account ":"கணக்கு இல்லை ?",
+  "Notifications":"அறிவிப்புகள்",
+  "Yesterday":"நேற்று",
+  "Please don't say that":"தயவுசெய்து அதைச் சொல்லாதீர்கள்",
+  "View your all Post":"உங்கள் எல்லா இடுகையும் காண்க",
+  "I need help for":"எனக்கு உதவி தேவை",
+  "request.name":"கோரிக்கை பெயர்",
+  "Help Info":"உதவி தகவல்",
+  "Please type your help info":"உங்கள் உதவி தகவலைத் தட்டச்சு செய்க",
+  "helpText":"",
+  "How Can we contact you":"நாங்கள் உங்களை எவ்வாறு தொடர்பு கொள்ள முடியும்",
+  "Please type your contact number":"உங்கள் தொடர்பு எண்ணைத் தட்டச்சு செய்க",
+  "Where are you located":"நீ எங்கு வசிக்கிறாய்",
+  "detectLocation()":"இருப்பிடத்தைக் கண்டறியவும்",
+  "selectReq":"கோரிக்கையைத் தேர்ந்தெடுக்கவும்",
+  "notif.message":"அறிவிப்பு செய்தி",
+  "Lorem ipsum dolor sit amet":"ரூம் சர்வீஸ் கேரட்",
+  "Central Helpline":"மத்திய ஹெல்ப்லைன்"
+  
+ 
+
 }

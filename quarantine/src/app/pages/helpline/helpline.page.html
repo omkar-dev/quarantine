@@ -1,28 +1,29 @@
-<ion-content color="primary" >
+
+
+
+ <ion-content>
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-        <ion-title color="secondary">HELP LINE NUMBER
-          <h2>{{'HELP LINE NUMBER' |translate }}</h2>
-        </ion-title>
-       <div>
-        <ion-icon name="notifications-outline"></ion-icon>
-       </div>
+      <ion-title><img src="../../../assets/helpLineIcon.svg" alt=""> Helpline</ion-title>
+      <div slot="end">
+        <ion-icon src="assets/material-notifications.svg"></ion-icon>
+      </div>
     </ion-toolbar>
   </ion-header>
-  
-  <ion-card>
+
+  <!-- <ion-card>
     <div>
       <ion-searchbar color="danger"></ion-searchbar>
     </div>
- <ion-title color="" >{{'Purpose: corona help lines'|translate}}</ion-title>
+ <ion-title color="" >Purpose: corona help lines</ion-title>
   </ion-card>
 
   <div id="container">
     <ion-item>
-      <ion-label>{{'Default Label'|translate}</ion-label>
+      <ion-label>Default Label</ion-label>
       <ion-input>   123458456     .........
                <ion-icon name="call-outline"></ion-icon>
       </ion-input>
@@ -30,15 +31,15 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>{{'Default Label1'|translate}}</ion-label>
-      <ion-input>   123458457     ........
+      <ion-label>Default Label</ion-label>
+      <ion-input>   123458456     ........
                <ion-icon name="call-outline"></ion-icon>
       </ion-input>
 
     </ion-item>
 
     <ion-item>
-      <ion-label position="fixed">{{'help line no :-'|translate}} </ion-label>
+      <ion-label position="fixed">help lin no :- </ion-label>
       <ion-input>
         
       </ion-input>
@@ -46,20 +47,54 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="fixed">h{{'elp lin no :-'|translate}} </ion-label>
+      <ion-label position="fixed">{{'help lin no :-'|translate}} </ion-label>
+
       <ion-input>
         
       </ion-input>
       <ion-icon name="call-outline"></ion-icon>
     </ion-item>
     
-  </div>
-</ion-content>
+  </div> -->
 
+  <div class="main">
+    <h4>Helpline Number for Coronavirus</h4>
+
+    <div class="helpLine">
+      <ion-item *ngFor="let help of helpLineArray" lines="none">
+        <ion-label>
+          <h4>{{help.helpline_name}}</h4>
+          <p>{{help.helpline_no}} </p>
+        </ion-label>
+        <!-- <ion-icon slot="end" src="assets/callIcon.svg"></ion-icon> -->
+      <img slot="end" (click)="openDialer(help.helpline_no)" src="assets/callIcon.svg">
+
+      </ion-item>
+    </div><br><br>
+    <h4>Donate - </h4>
+    <div class="donate">
+      <ion-item *ngFor="let donate of donationsArray" button lines="none">
+        <ion-avatar slot="start">
+          <img src="../../../assets/donate.svg">
+        </ion-avatar>
+        <ion-label>
+          <!-- <h4>{{donate.donation_id}}</h4> -->
+          <p>{{donate.donation_name}}</p>
+        </ion-label>
+      </ion-item>
+    </div>
+  </div>
+
+
+
+ 
+<!--
 <ion-footer>
   <ion-toolbar>
     <ion-title color="primary">Footer</ion-title>
   </ion-toolbar>
   <ion-icon name="home-outline"></ion-icon>
 </ion-footer>
+-->
 
+</ion-content>

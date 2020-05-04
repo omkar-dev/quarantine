@@ -19,7 +19,7 @@
       <img src="../../../assets/banner.svg" alt="">
     </div>
 
-    <div class="dailyTask">
+    <!-- <div class="dailyTask">
       <h4>Daily Task</h4>
       <div class="current">
         <h5>Current Quest</h5>
@@ -27,9 +27,9 @@
           <span></span>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="newMessage">
+    <div *ngIf="isShopkeeper" class="newMessage">
       <div class="title">
         <h4>New Messages</h4>
         <a href="javascript:void(0)">See all</a>
@@ -60,29 +60,11 @@
       </div>
     </div>
 
-    <div class="list">
-      <ion-item lines="none">
-        <ion-thumbnail slot="start">
-          <img src="../../../assets//scooter.svg">
-        </ion-thumbnail>
-        <ion-label>Food Request</ion-label>
-        <ion-icon slot="end" src="assets/arrow.svg"></ion-icon>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-thumbnail slot="start">
-          <img src="../../../assets//ppl.svg">
-        </ion-thumbnail>
-        <ion-label>Help Lines No</ion-label>
-        <ion-icon slot="end" src="assets/arrow.svg"></ion-icon>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-thumbnail slot="start">
-          <img src="../../../assets//donate.svg">
-        </ion-thumbnail>
-        <ion-label>Donation</ion-label>
-        <ion-icon slot="end" src="assets/arrow.svg"></ion-icon>
-      </ion-item>
-
+    <div class="blogList">
+      <div class="blog" [class.active]="req.show" *ngFor="let req of helpRequestArray; let i=index;" (click)="selectReq(req,i)">
+        <img src="../../../assets/{{req.imgUrl}}" alt="">
+        <p>{{req.name}}</p>
+      </div>
     </div>
   </div>
 

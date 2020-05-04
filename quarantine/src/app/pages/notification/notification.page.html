@@ -21,7 +21,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>
-      <ion-icon src="assets/location.svg"></ion-icon> Notifications
+      <ion-icon src="assets/location.svg"></ion-icon> {{'Notifications'|translate}}
     </ion-title>
     <ion-icon slot="end" src="assets/search.svg"></ion-icon>
   </ion-toolbar>
@@ -36,7 +36,7 @@
       <ion-label>
         <h4>{{notif.sender}}</h4>
         <p>
-          {{notif.message}}
+          {{'notif.message'|translate}}
         </p>
       </ion-label>
       <div class="date_section msg_comming" slot="">
@@ -47,16 +47,16 @@
 
     <ion-item button lines="none">
       <ion-avatar slot="start">
-        F
+        
       </ion-avatar>
       <ion-label>
         <h4>Farhan Patel</h4>
         <p>
-          Please don't say that...
+         {{ "Please don't say that..."|translate}}
         </p>
       </ion-label>
       <div class="date_section" slot="">
-        <p>Yesterday</p>
+        <p>{{ 'Yesterday'|translate}}</p>
       </div>
     </ion-item>
   </div>

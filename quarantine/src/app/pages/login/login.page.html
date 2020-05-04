@@ -59,7 +59,44 @@
 
 
 <ion-content mode="ios">
-  <div class="ion-padding">
+ 
+  <div *ngIf="!languageSelected && !showOnboard" class="languageSelect" >
+
+    <ion-item button  lines="none" style="--background: #E4ECFD;color: #6C7A92" *ngFor="let language of languages;let i = index" 
+      (click)="switchLanguage(language)">
+        <ion-label style="padding:1.78vh; " >{{language}}   
+        </ion-label>
+        <ion-icon solt="end"  style="color:#5EC4BA;font-weight: bolder;"name="checkmark"></ion-icon>
+        &nbsp;        &nbsp;
+    </ion-item>
+  </div>
+
+  <div *ngIf = "!languageSelected && showOnboard" >
+    <ion-slides   pager dir="ltr" class = "slider" #mySlider (ionSlidesDidLoad)="SlideOnTimeOut()"  (ionSlideDidChange)="SlideOnTimeOut()" >
+      <ion-slide>
+        <img style="max-width: 100vw !important;max-height: 100vh !important;" src="assets/onboarding/english/Class-Booking.gif"/>
+      </ion-slide>
+    
+      <ion-slide>
+        <img style="max-width: 100vw !important;max-height: 100vh !important;" src="assets/onboarding/english/Flixiable-method-Payment.gif"/>
+      </ion-slide>
+    
+      <ion-slide>
+        <img style="max-width: 100vw !important;max-height: 100vh !important;" src="assets/onboarding/english/Freeze-Membership.gif"/>
+      </ion-slide>
+    
+      <ion-slide>
+        <img style="max-width: 100vw !important;max-height: 100vh !important;" src="assets/onboarding/english/Offers.gif"/>
+      </ion-slide>
+  
+    </ion-slides>
+    <ion-button fill="clear" class="login-button" (click)="goToLogin()">Login</ion-button>
+    <ion-button fill="clear" class="signup-button" (click)="goToSignUp()">Signup</ion-button>
+  
+  
+  </div>
+
+  <div *ngIf="languageSelected && !showVC && !showOnboard" class="ion-padding">
     <div class="mid" [class.active]="logoAnimation">
       <img class="home-logo" src="../../../assets/logo-home.svg" [class.active]="logoAnimation">
       <div class="after_show">
@@ -69,22 +106,41 @@
         </ion-item>
         <p *ngIf="!email.valid &&(email.touched|| email.dirty)">Enter a valid email id</p>
 
-        <ion-button expand="block" (click)="Login()">Log In
+        <ion-button expand="block" (click)="onLogin()">{{'Log In'|translate}}
           <ion-ripple-effect></ion-ripple-effect>
         </ion-button>
         <ion-button expand="block" class="google_bgn ripple-parent" (click)="GoogleLogin()">
 
           <ion-ripple-effect></ion-ripple-effect>
           <ion-icon src="../../../assets/google-icon.svg" slot="start" class="google-logo"></ion-icon>
-          Log in with Google
+         {{ 'Log in with Google'|translate }}
         </ion-button>
       </div>
     </div>
 
     <div class="account_text">
-
       <ion-text>Don’t have account ? <a href="avascript:void(0)" (click)="goToSignUp()">Sign up now</a></ion-text>
     </div>
+  </div>
+
+  <div *ngIf="showVC && !showOnboard">
+    <ion-item id="otp">
+      <ion-label>verification code :</ion-label>
+      <ion-input [(ngModel)]="vc1" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,1)" #v1>
+      </ion-input>
+      <ion-input [(ngModel)]="vc2" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,2)" #v2>
+      </ion-input>
+      <ion-input [(ngModel)]="vc3" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,3)" #v3>
+      </ion-input>
+      <ion-input [(ngModel)]="vc4" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,4)" #v4>
+      </ion-input>
+      <ion-input [(ngModel)]="vc5" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,5)" #v5>
+      </ion-input>
+      <ion-input [(ngModel)]="vc6" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,6)" #v6>
+      </ion-input>
+    </ion-item>
+    <ion-button>Resend</ion-button>
+    <ion-button (click)="verifyCode()" >Verify</ion-button>
   </div>
 
 

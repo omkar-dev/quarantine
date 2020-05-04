@@ -11,7 +11,38 @@
 "Default Label1":"ডিফল্ট লেবেল",
 "123458457":"১২৩৪৫৮৪৫৭",
 
-"help lin no":"সাহায্য লিন নং"
+"help lin no":"সাহায্য লিন নং",
+  
+"current quest":
+"বর্তমান অনুসন্ধান",
+"New Messages":"নতুন বার্তা",
+"See all":"সবগুলো দেখ",
+"Food Request":"খাদ্য অনুরোধ",
+"Log In":"প্রবেশ করুন",
+"help":"সাহায্যের",
+"Submit":"জমা দিন",
+"i need help ":"আমার সাহায্য দরকার",
+"Log in with Google":"গুগল দিয়ে লগ ইন করুন",
+"Don’t have account ":"অ্যাকাউন্ট নেই ?",
+"Notifications":"বিজ্ঞপ্তিগুলি",
+"Yesterday":"গতকাল",
+"Please don't say that":"দয়া করে এটি বলবেন না",
+"View your all Post":"আপনার সমস্ত পোস্ট দেখুন",
+"I need help for":"আমার জন্য সাহায্য দরকার",
+"request.name":"অনুরোধ নাম",
+"Help Info":"সহায়তা তথ্য",
+"Please type your help info":"আপনার সহায়তা তথ্য টাইপ করুন",
+"helpText":"সাহায্যকারী লেখা",
+"How Can we contact you":"আমরা কিভাবে আপনার সাথে যোগাযোগ করতে পারি",
+"Please type your contact number":"আপনার পরিচিতির নম্বর টাইপ করুন",
+"Where are you located":"আপনি কোথায় অবস্থিত",
+"detectLocation()":"অবস্থান সনাক্ত করুন",
+"selectReq":"অনুরোধ নির্বাচন করুন",
+"notif.message":"বিজ্ঞপ্তি বার্তা",
+"Lorem ipsum dolor sit amet":"আর্কাইভ গাজর",
+"Central Helpline":"কেন্দ্রীয় হেল্পলাইন"
+
+
 
 
 }

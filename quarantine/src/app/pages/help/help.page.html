@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>I need help</ion-title>
+    <ion-title>{{'I need help'|trasleat}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -9,7 +9,7 @@
   <ion-item>
     <ion-label>I need help with :</ion-label>
     <ion-select [(ngModel)]="type" (ionChange)="helpType()" placeholder="Choose one">
-      <ion-select-option [value]="help" *ngFor="let help of helpArray">{{help}}</ion-select-option>
+      <ion-select-option [value]="help" *ngFor="let help of helpArray">{{help|trasleat}}</ion-select-option>
     </ion-select>
   </ion-item>
 
@@ -17,7 +17,7 @@
       <ion-input placeholder="Help Info"  ></ion-input>
   <ion-input placeholder="How can we contact you ?"></ion-input>
   <ion-input placeholder="Where are you located"></ion-input>
-  <ion-button>Submit</ion-button>
+  <ion-button>{{'Submit'|trasleat}}</ion-button>
   </div>
 
   <div *ngIf="layoff">

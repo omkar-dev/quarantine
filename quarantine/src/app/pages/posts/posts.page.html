@@ -1,0 +1,85 @@
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title><img src="../../../assets/post.svg" alt=""> My Posts</ion-title>
+      <div slot="end">
+        <ion-icon src="assets/material-notifications.svg"></ion-icon>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="main">
+    <ion-item *ngFor="let post of postsArray" lines="none">
+      <div slot="start">
+        <ion-avatar>
+          <img src="../../../assets/kitchen.svg">
+        </ion-avatar>
+      </div>
+      <ion-label>
+        <h3>{{post.help_for}}</h3>
+        <p>{{post.help_info}}</p>
+        <div class="btn_group">
+          <ion-button (click)="resolve(post)">Resolve</ion-button>
+          <ion-button (click)="delete(post)">Delete</ion-button>
+        </div>
+      </ion-label>
+    </ion-item>
+
+    <!-- <ion-item lines="none">
+      <div slot="start">
+        <ion-avatar>
+          <img src="../../../assets/kitchen.svg">
+        </ion-avatar>
+      </div>
+      <ion-label>
+        <h3>Food Requests</h3>
+        <p>Lorem ipsum dolor sit amet</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <div slot="start">
+        <ion-avatar>
+          <img src="../../../assets/handicaf_1.svg">
+        </ion-avatar>
+      </div>
+      <ion-label>
+        <h3>Handicap</h3>
+        <p>Lorem ipsum dolor sit amet</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <div slot="start">
+        <ion-avatar>
+          <img src="../../../assets/job_layout.svg">
+        </ion-avatar>
+      </div>
+      <ion-label>
+        <h3>Job Layoffs</h3>
+        <p>Lorem ipsum dolor sit amet</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <div slot="start">
+        <ion-avatar>
+          <img src="../../../assets/medical_2.svg">
+        </ion-avatar>
+      </div>
+      <ion-label>
+        <h3>Medical Help</h3>
+        <p>Lorem ipsum dolor sit amet</p>
+      </ion-label>
+    </ion-item> -->
+  </div>
+
+  <!-- <div class="no_post">
+    <img src="../../../assets/no_post.svg" alt="">
+    <p>No Post Yet</p>
+  </div> -->
+</ion-content>
+

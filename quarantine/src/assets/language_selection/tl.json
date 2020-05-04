@@ -9,5 +9,37 @@
 
   "Default Label1":"డిఫాల్ట్ లేబుల్",
 
-    "help lin no :-":"లిన్ నంబర్‌కు సహాయం చేయండి"
+    "help lin no :-":"లిన్ నంబర్‌కు సహాయం చేయండి",
+
+    "Current Quest":"ప్రస్తుత తపన",
+   "New Messages":"క్రొత్త సందేశాలు",
+   "See all":"అన్నింటిని చూడు",
+   "Food Request":"ఆహార అభ్యర్థన",
+   "Log In":"ప్రవేశించండి",
+   "help":"సహాయం",
+   "Submit":"సమర్పించండి",
+   "i need help ":"నాకు సహాయం కావాలి",
+   "Log in with Google":"Google తో లాగిన్ అవ్వండి",
+   "Don’t have account ":"ఖాతా లేదు ?",
+   "Notifications":"నోటిఫికేషన్ల" ,
+   "Yesterday":"నిన్న",
+   "Please don't say that":"దయచేసి అలా అనకండి",
+   "View your all Post":"మీ అన్ని పోస్ట్‌ను చూడండి",
+   "I need help for":"నాకు సహాయం కావాలి",
+   "request.name":"అభ్యర్థన పేరు",
+   "Help Info":"సహాయం సమాచారం",
+   "Please type your help info":"దయచేసి మీ సహాయ సమాచారాన్ని టైప్ చేయండి",
+   "How Can we contact you":"మేము మిమ్మల్ని ఎలా సంప్రదించగలం",
+   "Please type your contact number":"దయచేసి మీ సంప్రదింపు సంఖ్యను టైప్ చేయండి",
+   "Where are you located":"మీరు ఎక్కడ ఉన్నారు",
+   "detectLocation()":"స్థానాన్ని గుర్తించండి()",
+   "selectReq":"అభ్యర్థన ఎంచుకోండి",
+   "notif.message":"నోటిఫికేషన్ సందేశం",
+   "Lorem ipsum dolor sit amet":"లోరెం ఇప్సమ్ క్యారెట్లు",
+   "Central Helpline":"సెంట్రల్ హెల్ప్‌లైన్"
+
+   
+
+
+    
 }
