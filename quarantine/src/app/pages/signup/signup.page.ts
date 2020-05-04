@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient,HttpParams } from '@angular/common/http';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-signup',
@@ -25,8 +26,8 @@ export class SignupPage implements OnInit {
   shop_coordinates:""
   shop_address:""
   bottomPopup:boolean=false;
-  fromTime;
-  toTime;
+  fromTime="";
+  toTime="";
   // checkbox1=false;
   // checkbox2=false;
   // checkbox3=false;
@@ -64,9 +65,11 @@ validation_messages = {
   medical: boolean;
   grocery: boolean;
   flag: any;
+  shopDetails: boolean=false;
     
     constructor(private formBuilder: FormBuilder,
-      private router:Router,private httpclient:HttpClient) { }
+      private router:Router,private httpclient:HttpClient,
+      public alertController : AlertController) { }
 
 
 
@@ -79,69 +82,76 @@ validation_messages = {
     this.shopForm=this.formBuilder.group({
       shopName: [this.shop_name, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
       shopLocality:[this.shop_locality, Validators.compose([Validators.maxLength(100), Validators.required])],
-      shopAddress:[this.shop_locality, Validators.compose([Validators.maxLength(200), Validators.required])]
+      shopAddress:[this.shop_address, Validators.compose([Validators.maxLength(200), Validators.required])]
     })
-  }
-  onSubmit(){
-    if(this.signupForm.valid){
-
-    this.bottomPopup= this.selectedCheckbox!= 2?true:false;
-    this.bottomPopup==false?this.router.navigate(['/dashboard']):null;
-    }
   }
 
   selectType(type)
   {
-
-    if(type=='others')
-    {
-        this.type = 'others'
-        this.others = true
-        this.grocery = false
-        this.medical = false
-
-    }
-    else if (type =='medical')
-    {
-        this.type = 'medical'
-       this.medical=true
-       this.others = false
-       this.grocery = false
-    }
-    else if(type == 'grocery')
-    {
-        this.type = 'grocery'
-        this.grocery = true   
-        this.others = false
-        this.medical = false 
- }
-    console.log("selected type : ",this.type)
+    this.others=this.grocery=this.medical=false;
+    type=='others'? this.others=true:(type=='grocery'?this.grocery=true:this.medical=true)
+    console.log("selected type : ",type)
   }
 
-  signUp()
-  {
+  signUp(){
+    if(this.signupForm.valid){
+      this.others==true?this.SendCode():this.shopDetails=true
+    }else
+      this.validateAllFormFields(this.signupForm)
+
+  }
+
+  SendCode(){
 
     let name=this.signupForm.get('name').value;
-    let email=this.signupForm.get('emailAddress').value
-    let params = new HttpParams();
-    params = params.append('user_name',name);
-    params = params.append('email', email);
-    params = params.append('attempt', '2');
-    // this.httpclient.
-    this.httpclient.get(
-      'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
-      {params: params, responseType: 'text'}
-    )
-    .subscribe(res=>{
-      if(res==='Otp Send'){
-        let navData={
-          showVc:true
+      let email=this.signupForm.get('emailAddress').value
+      let params = new HttpParams();
+      params = params.append('user_name',name);
+      params = params.append('email', email);
+      params = params.append('attempt', '2');
+      // this.httpclient.
+      this.httpclient.get(
+        'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
+        {params: params, responseType: 'text'}
+      )
+      .subscribe(res=>{
+        if(res==='Otp Send'){
+          this.shopDetails=false;
+          let navData={
+            showVc:true
+          }
+          this.router.navigate(['/login/verifyCode'])
         }
-        this.router.navigate(['/login/verifyCode'])
+      },err=>console.log(err))
+      console.log("Details", name, email, this.location, this.type)
+  }
+
+  shopDetailsSubmit(){
+    if(this.shopForm.valid && this.fromTime!="" && this.toTime!=""){
+      console.log(this.shopForm.value,'form values')
+      this.SendCode()
+    }else{
+      !this.shopForm.valid?this.validateAllFormFields(this.shopForm):this.presentAlert()
+    }
+  }
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {  //{2}
+      const control = formGroup.get(field);             //{3}
+      if (control instanceof FormControl) {             //{4}
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {        //{5}
+        this.validateAllFormFields(control);            //{6}
       }
-    },err=>console.log(err))
-    
-    console.log("Details", name, email, this.location, this.type)
+    });
+  }
+
+  async presentAlert(){
+    const alert = await this.alertController.create({
+      header: "Incomplete details",
+      message: "Please enter the From and To Time",
+      buttons: ["ok"]
+    });
+    await alert.present();
   }
 
 }

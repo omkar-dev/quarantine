@@ -8,7 +8,6 @@ import { NeedHelpPageRoutingModule } from './need-help-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { NeedHelpPage } from './need-help.page';
-import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
