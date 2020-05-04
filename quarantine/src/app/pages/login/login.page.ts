@@ -3,7 +3,7 @@ import { FormGroup, FormControl,Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx'
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
@@ -51,7 +51,8 @@ export class LoginPage implements OnInit {
       private storage:Storage,
       private androidPermissions: AndroidPermissions,
     private geolocation: Geolocation,
-    private router:Router,public translate: TranslateService, private navCtrl: NavController
+    private router:Router,public translate: TranslateService, private navCtrl: NavController,
+    private route:ActivatedRoute
     ) {     this.lang = 'en';
     this.translate.setDefaultLang('en');
     this.translate.use('en');
@@ -91,7 +92,10 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    //debugger;
+    let vc = this.route.snapshot.params.id;
+    if(vc == 'verifyCode'){
+      this.showVC=true
+    }
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
       success => console.log('Location Permission granted',success),
       err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
