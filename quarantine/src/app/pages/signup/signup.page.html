@@ -116,6 +116,7 @@
 
 <!-- SHIVANG CODE -->
 <ion-content>
+    <div *ngIf="!shopDetails">
   <img class="home-logo" src="../../../assets/logo-home.svg">
     <h5>Who we are</h5>
     <ion-row>
@@ -138,6 +139,7 @@
         <p>Grocery </p>
       </ion-col>
     </ion-row>
+
   <form [formGroup]="signupForm">
   
     <div class="ion-padding">
@@ -179,8 +181,57 @@
       </div>
     </div>
   </form>
+  </div>
+  <div *ngIf="shopDetails">
+  <form  [formGroup]="shopForm">
+
+    <ion-item>
+      <ion-input placeholder="Shop Name" formControlName="shopName"></ion-input>
+    </ion-item>
+    <div *ngFor="let validation of validation_messages.shopName">
+  <p *ngIf="shopForm.get('shopName').hasError(validation.type) && (shopForm.get('shopName').dirty || shopForm.get('shopName').touched)">
+    {{validation.message}}
+  </p>
+</div>
+    <ion-item>
+      <ion-input placeholder="Shop locality"  formControlName="shopLocality"></ion-input>
+    </ion-item>
+    <div *ngFor="let validation of validation_messages.shopLocality">
+  <p *ngIf="shopForm.get('shopLocality').hasError(validation.type) && (shopForm.get('shopLocality').dirty || shopForm.get('shopLocality').touched)">
+    {{validation.message}}
+  </p>
+</div>
+    <ion-item>
+      <ion-textarea placeholder="Shop Address" formControlName="shopAddress"></ion-textarea>
+    </ion-item>
+    <div *ngFor="let validation of validation_messages.shopAddress">
+  <p *ngIf="shopForm.get('shopAddress').hasError(validation.type) && (shopForm.get('shopAddress').dirty || shopForm.get('shopAddress').touched)">
+    {{validation.message}}
+  </p>
+</div>
+    <ion-item>
+      <ion-input placeholder="Shop Coordinates"></ion-input>
+    </ion-item>
+    <div *ngFor="let validation of validation_messages.name">
+  <p *ngIf="signupForm.get('name').hasError(validation.type) && (signupForm.get('name').dirty || signupForm.get('name').touched)">
+    {{validation.message}}
+  </p>
+</div>
+   
+  </form>
+  <ion-item>
+      <ion-label>
+        <ion-datetime [(ngModel)]="fromTime" displayFormat="hh:mm A" placeholder="From"  ></ion-datetime>
+      </ion-label>
+      
+    </ion-item>
+    <ion-item>
+      <ion-label>
+      <ion-datetime [(ngModel)]="toTime" displayFormat="hh:mm A" placeholder="To" ></ion-datetime>
+      </ion-label>
+    </ion-item>
   
-  
-  
+    <ion-button (click)="shopDetailsSubmit()">Submit</ion-button>
+  </div>
   </ion-content>
   

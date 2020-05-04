@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx'
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
@@ -105,7 +105,6 @@ export class LoginPage implements OnInit {
 
   
   getGeoLoc() {
-// debugger;
     this.geolocation.getCurrentPosition().then((resp) => {
       // let loc = {}
       this.location['latitude'] = resp.coords.latitude;
