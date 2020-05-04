@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient,HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
@@ -65,7 +66,7 @@ validation_messages = {
   flag: any;
     
     constructor(private formBuilder: FormBuilder,
-      private router:Router) { }
+      private router:Router,private httpclient:HttpClient) { }
 
 
 
@@ -119,8 +120,28 @@ validation_messages = {
 
   signUp()
   {
-    this.router.navigate(['/tabs'])
-    console.log("Details", this.email, this.fullName, this.location, this.type)
+
+    let name=this.signupForm.get('name').value;
+    let email=this.signupForm.get('emailAddress').value
+    let params = new HttpParams();
+    params = params.append('user_name',name);
+    params = params.append('email', email);
+    params = params.append('attempt', '2');
+    // this.httpclient.
+    this.httpclient.get(
+      'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
+      {params: params, responseType: 'text'}
+    )
+    .subscribe(res=>{
+      if(res==='Otp Send'){
+        let navData={
+          showVc:true
+        }
+        this.router.navigate(['/login/verifyCode'])
+      }
+    },err=>console.log(err))
+    
+    console.log("Details", name, email, this.location, this.type)
   }
 
 }
