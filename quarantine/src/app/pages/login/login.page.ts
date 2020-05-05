@@ -77,6 +77,7 @@ export class LoginPage implements OnInit {
 
 
   ClearData(){
+    this.showVC=false;
     this.verificationCode='';
     this.emailid='';
     this.vc6=this.vc5=this.vc4=this.vc3=this.vc2=this.vc1=""
@@ -132,12 +133,6 @@ export class LoginPage implements OnInit {
   ionViewWillEnter(){
 
     this.ClearData();
-
-    let vc = this.route.snapshot.params.id;
-
-    if(vc == 'verifyCode'){
-      this.showVC=true
-    }
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
       success => console.log('Location Permission granted',success),
       err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)

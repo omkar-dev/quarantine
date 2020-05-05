@@ -102,7 +102,7 @@ validation_messages = {
   }
 
   SendCode(){
-
+console.log('s')
     let name = this.signupForm.get('name').value;
       let email = this.signupForm.get('emailAddress').value;
       let locality = this.signupForm.get('locality').value;
