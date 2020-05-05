@@ -74,6 +74,14 @@ export class LoginPage implements OnInit {
     });
   }
 
+
+
+  ClearData(){
+    this.verificationCode='';
+    this.emailid='';
+    this.vc6=this.vc5=this.vc4=this.vc3=this.vc2=this.vc1=""
+  }
+
   ngOnInit() {
     this.languages=[
       'English',
@@ -107,17 +115,26 @@ export class LoginPage implements OnInit {
   getGeoLoc() {
     this.geolocation.getCurrentPosition().then((resp) => {
       // let loc = {}
-      this.location['latitude'] = resp.coords.latitude;
-      this.location['longitude'] = resp.coords.longitude;
-      //this.distanceInKmNew(loc);
-      console.log(this.location)
+      this.location={}
+      if(resp &&  resp.coords){
+        this.location['latitude'] = resp.coords.latitude;
+        this.location['longitude'] = resp.coords.longitude;
+        //this.distanceInKmNew(loc);
+        console.log(this.location)
+
+      }
+
     }).catch((error) => {
       console.log('Error getting location', error);
     });
   }
 
   ionViewWillEnter(){
+
+    this.ClearData();
+
     let vc = this.route.snapshot.params.id;
+
     if(vc == 'verifyCode'){
       this.showVC=true
     }
@@ -182,6 +199,8 @@ export class LoginPage implements OnInit {
     params = params.append('user_code', this.verificationCode);
     params = params.append('email', this.emailid);
     params = params.append('attempt', '2');
+    params = params.append('user_name', ' ');
+
     this.http.get('https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code', { params: params } )
       .pipe(
         catchError(e => {
