@@ -14,18 +14,12 @@
   <p>NOVEMBER 28, 2019</p>
 
   <div class="cf">
-    <div class="chat_body left">
-      <p>Hi Gerorge. The design file you
-        sent over isn't opening! Do yo
-        think it needs a newer paint
-        version?</p>
+    <div class="chat_body left" *ngFor="let shopers of shopersMessagesArray">
+      <p>{{shopers.Message}}</p>
       <span>10:47 AM</span>
     </div>
-    <div class="chat_body right">
-      <p>Hi Gerorge. The design file you
-        sent over isn't opening! Do yo
-        think it needs a newer paint
-        version?</p>
+    <div class="chat_body right" *ngFor="let users of usersMessagesArray">
+      <p>{{users.Message}}</p>
       <span>10:47 AM <img src="../../../assets/right_icon.svg" alt=""></span>
     </div>
     <div class="clear"></div>

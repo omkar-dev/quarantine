@@ -4,6 +4,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Storage } from '@ionic/storage';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { HttpClient} from '@angular/common/http';
+import { DataService } from 'src/app/services/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nearby',
@@ -23,7 +25,8 @@ export class NearbyPage implements OnInit {
   public shopDetails ;
   locationData: any;
   public backupjsondata:any;
-  constructor(private navCtrl: NavController,private storage: Storage,private geolocation: Geolocation,private nativeGeocoder: NativeGeocoder,public httpClient: HttpClient) { }
+  dummyMessagesArray  :any
+  constructor(private router : Router,private dataService : DataService,private navCtrl: NavController,private storage: Storage,private geolocation: Geolocation,private nativeGeocoder: NativeGeocoder,public httpClient: HttpClient) { }
 
   ionViewWillEnter()
   {
@@ -34,6 +37,55 @@ export class NearbyPage implements OnInit {
    console.log("currentUserCity", this.currentUserCity)
    })
    this.getGeoLoc();
+   this.dummyMessagesArray = [{
+    type:"reply/message",
+    messege_id:"",
+    Shopid:"",
+    Userid:"",
+    Message:"",
+    Attachment:"",
+    timestamp:"",
+    reply:[
+    {
+    type:"reply/message",
+    messege_id:"",
+    Shopid:"111",
+    Userid:"",
+    Message:"This is shopkeepers 1st message",
+    Attachment:"",
+    timestamp:"2015-03-28T12:00:00Z",
+    },
+    {
+    type:"reply/message",
+    messege_id:"",
+    Shopid:"",
+    Userid:"111",
+    Message:"This is users 1st message",
+    Attachment:"",
+    timestamp:"2015-03-27T12:00:00Z"
+    },
+    {
+      type:"reply/message",
+      messege_id:"",
+      Shopid:"111",
+      Userid:"",
+      Message:"This is shopkeepers 2nd message",
+      Attachment:"",
+      timestamp:"2015-03-26T12:00:00Z",
+      },
+      {
+      type:"reply/message",
+      messege_id:"",
+      Shopid:"",
+      Userid:"111",
+      Message:"This is users 2nd message",
+      Attachment:"",
+      timestamp:"2015-03-25T12:00:00Z"
+      }],
+    
+    
+    }]
+    
    
   }
   ngOnInit() {
@@ -115,9 +167,18 @@ getShopDetails(){
 
 
 
-  onchat(){
+  onchat(data){
 
-this.navCtrl.navigateForward(["/chat"])
+// this.navCtrl.navigateForward(["/chat"])
+if(this.dummyMessagesArray[0]['reply'].length>0)
+{
+  this.dataService.setData(1,this.dummyMessagesArray[0]['reply'])
+  this.router.navigateByUrl('/chat/1')
+}
+else
+{
+
+}
 
   }
 
