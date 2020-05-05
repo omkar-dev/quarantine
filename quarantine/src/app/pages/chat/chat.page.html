@@ -27,8 +27,8 @@
 </ion-content>
 <ion-footer>
   <div class="input">
-    <ion-input></ion-input>
+    <ion-input placeholder="Type a message" [(ngModel)]="message"></ion-input>
     <ion-icon src="assets/camera.svg"></ion-icon>
   </div>
-  <ion-icon src="../../../assets/mike.svg"></ion-icon>
+  <ion-icon (click)="send()" src="../../../assets/mike.svg"></ion-icon>
 </ion-footer>

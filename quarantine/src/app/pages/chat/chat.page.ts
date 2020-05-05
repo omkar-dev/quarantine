@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import { HttpService } from 'src/app/services/http.service';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class ChatPage implements OnInit {
   usersMessagesArray: any;
   sortedUsersMessagesArray: any;
   sortedShopersMessagesArray :  any
-  constructor(private route :  ActivatedRoute) { }
+  message : any
+  constructor(private route :  ActivatedRoute,private http:HttpService) { }
 
   ngOnInit() {
     
@@ -44,6 +46,33 @@ export class ChatPage implements OnInit {
       const sortedArray = this.receivedMessagesArray.sort((a,b)=>new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
       console.log("sorted",sortedArray)
     }
+
+    
+  }
+
+  send()
+  {
+    console.log(this.message)
+    console.log("Inside send")
+    let body={
+      "type":"message",
+      "messege_id":"4667",
+      "Shopid":"999",
+      "Userid":"12",
+      "Message": this.message,
+      "Attachment":"new img",
+      "timestamp":"45678"
+}
+if(this.message){
+  this.http.sendMessage(body).subscribe(res=>{
+    console.log(res)
+  })
+}
+else
+{
+  console.log("Cannot send empty message!")
+}
+    
   }
 
 
