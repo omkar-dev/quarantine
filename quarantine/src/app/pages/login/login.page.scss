@@ -196,3 +196,44 @@ ion-slides {
     z-index: 1000;
     color: var(--ion-color-primary);
 }
+
+.verifyOtp{
+
+    min-height: 30vh;   
+    padding-bottom: 15px;  
+    background: transparent;
+    color: grey;
+    text-align: center;
+    ion-input{
+      border: 1px solid rgb(175, 170, 170);
+    }
+
+
+    .verify{
+ 
+    width:60vw;
+    height: 5vh;
+    }
+}
+
+
+
+.popup_overlay {
+    position: fixed;
+    bottom: 0px;
+    z-index: 999;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease all;
+    transform: scale(0.9);
+
+    &.active {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1)
+    }
+}
