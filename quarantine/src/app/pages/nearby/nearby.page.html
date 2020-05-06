@@ -11,7 +11,7 @@
 
     <div [ngSwitch]="tabPart" class="tabBody">
       <div class="searchBar">
-        <ion-searchbar mode='ios' placeholder="Search by text" [(ngModel)]="searchTerm" (ionChange)="filterJSONData()"></ion-searchbar>
+        <ion-searchbar mode='ios' placeholder="Search by text" [(ngModel)]="searchTerm" (ionChange)="filterJSONData()" (ionClear)="getFullData()"> </ion-searchbar>
         <!-- <ion-icon src="assets/awesome-filter.svg"></ion-icon> -->
       </div>
 
