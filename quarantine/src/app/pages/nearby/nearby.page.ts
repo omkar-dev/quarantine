@@ -26,10 +26,13 @@ export class NearbyPage implements OnInit {
   locationData: any;
   public backupjsondata:any;
   dummyMessagesArray  :any
+  fullMedicalStoreList: any[];
+  fullGroceryStoreList: any[];
   constructor(private router : Router,private dataService : DataService,private navCtrl: NavController,private storage: Storage,private geolocation: Geolocation,private nativeGeocoder: NativeGeocoder,public httpClient: HttpClient) { }
 
   ionViewWillEnter()
   {
+    console.log("tabs",this.tabPart)
    this.currentCity = "kalyan"
    this.storage.set("currentCity",this.currentCity);
    this.storage.get('currentCity').then(toc=>{
@@ -152,10 +155,12 @@ getShopDetails(){
     console.log("shopDetails", this.shopDetails)
 
     this.medicalstorelist = this.shopDetails['data'].filter(stat =>  stat.shop_type.includes('medical') )
+    this.fullMedicalStoreList = this.medicalstorelist
 
     console.log("medicalstorelist", this.medicalstorelist)
 
     this.grocerystorelist = this.shopDetails['data'].filter(stat => stat.shop_type.includes('grocery'))
+    this.fullGroceryStoreList = this.grocerystorelist
 
     console.log("grocerystorelist",this.grocerystorelist)
   
@@ -189,13 +194,30 @@ else
 
     if(this.searchTerm && this.searchTerm.trim()!='')
     {
-      this.medicalstorelist = this.backupjsondata.filter(item =>   {
+      this.medicalstorelist = this.medicalstorelist.filter(item =>   {
 
         return ( String(item['shop_name']).toLowerCase().startsWith(this.searchTerm.toLowerCase()) )
        })
+
+       this.grocerystorelist = this.grocerystorelist.filter(item =>   {
+
+        return ( String(item['shop_name']).toLowerCase().startsWith(this.searchTerm.toLowerCase()) )
+       })
+
       console.log("New shopDetails",this.medicalstorelist)
+    }
+    else
+    {
+      this.getFullData()
     }
    
     
+  }
+
+  getFullData()
+  {
+    console.log('inside full data')
+    this.medicalstorelist = this.fullMedicalStoreList
+    this.grocerystorelist = this.fullGroceryStoreList
   }
 }
