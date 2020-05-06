@@ -174,9 +174,10 @@ export class LoginPage implements OnInit {
     }
     else {
       let params = new HttpParams();
-      params = params.append('user_name', '');
+      params = params.append('user_name', ' ');
       params = params.append('email', this.emailid);
       params = params.append('attempt', '2');
+
       this.http.get(
         'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
         {params: params, responseType: 'text'}
@@ -197,10 +198,9 @@ export class LoginPage implements OnInit {
 
   verifyCode() {
     let params = new HttpParams();
-    params = params.append('user_code', ' ');
+    params = params.append('user_code',this.verificationCode );
     params = params.append('email', this.emailid);
     params = params.append('attempt', '2');
-    // params = params.append('user_name', ' ');
 
     this.http.get('https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code', { params: params } )
       .pipe(
