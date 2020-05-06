@@ -14,8 +14,9 @@ import { NeedHelpPage } from './need-help.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    NeedHelpPageRoutingModule,
     TranslateModule,
-    NeedHelpPageRoutingModule
+
   ],
   declarations: [NeedHelpPage]
 })

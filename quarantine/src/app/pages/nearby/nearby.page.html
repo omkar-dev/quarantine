@@ -11,108 +11,45 @@
 
     <div [ngSwitch]="tabPart" class="tabBody">
       <div class="searchBar">
-        <ion-searchbar mode="ios" placeholder="Search by text"></ion-searchbar>
-        <ion-icon src="assets/awesome-filter.svg"></ion-icon>
+        <ion-searchbar mode='ios' placeholder="Search by text" [(ngModel)]="searchTerm" (ionChange)="filterJSONData()"></ion-searchbar>
+        <!-- <ion-icon src="assets/awesome-filter.svg"></ion-icon> -->
       </div>
+
       <div *ngSwitchCase="'medical'">
 
-        <ion-item button lines="none">
+        <ion-item button lines="none" *ngFor="let item of medicalstorelist">
           <ion-avatar slot="start">
             <img src="../../../assets/mediacal.png">
           </ion-avatar>
           <ion-label>
-            <h4>Sachin Medical Store</h4>
+            <h4>{{item.shop_name}}</h4>
             <p>
-              <ion-icon src="assets/material-location-on.svg"></ion-icon> Tijuana, B.C., Mexico
+              <ion-icon src="assets/material-location-on.svg"></ion-icon> {{item.shop_locality}}
             </p>
             <p>
-              <ion-icon src="assets/time.svg"></ion-icon> 9AM- 7PM
-            </p>
-          </ion-label>
-          <ion-button slot="end"  (click)="onchat()">Chat</ion-button>
-        </ion-item>
-
-        <ion-item button lines="none">
-          <ion-avatar slot="start">
-            <img src="../../../assets/mediacal.png">
-          </ion-avatar>
-          <ion-label>
-            <h4>Sachin Medical Store</h4>
-            <p>
-              <ion-icon src="assets/material-location-on.svg"></ion-icon> Tijuana, B.C., Mexico
-            </p>
-            <p>
-              <ion-icon src="assets/time.svg"></ion-icon> 9AM- 7PM
+              <ion-icon src="assets/time.svg"></ion-icon> {{item.shop_timings}}
             </p>
           </ion-label>
-          <ion-button slot="end" (click)="onchat()">Chat</ion-button>
-        </ion-item>
-
-        <ion-item button lines="none">
-          <ion-avatar slot="start">
-            <img src="../../../assets/mediacal.png">
-          </ion-avatar>
-          <ion-label>
-            <h4>Sachin Medical Store</h4>
-            <p>
-              <ion-icon src="assets/material-location-on.svg"></ion-icon> Tijuana, B.C., Mexico
-            </p>
-            <p>
-              <ion-icon src="assets/time.svg"></ion-icon> 9AM- 7PM
-            </p>
-          </ion-label>
-          <ion-button slot="end"  (click)="onchat()" >Chat</ion-button>
-        </ion-item>
-
-        <ion-item button lines="none">
-          <ion-avatar slot="start">
-            <img src="../../../assets/mediacal.png">
-          </ion-avatar>
-          <ion-label>
-            <h4>Sachin Medical Store</h4>
-            <p>
-              <ion-icon src="assets/material-location-on.svg"></ion-icon> Tijuana, B.C., Mexico
-            </p>
-            <p>
-              <ion-icon src="assets/time.svg"></ion-icon> 9AM- 7PM
-            </p>
-          </ion-label>
-          <ion-button slot="end"  (click)="onchat()">Chat</ion-button>
+          <ion-button slot="end"  (click)="onchat(time)">Chat</ion-button>
         </ion-item>
       </div>
 
 
       <div *ngSwitchCase="'grocery'">
-        <ion-item button lines="none">
+        <ion-item button lines="none" *ngFor="let item of grocerystorelist">
           <ion-avatar slot="start">
             <img src="../../../assets/mediacal.png">
           </ion-avatar>
           <ion-label>
-            <h4>Sachin Medical Store</h4>
+            <h4>{{item.shop_name}}</h4>
             <p>
-              <ion-icon src="assets/material-location-on.svg"></ion-icon> Tijuana, B.C., Mexico
+              <ion-icon src="assets/material-location-on.svg"></ion-icon> {{item.shop_locality}}
             </p>
             <p>
-              <ion-icon src="assets/time.svg"></ion-icon> 9AM- 7PM
-            </p>
-          </ion-label>
-          <ion-button slot="end"  (click)="onchat()">Chat</ion-button>
-        </ion-item>
-
-        <ion-item button lines="none">
-          <ion-avatar slot="start">
-            <img src="../../../assets/mediacal.png">
-          </ion-avatar>
-          <ion-label>
-            <h4>Sachin Medical Store</h4>
-            <p>
-              <ion-icon src="assets/material-location-on.svg"></ion-icon> Tijuana, B.C., Mexico
-            </p>
-            <p>
-              <ion-icon src="assets/time.svg"></ion-icon> 9AM- 7PM
+              <ion-icon src="assets/time.svg"></ion-icon> {{item.shop_timings}}
             </p>
           </ion-label>
-          <ion-button slot="end"  (click)="onchat()">Chat</ion-button>
+          <ion-button slot="end"  (click)="onchat(item)">Chat</ion-button>
         </ion-item>
       </div>
     </div>

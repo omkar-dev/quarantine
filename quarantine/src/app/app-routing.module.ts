@@ -1,14 +1,20 @@
 
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { DataResolverService } from './resolver/data-resolver.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+
+    path:'login',loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+   },
+  {
+
+   path:'login/:id',loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
+
     path: 'signup',
     loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule)
   },
@@ -33,7 +39,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/help/help.module').then( m => m.HelpPageModule)
   },
   {
-    path: 'chat',
+    path: 'chat/:id',
+    resolve: {
+      special: DataResolverService
+    },
     loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
   },
   {
@@ -44,9 +53,6 @@ const routes: Routes = [
     path: 'posts',
     loadChildren: () => import('./pages/posts/posts.module').then( m => m.PostsPageModule)
   }
-
-
-
 
 
 ];
