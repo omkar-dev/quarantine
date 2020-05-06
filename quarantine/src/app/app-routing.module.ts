@@ -52,7 +52,11 @@ const routes: Routes = [
   {
     path: 'posts',
     loadChildren: () => import('./pages/posts/posts.module').then( m => m.PostsPageModule)
+  },  {
+    path: 'otp',
+    loadChildren: () => import('./pages/otp/otp.module').then( m => m.OtpPageModule)
   }
+
 
 
 ];

@@ -9,8 +9,9 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { catchError } from 'rxjs/operators';
 import { Device } from '@ionic-native/device/ngx';
-import { NavController, LoadingController, Platform, AlertController, IonSlides } from '@ionic/angular';
+import { NavController, LoadingController, Platform, AlertController, IonSlides, ModalController } from '@ionic/angular';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { OtpPage } from '../otp/otp.page';
 
 @Component({
   selector: 'app-login',
@@ -49,7 +50,7 @@ export class LoginPage implements OnInit {
   StorageLoaded: boolean;
 
     
- constructor(private googlePlus: GooglePlus,
+ constructor(private modalController: ModalController,private googlePlus: GooglePlus,
       private nativeStorage: NativeStorage,
       public loadingController: LoadingController,
       private platform: Platform,
@@ -131,7 +132,6 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter(){
-
     this.ClearData();
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
       success => console.log('Location Permission granted',success),
@@ -167,7 +167,11 @@ export class LoginPage implements OnInit {
 
   }
 
-  onLogin() {
+  async onLogin() {
+    const loading = await this.loadingController.create({
+      message: 'Verifying details'
+    });
+    this.presentLoading(loading);
     let accountVerified = this.accountVerified(this.emailid);
     if (accountVerified) {
       this.router.navigate(['/tabs']);
@@ -184,16 +188,30 @@ export class LoginPage implements OnInit {
       )
       .pipe(
         catchError(e => {
+          loading.dismiss()
           this.showAlert('User Not found');
           throw new Error(e.error);
         })
       )
       .subscribe(response => {
+        
         if (response === 'Otp Send') {
           this.showVC = true;
+          this.openOTPModal();
+          loading.dismiss()
+          
         }
       });
     }
+  }
+  async openOTPModal()
+  {
+    console.log("inside modal")
+    const modal = await this.modalController.create({
+      component: OtpPage,
+      componentProps : { "data" :  this.emailid}
+    });
+    await modal.present()
   }
 
   verifyCode() {
@@ -201,6 +219,7 @@ export class LoginPage implements OnInit {
     params = params.append('user_code',this.verificationCode );
     params = params.append('email', this.emailid);
     params = params.append('attempt', '2');
+    params = params.append('user_name', ' ');
 
     this.http.get('https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code', { params: params } )
       .pipe(
@@ -358,5 +377,7 @@ export class LoginPage implements OnInit {
   ionViewDidLeave() {
     this.StorageLoaded = false;
   }
+
+ 
 
 }
