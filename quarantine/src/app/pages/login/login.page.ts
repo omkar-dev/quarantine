@@ -168,33 +168,39 @@ export class LoginPage implements OnInit {
   }
 
   onLogin() {
-    let params = new HttpParams();
-    params = params.append('user_name', '');
-    params = params.append('email', this.emailid);
-    params = params.append('attempt', '2');
-    this.http.get(
-      'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
-      {params: params, responseType: 'text'}
-    )
-    .pipe(
-      catchError(e => {
-        this.showAlert('User Not found');
-        throw new Error(e.error);
-      })
-    )
-    .subscribe(response => {
-      if (response === 'Otp Send') {
-        this.showVC = true;
-      }
-    });
+    let accountVerified = this.accountVerified(this.emailid);
+    if (accountVerified) {
+      this.router.navigate(['/tabs']);
+    }
+    else {
+      let params = new HttpParams();
+      params = params.append('user_name', '');
+      params = params.append('email', this.emailid);
+      params = params.append('attempt', '2');
+      this.http.get(
+        'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
+        {params: params, responseType: 'text'}
+      )
+      .pipe(
+        catchError(e => {
+          this.showAlert('User Not found');
+          throw new Error(e.error);
+        })
+      )
+      .subscribe(response => {
+        if (response === 'Otp Send') {
+          this.showVC = true;
+        }
+      });
+    }
   }
 
   verifyCode() {
     let params = new HttpParams();
-    params = params.append('user_code', this.verificationCode);
+    params = params.append('user_code', ' ');
     params = params.append('email', this.emailid);
     params = params.append('attempt', '2');
-    params = params.append('user_name', ' ');
+    // params = params.append('user_name', ' ');
 
     this.http.get('https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code', { params: params } )
       .pipe(
@@ -214,7 +220,6 @@ export class LoginPage implements OnInit {
   storeVerifiedAccount() {
     this.storage.get('VerifiedAccounts').then(verifiedAccounts => {
       if(verifiedAccounts){
-        console.log(verifiedAccounts)              
         let verifiedAccount = {
           'deviceId': this.device.uuid,
           'emailId': this.emailid
@@ -232,6 +237,19 @@ export class LoginPage implements OnInit {
         this.storage.set('VerifiedAccounts', verifiedAccounts);
       }
     });
+  }
+
+  accountVerified(emailid): boolean {
+    let accountVerified: boolean = false;
+    this.storage.get('VerifiedAccounts').then(verifiedAccounts => {
+      if (verifiedAccounts) {
+        accountVerified = verifiedAccounts.some(account => account.email === emailid);
+      }
+      else {
+        accountVerified = false;
+      }
+    })
+    return accountVerified;
   }
 
   goToSignUp(){
