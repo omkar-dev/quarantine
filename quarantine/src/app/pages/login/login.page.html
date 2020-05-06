@@ -35,7 +35,7 @@
   
   </div>
 
-  <div *ngIf="languageSelected && showVC" class="ion-padding">
+  <div *ngIf="languageSelected && !showVC" class="ion-padding">
     <div class="mid" [class.active]="logoAnimation">
       <img class="home-logo" src="../../../assets/logo-home.svg" [class.active]="logoAnimation">
       <div class="after_show">
@@ -65,7 +65,7 @@
 
 
 
-    <div *ngIf="!showVC">
+    <div *ngIf="showVC">
       <ion-item id="otp">
         <ion-label>verification code :</ion-label>
         <ion-input [(ngModel)]="vc1" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,1)" #v1>
