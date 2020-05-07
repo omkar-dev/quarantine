@@ -14,47 +14,24 @@
   <div class="main">
     <h4>Can You Help</h4>
     <div class="blogList">
-      <div class="blog">
-        <img src="../../../assets/handiCaf.svg" alt="">
-        <p>Handicap</p>
-      </div>
-      <div class="blog">
-        <img src="../../../assets/medical_1.svg" alt="">
-        <p>Medical Help</p>
-      </div>
-      <div class="blog">
-        <img src="../../../assets/job.svg" alt="">
-        <p>Job Layoffs</p>
-      </div>
-      <div class="blog active">
-        <img src="../../../assets/food_request.svg" alt="">
-        <p>Food Requests</p>
+      <div class="blog" [class.active]="helpType.selected" *ngFor="let helpType of helpTypes" (click)="selectHelpType(helpType)">
+        <img src="../../../assets/{{helpType.imgUrl}}" alt=""> 
+
+        <p>{{helpType.name }}</p>
       </div>
     </div>
 
     <div class="list">
-      <ion-item lines="none">
+      <ion-item lines="none" *ngFor="let req of filteredReqs;" (click)="selectReq(req)">
         <ion-avatar slot="start">
-          <img src="../../../assets/kitchen.svg">
+          <img [src]="req.avatar">
         </ion-avatar>
         <ion-label>
-          <h3>{{'Central Helpline'|translate}}</h3>
-          <p>Lorem ipsum dolor sit amet</p>
+          <h3>{{ req.helpType }}</h3>
+          <p>{{ req.help_info }}</p>
         </ion-label>
-        <ion-icon slot="end" src="assets/call.svg"></ion-icon>
-        <ion-icon class="ellipsis" name="ellipsis-vertical"></ion-icon>
-      </ion-item>
-
-      <ion-item lines="none">
-        <ion-avatar slot="start">
-          <img src="../../../assets/kitchen.svg">
-        </ion-avatar>
-        <ion-label>
-          <h3>Handicap</h3>
-          <p>{{'Lorem ipsum dolor sit amet'|translate}}</p>
-        </ion-label>
-        <ion-icon slot="end" src="assets/call.svg"></ion-icon>
-        <ion-icon class="ellipsis" name="ellipsis-vertical"></ion-icon>
+        <ion-icon slot="end" src="assets/call.svg" (click)="openDialer(req.phone_no)"></ion-icon>
+        <ion-icon class="ellipsis" name="ellipsis-vertical" (click)="openMenu($event)"></ion-icon>
       </ion-item>
     </div>
   </div>
