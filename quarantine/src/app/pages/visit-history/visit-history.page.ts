@@ -9,6 +9,7 @@ import {
   BackgroundGeolocationEvents
 } from "@ionic-native/background-geolocation/ngx";
 import { HttpClient } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-visit-history',
@@ -31,7 +32,7 @@ export class VisitHistoryPage implements OnInit {
   combinedLatLong: string;
   mapUrl: string;
 
-  constructor(private nativeGeocoder: NativeGeocoder,private localNotifications : LocalNotifications,public geolocation : Geolocation,public zone : NgZone,private http: HttpClient, private backgroundGeolocation: BackgroundGeolocation) { }
+  constructor(public sanitizer: DomSanitizer,private nativeGeocoder: NativeGeocoder,private localNotifications : LocalNotifications,public geolocation : Geolocation,public zone : NgZone,private http: HttpClient, private backgroundGeolocation: BackgroundGeolocation) { }
 
   ngOnInit() {
   }
@@ -39,9 +40,9 @@ export class VisitHistoryPage implements OnInit {
   ionViewWillEnter()
   {
     this.latitude = 40.7127837;
-    this.longitude = -74.0059413
-    this.combinedLatLong = this.latitude+","+this.longitude
-    this.mapUrl = "https://www.google.com/maps/embed/v1/place?q=40.7127837,-74.0059413&amp;key=AIzaSyCEibeFAFYEpG6xh4eq8R_F_BQxba2XcQc"
+    this.longitude = -74.0059413              // this initial values of lat long will be taken from storage
+    this.combinedLatLong = "40.7127837,-74.0059413"
+    this.mapUrl = "https://www.google.com/maps/embed/v1/place?q="+this.combinedLatLong+"&key=AIzaSyCEibeFAFYEpG6xh4eq8R_F_BQxba2XcQc&zoom=17"
     console.log("combined",this.combinedLatLong)
   }
 
@@ -115,7 +116,8 @@ this.nativeGeocoder.reverseGeocode(lat, long, options)
       long :result[0].longitude,
       country : result[0].countryName,
       city : result[0].locality,
-      postCode : result[0].postalCode
+      postCode : result[0].postalCode,
+      subLocality : result[0].subLocality,
     }
     this.locationsArray.push(this.locationData);
     console.log("LocationsArray",this.locationsArray);
@@ -135,6 +137,13 @@ this.nativeGeocoder.reverseGeocode(lat, long, options)
    this.startTrack = !this.startTrack
    this.startTrack ? (this.buttonText = "Track Me") && this.stopTracking() : (this.buttonText = "Stop Tracking") && this.startTracking()
   console.log("startTrack",this.startTrack,this.buttonText)
+ }
+
+ showMarker(lat,long)
+ {
+  this.combinedLatLong = lat+","+long
+  this.mapUrl = "https://www.google.com/maps/embed/v1/place?q="+this.combinedLatLong+"&key=AIzaSyCEibeFAFYEpG6xh4eq8R_F_BQxba2XcQc&zoom=17"
+  console.log("combined",this.combinedLatLong)
  }
 
 }

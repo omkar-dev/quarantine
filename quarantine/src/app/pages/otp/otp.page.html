@@ -1,0 +1,62 @@
+<ion-content>
+  <img class="home-logo" src="../../../assets/logo-home.svg">
+
+  <!-- <ion-row>
+    <ion-col size="3" class="active">
+    </ion-col>
+    <ion-col size="3">
+      <div class="img_section">
+        <img src="../../../assets/medical.svg" alt="">
+      </div>
+      <p>Medical</p>
+    </ion-col>
+    <ion-col size="3">
+    </ion-col>
+  </ion-row> -->
+  <h5>Enter the Verification code we just
+    sent you on your email address</h5>
+  <ion-row class="otp_part">
+    <ion-col size="3">
+      <ion-item lines="none">
+        <ion-input [(ngModel)]="vc1" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,1)" #v1>
+        </ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="3">
+      <ion-item lines="none">
+        <ion-input [(ngModel)]="vc2" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,2)" #v2>
+        </ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="3">
+      <ion-item lines="none">
+        <ion-input [(ngModel)]="vc3" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,3)" #v3>
+        </ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="3">
+      <ion-item lines="none">
+        <ion-input [(ngModel)]="vc4" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,4)" #v4>
+        </ion-input>      </ion-item>
+    </ion-col>
+    <ion-col size="3">
+      <ion-item lines="none">
+        <ion-input [(ngModel)]="vc5" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,5)" #v5>
+        </ion-input>      
+      </ion-item>
+    </ion-col>
+    <ion-col size="3">
+      <ion-item lines="none">
+        <ion-input [(ngModel)]="vc6" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,6)" #v6>
+        </ion-input>
+           </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <p>If you didn't receive a code! <a href="">Resend</a></p>
+
+  <ion-button (click)="verifyCode()" expand="block">Log In
+    <ion-ripple-effect></ion-ripple-effect>
+  </ion-button>
+
+</ion-content>

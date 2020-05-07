@@ -3,6 +3,8 @@ import { NativeGeocoder, NativeGeocoderOptions, NativeGeocoderResult } from '@io
 import { LoadingController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+
 
 
 @Component({
@@ -20,8 +22,60 @@ export class NeedHelpPage implements OnInit {
   locationData: { lat: string; long: string; country: string; city: string; postCode: string; };
   contactNo : Number;
   helpText : String;
+  jobForm: FormGroup;
+  designation: any;
+  validation_messages: any
+  experience: any;
+  linkedIn: any;
+  industry: any;
+  normalForm: FormGroup;
+  
+  constructor(private formBuilder: FormBuilder,private router : Router,private geolocation : Geolocation, private nativeGeocoder: NativeGeocoder, public loadingCtrl: LoadingController) { 
+    this.jobForm = formBuilder.group({
+      designation: [this.designation, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
+      experience: [this.experience, Validators.compose([Validators.maxLength(30),Validators.pattern('[0-9]+'), Validators.required])],
+      linkedIn: [this.linkedIn, Validators.compose([Validators.maxLength(100),Validators.required])],
+      industry: [this.industry, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
 
-  constructor(private router : Router,private geolocation : Geolocation, private nativeGeocoder: NativeGeocoder, public loadingCtrl: LoadingController) { }
+
+    });
+    this.normalForm = formBuilder.group({
+      helpText: [this.helpText, Validators.compose([Validators.maxLength(100), Validators.required])],
+      contactNo: [this.contactNo, Validators.compose([Validators.maxLength(10),Validators.pattern('[0-9]+'), Validators.required])],
+      location: [this.location, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
+
+
+    });
+
+     this.validation_messages = {
+      'experience': [
+        { type: 'required', message: 'Experience is required' },
+        { type: 'pattern', message: 'Experience should only be in numbers' }
+      ],
+      'linkedIn': [
+        { type: 'required', message: 'Enter LinkedIn Profile' },
+      ],
+      'industry': [
+        { type: 'required', message: 'Industry is required' },
+        { type: 'pattern', message: 'Industry should only be in characters' }
+      ],
+      'designation': [
+        { type: 'required', message: 'Designation is required' },
+        { type: 'pattern', message: 'Designation cannot contain numbers' }
+      ],
+      'helpText': [
+        { type: 'required', message: 'Help Info is required to help you better!' }
+      ],
+      'contactNo': [
+        { type: 'required', message: 'Contact number is required' },
+        { type: 'pattern', message: 'Contact should contain only numbers' }
+      ],
+      'location': [
+        { type: 'required', message: 'Location is required' },
+        { type: 'pattern', message: 'Location should accept only characters' }
+      ]
+    }
+  }
 
   ngOnInit() {
   }
@@ -119,6 +173,33 @@ export class NeedHelpPage implements OnInit {
   {
     this.router.navigateByUrl('/posts')
   }
+
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {  //{2}
+      const control = formGroup.get(field);             //{3}
+      if (control instanceof FormControl) {             //{4}
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {        //{5}
+        this.validateAllFormFields(control);            //{6}
+      }
+    });
+  }
+
+  submit()
+  {
+if(this.helpFor=='Job Layoffs' && this.jobForm.valid)
+{
+  console.log("Job Form successfully submitted")
+}
+else if(this.helpFor!='Job Layoffs' && this.normalForm.valid)
+{
+  console.log("Normal form submitted successfully")
+} 
+else
+{
+  console.log("Please check the input fields")
+} 
+}
 
 }
 

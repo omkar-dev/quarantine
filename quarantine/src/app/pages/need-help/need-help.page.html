@@ -32,24 +32,89 @@
       </div>
     </div>
 
-    <div class="form_system">
-      <div class="col">
+    <div *ngIf="helpFor!='Job Layoffs'" class="form_system">
+      <form [formGroup]="normalForm">
+        <div class="col">
         <ion-label>{{'Help Info'|translate}}</ion-label>
-        <ion-textarea [(ngModel)]="helpText" placeholder="{{'Please type your help info' | translate}}"></ion-textarea>
+        <ion-textarea formControlName="helpText" placeholder="{{'Please type your help info' | translate}}"></ion-textarea>
+      </div>
+      <div *ngFor="let validation of validation_messages.helpText">
+        <p *ngIf="normalForm.get('helpText').hasError(validation.type) && (normalForm.get('helpText').dirty || normalForm.get('helpText').touched)">
+          {{validation.message}}
+        </p>
       </div>
       <div class="col">
         <ion-label>{{'How Can we contact you'|translate}}</ion-label>
-        <ion-input [(ngModel)]="contactNo" placeholder="{{'Please type your contact number' | translate}}"></ion-input>
+        <ion-input formControlName="contactNo" placeholder="{{'Please type your contact number' | translate}}"></ion-input>
+      </div>
+      <div *ngFor="let validation of validation_messages.contactNo">
+        <p *ngIf="normalForm.get('contactNo').hasError(validation.type) && (normalForm.get('contactNo').dirty || normalForm.get('contactNo').touched)">
+          {{validation.message}}
+        </p>
       </div>
       <div class="col">
         <ion-label>{{'Where are you located'| translate}}</ion-label>
-        <ion-input placeholder="{{'Please type your location' | translate}}" [(ngModel)]="location">
+        <ion-input placeholder="{{'Please type your location' | translate}}" formControlName="location">
           <img    (click)="detectLocation()" src="assets/material-my-location.svg"></ion-input>
 
           <!-- <ion-icon src="assets/material-my-location.svg"></ion-icon>  // commented as icon doesnt accept click events--> 
       </div>
+      <div *ngFor="let validation of validation_messages.location">
+        <p *ngIf="normalForm.get('location').hasError(validation.type) && (normalForm.get('location').dirty || normalForm.get('location').touched)">
+          {{validation.message}}
+        </p>
+      </div>
+    </form>
+      
+    </div>
+
+    <div *ngIf="helpFor=='Job Layoffs'" class="form_system">
+      
+      <form [formGroup]="jobForm">
+        <div class="col">
+          <ion-label>{{'Total Experience'|translate}}</ion-label>
+          <ion-input formControlName="experience" placeholder="{{'Please enter total years of experience' | translate}}"></ion-input>
+        </div>
+        <div *ngFor="let validation of validation_messages.experience">
+          <p *ngIf="jobForm.get('experience').hasError(validation.type) && (jobForm.get('experience').dirty || jobForm.get('experience').touched)">
+            {{validation.message}}
+          </p>
+        </div>
+        <div class="col">
+          <ion-label>{{'LinkedIn Profile'|translate}}</ion-label>
+          <ion-input formControlName="linkedIn" placeholder="{{'LinkedIn Profile' | translate}}"></ion-input>
+        </div>
+        <div *ngFor="let validation of validation_messages.linkedIn">
+          <p *ngIf="jobForm.get('linkedIn').hasError(validation.type) && (jobForm.get('linkedIn').dirty || jobForm.get('linkedIn').touched)">
+            {{validation.message}}
+          </p>
+        </div>
+          <div class="col">
+            <ion-label>{{'Designation'|translate}}</ion-label>
+            <ion-input  placeholder="Designation" formControlName="designation"></ion-input>
+          </div>
+          <div *ngFor="let validation of validation_messages.designation">
+            <p *ngIf="jobForm.get('designation').hasError(validation.type) && (jobForm.get('designation').dirty || jobForm.get('designation').touched)">
+              {{validation.message}}
+            </p>
+          </div>
+          <div class="col">
+            <ion-label>{{'Industry'|translate}}</ion-label>
+            <ion-input  placeholder="Industry" formControlName="industry"></ion-input>
+          </div>
+          <div *ngFor="let validation of validation_messages.industry">
+            <p *ngIf="jobForm.get('industry').hasError(validation.type) && (jobForm.get('industry').dirty || jobForm.get('industry').touched)">
+              {{validation.message}}
+            </p>
+          </div>
+    </form>
     </div>
   </div>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-button (click)="submit()">Submit</ion-button>
+    </ion-toolbar>
+  </ion-footer>
 
 
 </ion-content>

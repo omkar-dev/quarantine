@@ -29,6 +29,7 @@ import { BackgroundGeolocation } from "@ionic-native/background-geolocation/ngx"
 import { SafePipeModule } from 'safe-pipe';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Device } from '@ionic-native/device/ngx';
+import { OtpPage } from './pages/otp/otp.page';
 
 
 export function createTranslateLoader(http: HttpClient){ 
@@ -36,8 +37,8 @@ export function createTranslateLoader(http: HttpClient){
 }
 
 @NgModule({
-  declarations: [AppComponent, FeedbackComponent],
-  entryComponents: [ FeedbackComponent ],
+  declarations: [AppComponent, FeedbackComponent,OtpPage],
+  entryComponents: [ FeedbackComponent,OtpPage],
 
 
   imports: [BrowserModule, IonicModule.forRoot(),

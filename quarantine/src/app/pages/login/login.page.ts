@@ -9,8 +9,9 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { catchError } from 'rxjs/operators';
 import { Device } from '@ionic-native/device/ngx';
-import { NavController, LoadingController, Platform, AlertController, IonSlides } from '@ionic/angular';
+import { NavController, LoadingController, Platform, AlertController, IonSlides, ModalController } from '@ionic/angular';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { OtpPage } from '../otp/otp.page';
 
 @Component({
   selector: 'app-login',
@@ -49,7 +50,7 @@ export class LoginPage implements OnInit {
   StorageLoaded: boolean;
 
     
- constructor(private googlePlus: GooglePlus,
+ constructor(private modalController: ModalController,private googlePlus: GooglePlus,
       private nativeStorage: NativeStorage,
       public loadingController: LoadingController,
       private platform: Platform,
@@ -65,12 +66,13 @@ export class LoginPage implements OnInit {
     this.translate.setDefaultLang('en');
     this.translate.use('en');
     router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.previouChecksUrl = event.url;
-        if (this.previouChecksUrl) {
-          this.languageSelected = true;
-        }
-      }
+      // if (event instanceof NavigationEnd) {
+      //   console.log("eventt",event)
+      //   this.previouChecksUrl = event.url;
+      //   if (this.previouChecksUrl) {
+      //     this.languageSelected = true;
+      //   }
+      // }
     });
   }
 
@@ -131,6 +133,8 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    console.log("lang",this.languageSelected)
+    console.log("onBoard",this.showOnboard)
 
     this.ClearData();
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
@@ -155,43 +159,71 @@ export class LoginPage implements OnInit {
         this.languageSelected = true;
         this.StorageLoaded = false;
       }
+      console.log("lang",this.languageSelected)
     });
     this.storage.get('OnboardingShown').then(s => {
       if (s) {
-        this.showOnboard = false;
-      } else {
         this.showOnboard = true;
+      } else {
+        this.showOnboard = false;
         this.StorageLoaded = false;
       }
+      console.log("onBoard",this.showOnboard)
+
     })
 
   }
 
-  onLogin() {
-    let params = new HttpParams();
-    params = params.append('user_name', '');
-    params = params.append('email', this.emailid);
-    params = params.append('attempt', '2');
-    this.http.get(
-      'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
-      {params: params, responseType: 'text'}
-    )
-    .pipe(
-      catchError(e => {
-        this.showAlert('User Not found');
-        throw new Error(e.error);
-      })
-    )
-    .subscribe(response => {
-      if (response === 'Otp Send') {
-        this.showVC = true;
-      }
+  async onLogin() {
+    const loading = await this.loadingController.create({
+      message: 'Verifying details'
     });
+    this.presentLoading(loading);
+    let accountVerified = this.accountVerified(this.emailid);
+    if (accountVerified) {
+      this.router.navigate(['/tabs']);
+    }
+    else {
+      let params = new HttpParams();
+      params = params.append('user_name', ' ');
+      params = params.append('email', this.emailid);
+      params = params.append('attempt', '2');
+
+      this.http.get(
+        'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
+        {params: params, responseType: 'text'}
+      )
+      .pipe(
+        catchError(e => {
+          loading.dismiss()
+          this.showAlert('User Not found');
+          throw new Error(e.error);
+        })
+      )
+      .subscribe(response => {
+        
+        if (response === 'Otp Send') {
+          this.showVC = true;
+          this.openOTPModal();
+          loading.dismiss()
+          
+        }
+      });
+    }
+  }
+  async openOTPModal()
+  {
+    console.log("inside modal")
+    const modal = await this.modalController.create({
+      component: OtpPage,
+      componentProps : { "data" :  this.emailid}
+    });
+    await modal.present()
   }
 
   verifyCode() {
     let params = new HttpParams();
-    params = params.append('user_code', this.verificationCode);
+    params = params.append('user_code',this.verificationCode );
     params = params.append('email', this.emailid);
     params = params.append('attempt', '2');
     params = params.append('user_name', ' ');
@@ -214,7 +246,6 @@ export class LoginPage implements OnInit {
   storeVerifiedAccount() {
     this.storage.get('VerifiedAccounts').then(verifiedAccounts => {
       if(verifiedAccounts){
-        console.log(verifiedAccounts)              
         let verifiedAccount = {
           'deviceId': this.device.uuid,
           'emailId': this.emailid
@@ -232,6 +263,19 @@ export class LoginPage implements OnInit {
         this.storage.set('VerifiedAccounts', verifiedAccounts);
       }
     });
+  }
+
+  accountVerified(emailid): boolean {
+    let accountVerified: boolean = false;
+    this.storage.get('VerifiedAccounts').then(verifiedAccounts => {
+      if (verifiedAccounts) {
+        accountVerified = verifiedAccounts.some(account => account.email === emailid);
+      }
+      else {
+        accountVerified = false;
+      }
+    })
+    return accountVerified;
   }
 
   goToSignUp(){
@@ -333,12 +377,16 @@ export class LoginPage implements OnInit {
   }
 
   goToLogin() {
-    this.showOnboard = false;
+    this.showOnboard = true;
     this.storage.set('OnboardingShown', true); //SETTING KEY TO TRUE, ONCE THE INITIAL ROOT PAGE IS SHOWN.
+    this.languageSelected=true
+    this.storage.set('language', true);
   }
 
   ionViewDidLeave() {
     this.StorageLoaded = false;
   }
+
+ 
 
 }

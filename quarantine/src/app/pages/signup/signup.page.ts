@@ -125,9 +125,9 @@ console.log('s')
       // this.httpclient.
 
 
-
+      
       this.httpclient.post(
-       'https://us-central1-quarantine-4a6e8.cloudfunctions.net/signup-2',(params), {headers: {'Content-Type': 'application/json'}}
+       'https://us-central1-quarantine-4a6e8.cloudfunctions.net/signup',(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
       
       )
       .subscribe(res=>{ 

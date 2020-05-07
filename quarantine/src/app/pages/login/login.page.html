@@ -10,7 +10,7 @@
     </ion-item>
   </div>
 
-  <div *ngIf = "!languageSelected && showOnboard && !showVC" >
+  <div *ngIf = "languageSelected && !showOnboard && !showVC">
     <ion-slides   pager dir="ltr" class = "slider" #mySlider (ionSlidesDidLoad)="SlideOnTimeOut()"  (ionSlideDidChange)="SlideOnTimeOut()" >
       <ion-slide>
         <img style="max-width: 100vw !important;max-height: 100vh !important;" src="assets/onboarding/english/Class-Booking.gif"/>
@@ -35,7 +35,7 @@
   
   </div>
 
-  <div *ngIf="languageSelected && showVC" class="ion-padding">
+  <div *ngIf="languageSelected && !showVC" class="ion-padding">
     <div class="mid" [class.active]="logoAnimation">
       <img class="home-logo" src="../../../assets/logo-home.svg" [class.active]="logoAnimation">
       <div class="after_show">
@@ -65,39 +65,53 @@
 
 
 
-    <div *ngIf="!showVC">
-      <ion-item id="otp">
-        <ion-label>verification code :</ion-label>
-        <ion-input [(ngModel)]="vc1" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,1)" #v1>
-        </ion-input>
-        <ion-input [(ngModel)]="vc2" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,2)" #v2>
-        </ion-input>
-        <ion-input [(ngModel)]="vc3" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,3)" #v3>
-        </ion-input>
-        <ion-input [(ngModel)]="vc4" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,4)" #v4>
-        </ion-input>
-        <ion-input [(ngModel)]="vc5" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,5)" #v5>
-        </ion-input>
-        <ion-input [(ngModel)]="vc6" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,6)" #v6>
-        </ion-input>
-      </ion-item>
-
-      <ion-button expand="block"(click)="verifyCode()">Verify
-          <ion-ripple-effect></ion-ripple-effect>
-        </ion-button>
-
-      <div class="account_text">
-          <ion-text>Didn’t recive OTP? <a href="avascript:void(0)" (click)="goToLogin()">Resend</a></ion-text>
-        </div>
-    
-    </div>
-
-
-
-
 </ion-content>
 
+<!-- <div  class="popup_overlay" [class.active]="showVC">
 
+<div   class="verifyOtp"  >
+
+  <h3>
+    Enter OTP
+  </h3>
+    <ion-label>We have sent OTP to your e-mail<br>
+    address for verification
+    </ion-label>
+    <br>
+    <br>
+    <br>
+
+<ion-item lines="none" id="otp">
+    <ion-input [(ngModel)]="vc1" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,1)" #v1>
+    </ion-input>
+    <ion-input [(ngModel)]="vc2" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,2)" #v2>
+    </ion-input>
+    <ion-input [(ngModel)]="vc3" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,3)" #v3>
+    </ion-input>
+    <ion-input [(ngModel)]="vc4" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,4)" #v4>
+    </ion-input>
+    <ion-input [(ngModel)]="vc5" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,5)" #v5>
+    </ion-input>
+    <ion-input [(ngModel)]="vc6" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,6)" #v6>
+    </ion-input>
+  </ion-item>
+  <br>
+
+
+  <ion-button class="verify" (click)="verifyCode()">Verify
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-button>
+    <br>
+    <br>
+    <br>
+
+  <div class="account_text">
+      <ion-text >Didn’t recive OTP? <a href="avascript:void(0)" (click)="onLogin()">Resend</a></ion-text>
+    </div>
+
+</div>  
+   
+</div> -->
 
 
 
