@@ -66,12 +66,13 @@ export class LoginPage implements OnInit {
     this.translate.setDefaultLang('en');
     this.translate.use('en');
     router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.previouChecksUrl = event.url;
-        if (this.previouChecksUrl) {
-          this.languageSelected = true;
-        }
-      }
+      // if (event instanceof NavigationEnd) {
+      //   console.log("eventt",event)
+      //   this.previouChecksUrl = event.url;
+      //   if (this.previouChecksUrl) {
+      //     this.languageSelected = true;
+      //   }
+      // }
     });
   }
 
@@ -132,6 +133,9 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    console.log("lang",this.languageSelected)
+    console.log("onBoard",this.showOnboard)
+
     this.ClearData();
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
       success => console.log('Location Permission granted',success),
@@ -155,14 +159,17 @@ export class LoginPage implements OnInit {
         this.languageSelected = true;
         this.StorageLoaded = false;
       }
+      console.log("lang",this.languageSelected)
     });
     this.storage.get('OnboardingShown').then(s => {
       if (s) {
-        this.showOnboard = false;
-      } else {
         this.showOnboard = true;
+      } else {
+        this.showOnboard = false;
         this.StorageLoaded = false;
       }
+      console.log("onBoard",this.showOnboard)
+
     })
 
   }
@@ -370,8 +377,10 @@ export class LoginPage implements OnInit {
   }
 
   goToLogin() {
-    this.showOnboard = false;
+    this.showOnboard = true;
     this.storage.set('OnboardingShown', true); //SETTING KEY TO TRUE, ONCE THE INITIAL ROOT PAGE IS SHOWN.
+    this.languageSelected=true
+    this.storage.set('language', true);
   }
 
   ionViewDidLeave() {
