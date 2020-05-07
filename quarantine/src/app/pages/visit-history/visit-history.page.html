@@ -30,14 +30,15 @@
 
 
 <ion-content>
-  <!-- <iframe
+ 
+  <iframe
   width="600"
-  height="450"
+  height="350"
   frameborder="0" style="border:0" 
-  [src]="mapUrl | safe: 'resourceUrl'" allowfullscreen>
-</iframe> -->
+  [src]="sanitizer.bypassSecurityTrustResourceUrl(mapUrl)" allowfullscreen>
+</iframe>
 
-<img src="../../../assets/mapImage.jpg" alt="">
+<!-- <img src="../../../assets/mapImage.jpg" alt=""> -->
 
 </ion-content>
 
@@ -46,7 +47,7 @@
     <ion-icon src="assets/ion-pluse.svg"></ion-icon> {{buttonText}}
   </ion-button>
   <div class="list">
-    <ion-item *ngFor="let location of locationsArray" lines="none" no-padding class="no-padding">
+    <ion-item *ngFor="let location of locationsArray" (click)="showMarker(location.lat,location.long)"lines="none" no-padding class="no-padding">
       <img src="../../../assets/location_1.svg" slot="start" alt="">
       <ion-label>{{location.city}}</ion-label>
       <div class="time" slot="end">23 Min ago</div>

@@ -52,6 +52,7 @@
     "cordova-plugin-wkwebview-engine": "^1.2.1",
     "cordova-sqlite-storage": "5.0.0",
     "core-js": "^2.5.4",
+    "domsanitizer": "^0.2.2",
     "moment": "^2.25.3",
     "rxjs": "~6.5.1",
     "safe-pipe": "^1.0.3",

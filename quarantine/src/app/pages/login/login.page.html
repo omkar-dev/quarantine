@@ -10,7 +10,7 @@
     </ion-item>
   </div>
 
-  <div *ngIf = "!languageSelected && showOnboard && !showVC" >
+  <div *ngIf = "languageSelected && !showOnboard && !showVC">
     <ion-slides   pager dir="ltr" class = "slider" #mySlider (ionSlidesDidLoad)="SlideOnTimeOut()"  (ionSlideDidChange)="SlideOnTimeOut()" >
       <ion-slide>
         <img style="max-width: 100vw !important;max-height: 100vh !important;" src="assets/onboarding/english/Class-Booking.gif"/>
