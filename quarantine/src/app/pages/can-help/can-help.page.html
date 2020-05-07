@@ -12,17 +12,24 @@
   </ion-header>
 
   <div class="main">
+    <ion-segment [(ngModel)]="isResolved" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="active">
+        <ion-label>Active</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="resolved">
+        <ion-label>Resolved</ion-label>
+      </ion-segment-button>
+    </ion-segment>
     <h4>Can You Help</h4>
     <div class="blogList">
       <div class="blog" [class.active]="helpType.selected" *ngFor="let helpType of helpTypes" (click)="selectHelpType(helpType)">
         <img src="../../../assets/{{helpType.imgUrl}}" alt=""> 
-
         <p>{{helpType.name }}</p>
       </div>
     </div>
 
     <div class="list">
-      <ion-item lines="none" *ngFor="let req of filteredReqs;" (click)="selectReq(req)">
+      <ion-item lines="none" *ngFor="let req of filteredReqs;">
         <ion-avatar slot="start">
           <img [src]="req.avatar">
         </ion-avatar>

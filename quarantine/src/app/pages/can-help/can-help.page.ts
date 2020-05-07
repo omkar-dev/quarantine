@@ -11,6 +11,7 @@ import { MarkSpamComponent } from 'src/app/components/mark-spam/mark-spam.compon
 })
 export class CanHelpPage implements OnInit {
 
+  isResolved = 'active';
   helpTypes: any[] = [
     {
       name: "Handicap",
@@ -39,25 +40,29 @@ export class CanHelpPage implements OnInit {
       helpType: "Food Requests",
       avatar: "../../../assets/kitchen.svg",
       help_info: "Lorem ipsum dolor sit amet",
-      phone_no: '911'
+      phone_no: '911',
+      resolved: 'active'
     },
     {
       helpType: "Job Layoffs",
       avatar: "../../../assets/job_layout.svg",
       help_info: "Lorem ipsum dolor sit amet",
-      phone_no: '911'
+      phone_no: '911',
+      resolved: 'resolved'
     },
     {
       helpType: "Medical Help",
       avatar: "../../../assets/medical_2.svg",
       help_info: "Lorem ipsum dolor sit amet",
-      phone_no: '911'
+      phone_no: '911',
+      resolved: 'resolved'
     },
     {
       helpType: "Handicap",
       avatar: "../../../assets/handicaf_1.svg",
       help_info: "Lorem ipsum dolor sit amet",
-      phone_no: '911'
+      phone_no: '911',
+      resolved: 'active'
     },
   ];
   filteredReqs = this.helpRequests;
@@ -65,6 +70,7 @@ export class CanHelpPage implements OnInit {
   constructor(private callNumber: CallNumber, private popoverController: PopoverController) { }
 
   ngOnInit() {
+    this.filteredReqs = this.filterRequests(this.isResolved);
   }
 
   selectHelpType(data)
@@ -72,16 +78,12 @@ export class CanHelpPage implements OnInit {
     if (!data.selected){
       this.helpTypes.map(help => help.selected = false);
       data.selected = true;
-      this.filteredReqs = this.helpRequests.filter(req => req.helpType === data.name);
+      this.filteredReqs = this.filterRequests(this.isResolved, data.name);
     }
     else {
-      this.filteredReqs = this.helpRequests;
+      this.filteredReqs = this.filterRequests(this.isResolved);
       data.selected = false;
     }
-  }
-
-  selectReq(req) {
-    console.log(req);
   }
 
   openDialer(phoneNo) {
@@ -96,6 +98,20 @@ export class CanHelpPage implements OnInit {
       event: event
     });
     return (await popover).present();
+  }
+
+  segmentChanged(event) {
+    this.helpTypes.map(help => help.selected = false);
+    this.filteredReqs = this.filterRequests(this.isResolved);
+  }
+
+  filterRequests(isResolved, helpType?) {
+    if (helpType) {
+      return this.helpRequests.filter(req => ((req.resolved === isResolved) && (req.helpType === helpType)));
+    } 
+    else {
+      return this.helpRequests.filter(req => req.resolved === isResolved);
+    }
   }
 
 }
