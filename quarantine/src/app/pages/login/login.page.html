@@ -37,7 +37,7 @@
   
   </div>
 
-  <div *ngIf="languageSelected && !showVC" class="ion-padding">
+  <div *ngIf="languageSelected && showOnboard && !showVC" class="ion-padding">
     <div class="mid" [class.active]="logoAnimation">
       <img class="home-logo" src="../../../assets/logo-home.svg" [class.active]="logoAnimation">
       <div class="after_show">

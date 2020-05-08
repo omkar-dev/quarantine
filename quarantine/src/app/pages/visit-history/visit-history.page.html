@@ -52,6 +52,7 @@
       <ion-label>{{location.city}}</ion-label>
       <div class="time" slot="end">23 Min ago</div>
     </ion-item>
+    <p *ngIf="locationsArray &&locationsArray.length==0">Nothing to show! Click on Track Me to enable tracking!</p>
   </div>
 </div>
 
