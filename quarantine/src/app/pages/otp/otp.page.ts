@@ -74,13 +74,16 @@ export class OtpPage implements OnInit {
     {
            this.dataFromLogin = (this.navParams.get('data'));
             this.emailid = this.dataFromLogin.email
+            console.log("from login",this.emailid)
+
     }
     if(this.navParams.get('signupData'))
     {
       this.dataFromSignup = this.navParams.get('signupData')
+      this.emailid = this.signupData.email;
+
     }
     console.log("from signup",this.dataFromSignup)
-    console.log("from login",this.emailid)
 
 
     
@@ -200,56 +203,56 @@ export class OtpPage implements OnInit {
     alert.present();
   }
 
-  SendCode(){               //function for signup
+  // SendCode(){               //function for signup
     
-    console.log('s')
-        this.name = this.signupData.name;
-          this.email = this.signupData.email;
-          this.locality = this.signupData.locality;
-          this.type=this.signupData.type;
-          let params =    {
-            "userid": "c4239d9cf3b9",
-            "verfication_code" : " ",
-            "name": this.name,
-            "locality": this.locality,
-            "email": this.email,
-            "account_type": this.type,
-            "shop": {}
-        }
+  //   console.log('s')
+  //       this.name = this.signupData.name;
+  //         this.email = this.signupData.email;
+  //         this.locality = this.signupData.locality;
+  //         this.type=this.signupData.type;
+  //         let params =    {
+  //           "userid": "c4239d9cf3b9",
+  //           "verfication_code" : " ",
+  //           "name": this.name,
+  //           "locality": this.locality,
+  //           "email": this.email,
+  //           "account_type": this.type,
+  //           "shop": {}
+  //       }
     
     
-          let params2 = new HttpParams();
-          params2 = params2.append('user_name',this.name);
-          params2 = params2.append('email', this.email);
-          params2 = params2.append('attempt', '2');
-          // this.httpclient.
+  //         let params2 = new HttpParams();
+  //         params2 = params2.append('user_name',this.name);
+  //         params2 = params2.append('email', this.email);
+  //         params2 = params2.append('attempt', '2');
+  //         // this.httpclient.
     
     
           
          
-            this.http.get(
-              'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
-              {params: params2, responseType: 'text'}
-            )
-            .subscribe(res=>{
-              if(res==='Otp Send'){
-                this.shopDetails=false;
-                let navData={
-                  showVc:true
-                }
-                this.modalController.dismiss()
-                this.router.navigate(['/tabs'])
-              }
-            },err=>console.log(err))
-            // console.log("Details", this.name, this.email, this.location, this.type)
+  //           this.http.get(
+  //             'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
+  //             {params: params2, responseType: 'text'}
+  //           )
+  //           .subscribe(res=>{
+  //             if(res==='Otp Send'){
+  //               this.shopDetails=false;
+  //               let navData={
+  //                 showVc:true
+  //               }
+  //               this.modalController.dismiss()
+  //               this.router.navigate(['/tabs'])
+  //             }
+  //           },err=>console.log(err))
+  //           // console.log("Details", this.name, this.email, this.location, this.type)
             
             
       
-      }
+  //     }
 
-  checkCode()
-  {
-    this.signupData ? this.SendCode() : this.verifyCode()
-  }
+  // checkCode()
+  // {
+  //   this.signupData ? this.SendCode() : this.verifyCode()
+  // }
 
 }
