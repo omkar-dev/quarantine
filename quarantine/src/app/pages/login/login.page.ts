@@ -213,10 +213,14 @@ export class LoginPage implements OnInit {
   }
   async openOTPModal()
   {
+    let objToSend={
+      email : this.emailid,
+      from : "login"
+    }
     console.log("inside modal")
     const modal = await this.modalController.create({
       component: OtpPage,
-      componentProps : { "data" :  this.emailid}
+      componentProps : { "data" :  objToSend}
     });
     await modal.present()
   }

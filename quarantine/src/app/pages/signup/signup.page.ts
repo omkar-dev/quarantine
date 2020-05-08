@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient,HttpParams } from '@angular/common/http';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { OtpPage } from '../otp/otp.page';
 
 @Component({
   selector: 'app-signup',
@@ -67,7 +68,7 @@ validation_messages = {
   flag: any;
   shopDetails: boolean=false;
     
-    constructor(private formBuilder: FormBuilder,
+    constructor(private modalController : ModalController,private formBuilder: FormBuilder,
       private router:Router,private httpclient:HttpClient,
       public alertController : AlertController) { }
 
@@ -101,55 +102,121 @@ validation_messages = {
 
   }
 
-  SendCode(){
-console.log('s')
-    let name = this.signupForm.get('name').value;
-      let email = this.signupForm.get('emailAddress').value;
-      let locality = this.signupForm.get('locality').value;
-      let  type=this.others?'member':this.grocery||this.medical?'shop':null;
-      let params =    {
-        "userid": "c4239d9cf3b9",
-        "verfication_code" : " ",
-        "name": name,
-        "locality": locality,
-        "email": email,
-        "account_type": type,
-        "shop": {}
-    }
+//   SendCode(){
+// console.log('s')
+//     this.name = this.signupForm.get('name').value;
+//       this.email = this.signupForm.get('emailAddress').value;
+//       this.locality = this.signupForm.get('locality').value;
+//       this.type=this.others?'member':this.grocery||this.medical?'shop':null;
+//       let params =    {
+//         "userid": "c4239d9cf3b9",
+//         "verfication_code" : " ",
+//         "name": this.name,
+//         "locality": this.locality,
+//         "email": this.email,
+//         "account_type": this.type,
+//         "shop": {}
+//     }
 
 
-      let params2 = new HttpParams();
-      params2 = params2.append('user_name',name);
-      params2 = params2.append('email', email);
-      params2 = params2.append('attempt', '2');
-      // this.httpclient.
+//       let params2 = new HttpParams();
+//       params2 = params2.append('user_name',this.name);
+//       params2 = params2.append('email', this.email);
+//       params2 = params2.append('attempt', '2');
+//       // this.httpclient.
 
 
       
-      this.httpclient.post(
-       'https://us-central1-quarantine-4a6e8.cloudfunctions.net/signup',(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+//       this.httpclient.post(
+//        'https://us-central1-quarantine-4a6e8.cloudfunctions.net/signup',(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
       
-      )
-      .subscribe(res=>{ 
-        this.httpclient.get(
-          'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
-          {params: params2, responseType: 'text'}
-        )
-        .subscribe(res=>{
-          if(res==='Otp Send'){
-            this.shopDetails=false;
-            let navData={
-              showVc:true
-            }
-            this.router.navigate(['/login/verifyCode'])
-          }
-        },err=>console.log(err))
-        console.log("Details", name, email, this.location, this.type)
+//       )
+//       .subscribe(res=>{ 
+//         this.httpclient.get(
+//           'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
+//           {params: params2, responseType: 'text'}
+//         )
+//         .subscribe(res=>{
+//           if(res==='Otp Send'){
+//             this.shopDetails=false;
+//             let navData={
+//               showVc:true
+//             }
+//             this.router.navigate(['/login/verifyCode'])
+//           }
+//         },err=>console.log(err))
+//         console.log("Details", this.name, this.email, this.location, this.type)
         
-      });
+//       });
         
         
   
+//   }
+
+SendCode(){
+  console.log('s')
+      this.name = this.signupForm.get('name').value;
+        this.email = this.signupForm.get('emailAddress').value;
+        this.locality = this.signupForm.get('locality').value;
+        this.type=this.others?'member':this.grocery||this.medical?'shop':null;
+        let params =    {
+          "userid": "c4239d9cf3b9",
+          "verfication_code" : " ",
+          "name": this.name,
+          "locality": this.locality,
+          "email": this.email,
+          "account_type": this.type,
+          "shop": {}
+      }
+  
+  
+        let params2 = new HttpParams();
+        params2 = params2.append('user_name',this.name);
+        params2 = params2.append('email', this.email);
+        params2 = params2.append('attempt', '2');
+        // this.httpclient.
+  
+  
+        
+        this.httpclient.post(
+         'https://us-central1-quarantine-4a6e8.cloudfunctions.net/signup',(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+        
+        )
+        .subscribe(res=>{ 
+          if(res)
+          {
+            this.openOTPModal()
+          }
+          
+        });
+          
+          
+    
+    }
+
+  async openOTPModal()
+  {
+    this.name = this.signupForm.get('name').value;
+      this.email = this.signupForm.get('emailAddress').value;
+      this.locality = this.signupForm.get('locality').value;
+      this.type=this.others?'member':this.grocery||this.medical?'shop':null;
+    console.log("name",this.name)
+    let objToSend={
+      "userid": "c4239d9cf3b9",
+        "verfication_code" : " ",
+        "name": this.name,
+        "locality": this.locality,
+        "email": this.email,
+      "account_type": this.type,
+        "shop": {}
+
+    }
+    console.log("inside modal")
+    const modal = await this.modalController.create({
+      component: OtpPage,
+      componentProps : { "signupData" :  objToSend}
+    });
+    await modal.present()
   }
 
   shopDetailsSubmit(){
