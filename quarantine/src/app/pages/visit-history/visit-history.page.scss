@@ -5,6 +5,13 @@ ion-content {
         margin: 0 auto;
         display: block;
     }
+    .map {
+        // -webkit-filter: grayscale(80%);
+           -moz-filter: grayscale(80%);
+            -ms-filter: grayscale(80%);
+             -o-filter: grayscale(80%);
+                filter: grayscale(80%);
+    }
 }
 
 .bottomContent {
