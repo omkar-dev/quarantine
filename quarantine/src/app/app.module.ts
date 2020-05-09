@@ -9,7 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule, HttpClient} from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { HelpLineService } from './services/help-line/help-line.service';
 import { FormsModule } from '@angular/forms';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
@@ -30,6 +30,8 @@ import { SafePipeModule } from 'safe-pipe';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { OtpPage } from './pages/otp/otp.page';
+import { LoaderInterceptorService } from './loader-interceptor.service';
+import { LoaderComponent } from './components/loader/loader.component';
 
 
 export function createTranslateLoader(http: HttpClient){ 
@@ -37,7 +39,7 @@ export function createTranslateLoader(http: HttpClient){
 }
 
 @NgModule({
-  declarations: [AppComponent, FeedbackComponent,OtpPage],
+  declarations: [AppComponent, FeedbackComponent, LoaderComponent, OtpPage],
   entryComponents: [ FeedbackComponent,OtpPage],
 
 
@@ -68,6 +70,11 @@ export function createTranslateLoader(http: HttpClient){
     CallNumber,
     BackgroundGeolocation,
     Device,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptorService,
+      multi: true
+    },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy  }
   ],
   bootstrap: [AppComponent]
