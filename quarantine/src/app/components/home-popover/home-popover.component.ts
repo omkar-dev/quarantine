@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { FeedbackComponent } from '../feedback/feedback.component';
@@ -12,7 +12,7 @@ import { AppRatingService } from 'src/app/services/app-rating/app-rating.service
 })
 export class HomePopoverComponent implements OnInit {
 
-  constructor(
+  constructor(private modalController : ModalController,
     private popoverController: PopoverController, private router: Router, private storage: Storage, 
     private appRating: AppRatingService
   ) { }
@@ -21,10 +21,10 @@ export class HomePopoverComponent implements OnInit {
 
   async openFeedback() {
     this.popoverController.dismiss();
-    const popover = this.popoverController.create({
+    const modal = this.modalController.create({
       component: FeedbackComponent
     });
-    return (await popover).present();
+    return (await modal).present();
   }
 
   rating() {
@@ -33,9 +33,11 @@ export class HomePopoverComponent implements OnInit {
   }
 
   logout() {
-    this.router.navigate(['login'], {skipLocationChange: true,replaceUrl: true});
-    this.popoverController.dismiss();
+    // this.router.navigate(['/login'], {skipLocationChange: true,replaceUrl: true});
+    this.router.navigateByUrl('/login')
     this.storage.remove('role');
+    this.popoverController.dismiss();
+
   }
 
 }
