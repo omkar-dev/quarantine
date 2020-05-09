@@ -20,6 +20,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class OtpPage implements OnInit {
   @Input() data;
+  @Input() signupData;
+
   @ViewChild('v1', { static: false }) myInput1;
   @ViewChild('v2', { static: false }) myInput2;
   @ViewChild('v3', { static: false }) myInput3;
@@ -36,6 +38,13 @@ export class OtpPage implements OnInit {
   verificationCode:string;
   emailid: any;
   showVC: boolean;
+  dataFromSignup: any;
+  dataFromLogin: any;
+  name: any;
+  email: any;
+  locality: any;
+  type: any;
+  shopDetails: boolean;
 
 
   constructor(public navParams: NavParams,
@@ -56,9 +65,28 @@ export class OtpPage implements OnInit {
 
   ionViewWillEnter()
   {
-    let LOC = (this.navParams.get('data'));
-    console.log("data",LOC)
-    this.emailid = LOC
+    // this.dataFromLogin = (this.navParams.get('data'));
+    // this.emailid = this.dataFromLogin.email
+
+    // this.dataFromSignup = (this.navParams.get('signupData'))
+    // console.log("signupData",this.dataFromSignup)
+    if(this.navParams.get('data'))
+    {
+           this.dataFromLogin = (this.navParams.get('data'));
+            this.emailid = this.dataFromLogin.email
+            console.log("from login",this.emailid)
+
+    }
+    if(this.navParams.get('signupData'))
+    {
+      this.dataFromSignup = this.navParams.get('signupData')
+      this.emailid = this.signupData.email;
+
+    }
+    console.log("from signup",this.dataFromSignup)
+
+
+    
   }
 
 
@@ -101,6 +129,7 @@ export class OtpPage implements OnInit {
   }
 
   async verifyCode() {
+    console.log("inside verify code")
     const loading = await this.loadingController.create({
       message: 'Verifying details'
     });
@@ -173,5 +202,57 @@ export class OtpPage implements OnInit {
     });
     alert.present();
   }
+
+  // SendCode(){               //function for signup
+    
+  //   console.log('s')
+  //       this.name = this.signupData.name;
+  //         this.email = this.signupData.email;
+  //         this.locality = this.signupData.locality;
+  //         this.type=this.signupData.type;
+  //         let params =    {
+  //           "userid": "c4239d9cf3b9",
+  //           "verfication_code" : " ",
+  //           "name": this.name,
+  //           "locality": this.locality,
+  //           "email": this.email,
+  //           "account_type": this.type,
+  //           "shop": {}
+  //       }
+    
+    
+  //         let params2 = new HttpParams();
+  //         params2 = params2.append('user_name',this.name);
+  //         params2 = params2.append('email', this.email);
+  //         params2 = params2.append('attempt', '2');
+  //         // this.httpclient.
+    
+    
+          
+         
+  //           this.http.get(
+  //             'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
+  //             {params: params2, responseType: 'text'}
+  //           )
+  //           .subscribe(res=>{
+  //             if(res==='Otp Send'){
+  //               this.shopDetails=false;
+  //               let navData={
+  //                 showVc:true
+  //               }
+  //               this.modalController.dismiss()
+  //               this.router.navigate(['/tabs'])
+  //             }
+  //           },err=>console.log(err))
+  //           // console.log("Details", this.name, this.email, this.location, this.type)
+            
+            
+      
+  //     }
+
+  // checkCode()
+  // {
+  //   this.signupData ? this.SendCode() : this.verifyCode()
+  // }
 
 }
