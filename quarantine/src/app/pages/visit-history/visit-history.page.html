@@ -31,7 +31,7 @@
 
 <ion-content>
  
-  <iframe
+  <iframe class="map"
   width="600"
   height="350"
   frameborder="0" style="border:0" 
@@ -52,6 +52,7 @@
       <ion-label>{{location.city}}</ion-label>
       <div class="time" slot="end">23 Min ago</div>
     </ion-item>
+    <p *ngIf="locationsArray &&locationsArray.length==0">Nothing to show! Click on Track Me to enable tracking!</p>
   </div>
 </div>
 

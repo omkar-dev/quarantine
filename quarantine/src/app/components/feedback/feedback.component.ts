@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController, ToastController } from '@ionic/angular';
+import { PopoverController, ToastController, ModalController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -11,7 +11,7 @@ export class FeedbackComponent implements OnInit {
 
   feedbackMessage: string = "";
 
-  constructor(private popoverController: PopoverController, private toastController: ToastController, private http : HttpClient) { }
+  constructor(private modalController: ModalController,private popoverController: PopoverController, private toastController: ToastController, private http : HttpClient) { }
 
   ngOnInit() {}
 
@@ -32,6 +32,8 @@ export class FeedbackComponent implements OnInit {
       if(res)
       {
         console.log(res);
+        this.presentToast()
+        this.modalController.dismiss()
       }
       
     })
@@ -49,7 +51,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   closeFeedback() {
-    this.popoverController.dismiss();
+    this.modalController.dismiss();
   }
 
 }

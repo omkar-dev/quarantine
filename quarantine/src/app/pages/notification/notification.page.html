@@ -45,7 +45,7 @@
       </div>
     </ion-item>
 
-    <ion-item button lines="none">
+    <!-- <ion-item button lines="none">
       <ion-avatar slot="start">
         
       </ion-avatar>
@@ -58,6 +58,8 @@
       <div class="date_section" slot="">
         <p>{{ 'Yesterday'|translate}}</p>
       </div>
-    </ion-item>
+    </ion-item> -->
   </div>
+
+  <p *ngIf="notifications && notifications.length==0">No notifications yet!</p>
 </ion-content>
