@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { HttpClient,HttpParams } from '@angular/common/http';
 import { AlertController, ModalController } from '@ionic/angular';
 import { OtpPage } from '../otp/otp.page';
+import * as moment from 'moment'
+import { Storage } from '@ionic/storage';
+
+
 
 @Component({
   selector: 'app-signup',
@@ -67,10 +71,11 @@ validation_messages = {
   grocery: boolean;
   flag: any;
   shopDetails: boolean=false;
+  signupObject;
     
     constructor(private modalController : ModalController,private formBuilder: FormBuilder,
       private router:Router,private httpclient:HttpClient,
-      public alertController : AlertController) { }
+      public alertController : AlertController,private localStorage:Storage) { }
 
 
 
@@ -83,7 +88,8 @@ validation_messages = {
     this.shopForm=this.formBuilder.group({
       shopName: [this.shop_name, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
       shopLocality:[this.shop_locality, Validators.compose([Validators.maxLength(100), Validators.required])],
-      shopAddress:[this.shop_address, Validators.compose([Validators.maxLength(200), Validators.required])]
+      shopAddress:[this.shop_address, Validators.compose([Validators.maxLength(200), Validators.required])],
+      shopCoordinates:[this.shop_coordinates,Validators.compose([Validators.maxLength(200), Validators.required])]
     })
   }
 
@@ -158,16 +164,36 @@ SendCode(){
       this.name = this.signupForm.get('name').value;
         this.email = this.signupForm.get('emailAddress').value;
         this.locality = this.signupForm.get('locality').value;
-        this.type=this.others?'member':this.grocery||this.medical?'shop':null;
-        let params =    {
-          "userid": "c4239d9cf3b9",
-          "verfication_code" : " ",
-          "name": this.name,
-          "locality": this.locality,
-          "email": this.email,
-          "account_type": this.type,
-          "shop": {}
-      }
+        this.type=this.others?'member':'shop'
+        if(this.type == 'member'){
+          this.signupObject =    {
+            "userid": "c4239d9cf3b9",
+            "verfication_code" : " ",
+            "name": this.name,
+            "locality": this.locality,
+            "email": this.email,
+            "account_type": this.type,
+            "shop": {}
+        }
+        }else{
+          this.signupObject = {
+            "userid": "c4239d9cf3b9",
+            "verfication_code" : " ",
+            "name": this.name,
+            "locality": this.locality,
+            "email": this.email,
+            "account_type": this.type,
+            "shop": {
+              shopName:this.shopForm.value.shopName,
+              shopLocality:this.shopForm.value.shopLocality,
+              shopAddress:this.shopForm.value.shopAddress,
+              shopCoordinates:this.shopForm.value.shopCoordinates,
+              fromTime:moment(this.fromTime).format('hh:mm A'),
+              toTime:moment(this.toTime).format('hh:mm A')
+            }
+        } 
+        }
+          
   
   
         let params2 = new HttpParams();
@@ -179,7 +205,7 @@ SendCode(){
   
         
         this.httpclient.post(
-         'https://us-central1-quarantine-4a6e8.cloudfunctions.net/signup',(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+         'https://us-central1-quarantine-4a6e8.cloudfunctions.net/signup',(params2), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
         
         )
         .subscribe(res=>{ 
@@ -196,44 +222,28 @@ SendCode(){
 
   async openOTPModal()
   {
-    this.name = this.signupForm.get('name').value;
-      this.email = this.signupForm.get('emailAddress').value;
-      this.locality = this.signupForm.get('locality').value;
-      this.type=this.others?'member':this.grocery||this.medical?'shop':null;
-    console.log("name",this.name)
-    let objToSend={
-      "userid": "c4239d9cf3b9",
-        "verfication_code" : " ",
-        "name": this.name,
-        "locality": this.locality,
-        "email": this.email,
-      "account_type": this.type,
-        "shop": {}
-
-    }
     console.log("inside modal")
     const modal = await this.modalController.create({
       component: OtpPage,
-      componentProps : { "signupData" :  objToSend}
+      componentProps : { "signupData" :  this.signupObject}
     });
     await modal.present()
   }
 
   shopDetailsSubmit(){
     if(this.shopForm.valid && this.fromTime!="" && this.toTime!=""){
-      console.log(this.shopForm.value,'form values')
       this.SendCode()
     }else{
       !this.shopForm.valid?this.validateAllFormFields(this.shopForm):this.presentAlert()
     }
   }
   validateAllFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {  //{2}
-      const control = formGroup.get(field);             //{3}
-      if (control instanceof FormControl) {             //{4}
+    Object.keys(formGroup.controls).forEach(field => {  
+      const control = formGroup.get(field);             
+      if (control instanceof FormControl) {             
         control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {        //{5}
-        this.validateAllFormFields(control);            //{6}
+      } else if (control instanceof FormGroup) {        
+        this.validateAllFormFields(control);            
       }
     });
   }
