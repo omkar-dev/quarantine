@@ -210,7 +210,7 @@
   </p>
 </div>
     <ion-item>
-      <ion-input placeholder="Shop Coordinates"></ion-input>
+      <ion-input placeholder="Shop Coordinates" formControlName="shopCoordinates"></ion-input>
     </ion-item>
     <div *ngFor="let validation of validation_messages.name">
   <p *ngIf="signupForm.get('name').hasError(validation.type) && (signupForm.get('name').dirty || signupForm.get('name').touched)">

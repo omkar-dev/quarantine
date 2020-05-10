@@ -78,6 +78,7 @@ export class OtpPage implements OnInit {
     if(this.navParams.get('signupData'))
     {
       this.dataFromSignup = this.navParams.get('signupData')
+
     }
     console.log("from signup",this.dataFromSignup)
     console.log("from login",this.emailid)
@@ -148,11 +149,24 @@ export class OtpPage implements OnInit {
         })
         )
         .subscribe(response => {
+          console.log(response,'responseeee')
           this.router.navigate(['/tabs']);
           this.showVC = false;
           this.storeVerifiedAccount();
           loading.dismiss()
           this.modalController.dismiss()
+          if(this.signupData){
+
+            let User_Store =    {
+              "name": this.signupData.name,
+              "locality": this.signupData.locality,
+              "email": this.signupData.email,
+              "account_type": this.signupData.type,
+              "shop": this.signupData.shop
+          }
+          console.log(User_Store,'saving user store')
+          this.storage.set('UserStore',JSON.stringify(User_Store))
+          }
       })
   }
 
@@ -202,19 +216,19 @@ export class OtpPage implements OnInit {
 
   SendCode(){               //function for signup
     
-    console.log('s')
-        this.name = this.signupData.name;
-          this.email = this.signupData.email;
-          this.locality = this.signupData.locality;
-          this.type=this.signupData.type;
+    console.log(this.signupData,'signup dataaa')
+        // this.name = this.signupData.name;
+        //   this.email = this.signupData.email;
+        //   this.locality = this.signupData.locality;
+        //   this.type=this.signupData.type;
           let params =    {
             "userid": "c4239d9cf3b9",
             "verfication_code" : " ",
-            "name": this.name,
-            "locality": this.locality,
-            "email": this.email,
-            "account_type": this.type,
-            "shop": {}
+            "name": this.signupData.name,
+            "locality": this.signupData.locality,
+            "email": this.signupData.email,
+            "account_type": this.signupData.type,
+            "shop": this.signupData.shop
         }
     
     
@@ -249,7 +263,8 @@ export class OtpPage implements OnInit {
 
   checkCode()
   {
-    this.signupData ? this.SendCode() : this.verifyCode()
+    // this.signupData ? this.SendCode() : 
+    this.verifyCode()
   }
 
 }
