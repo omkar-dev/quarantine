@@ -29,7 +29,7 @@
 
 <ion-content>
   <div class="main">
-    <ion-item *ngFor="let notif of notifications" button lines="none">
+    <ion-item *ngFor="let notif of notifications" button lines="none" (click)="goToChat(notif)">
       <ion-avatar slot="start">
         {{notif.sender.charAt(0)}}
       </ion-avatar>
