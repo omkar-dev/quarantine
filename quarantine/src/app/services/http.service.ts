@@ -6,6 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
+  options =
+    {
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }
   donationData: any;
 
   constructor(private http: HttpClient) { }
@@ -17,10 +21,12 @@ export class HttpService {
 
   sendMessage(body) 
   {
-    let options =
-    {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    }
-    return this.http.post('https://us-central1-quarantine-13853.cloudfunctions.net/messages',body,options)
+    
+    return this.http.post('https://us-central1-quarantine-13853.cloudfunctions.net/messages',body,this.options)
   }
+
+    helpPostRequest(body)
+    {
+        return this.http.post('https://us-central1-quarantine-276114.cloudfunctions.net/helpapi',body,this.options)
+    }
 }

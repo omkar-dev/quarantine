@@ -4,6 +4,7 @@ import { LoadingController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { HttpService } from 'src/app/services/http.service';
 
 
 
@@ -20,8 +21,8 @@ export class NeedHelpPage implements OnInit {
   lat: number;
   long: any;
   locationData: { lat: string; long: string; country: string; city: string; postCode: string; };
-  contactNo : Number;
-  helpText : String;
+  contactNo : any;
+  helpText : any;
   jobForm: FormGroup;
   designation: any;
   validation_messages: any
@@ -29,8 +30,9 @@ export class NeedHelpPage implements OnInit {
   linkedIn: any;
   industry: any;
   normalForm: FormGroup;
+  userContactNo: any;
   
-  constructor(private formBuilder: FormBuilder,private router : Router,private geolocation : Geolocation, private nativeGeocoder: NativeGeocoder, public loadingCtrl: LoadingController) { 
+  constructor(private http : HttpService,private formBuilder: FormBuilder,private router : Router,private geolocation : Geolocation, private nativeGeocoder: NativeGeocoder, public loadingCtrl: LoadingController) { 
     this.jobForm = formBuilder.group({
       designation: [this.designation, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
       experience: [this.experience, Validators.compose([Validators.maxLength(30),Validators.pattern('[0-9]+'), Validators.required])],
@@ -50,7 +52,8 @@ export class NeedHelpPage implements OnInit {
      this.validation_messages = {
       'experience': [
         { type: 'required', message: 'Experience is required' },
-        { type: 'pattern', message: 'Experience should only be in numbers' }
+        { type: 'pattern', 
+        message: 'Experience should only be in numbers' }
       ],
       'linkedIn': [
         { type: 'required', message: 'Enter LinkedIn Profile' },
@@ -122,13 +125,16 @@ export class NeedHelpPage implements OnInit {
   async detectLocation()
   {
     console.log("inside detectlocation")
-    this.presentLoading()
-    this.geolocation.getCurrentPosition().then((resp) => {
+    const loading = await this.loadingCtrl.create({
+      message: 'Detecting Location'
+    });
+    this.presentLoading(loading);   
+     this.geolocation.getCurrentPosition().then((resp) => {
       // let loc = {}
       this.lat = resp.coords.latitude;
       this.long = resp.coords.longitude;
       this.getReverseGeoCode(this.lat,this.long)
-
+loading.dismiss();
 
     }).catch((error) => {
       console.log('Error getting location', error);
@@ -161,14 +167,9 @@ export class NeedHelpPage implements OnInit {
     .catch((error: any) => console.log(error));
   }
 
-  async presentLoading() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Detecting Location',
-      duration: 2000
-    });
-    await loading.present();
+  async presentLoading(loading) {
+    return await loading.present();
   }
-
   gotoPost()
   {
     this.router.navigateByUrl('/posts')
@@ -185,21 +186,65 @@ export class NeedHelpPage implements OnInit {
     });
   }
 
-  submit()
+  async submit()
   {
+    const loading = await this.loadingCtrl.create({
+      message: 'Submiting details'
+    });
+    this.presentLoading(loading);
+    this.contactNo =this.normalForm.get('contactNo').value
+    this.helpText = this.normalForm.get('helpText').value
+    this.location = this.normalForm.get('location').value
+    this.experience =this.jobForm.get('experience').value
+  this.linkedIn = this.jobForm.get('linkedIn').value
+  this.designation = this.jobForm.get('designation').value
+  this.industry = this.jobForm.get('industry').value
 if(this.helpFor=='Job Layoffs' && this.jobForm.valid)
 {
-  console.log("Job Form successfully submitted")
+  let body = {
+    "user_id":"1",
+    "help_for":this.helpFor,
+    "help_info":this.helpText,
+    "phone_no":this.contactNo,
+    "locality": this.location,
+    "jobs_user_name" : "Name",
+    "jobs_user_exp" : this.experience,
+    "linked_in_profile_link" : this.linkedIn,
+    "current_designation" : this.designation,
+    "industry" : this.industry,
+    "current_company" : "XYZ Technologies"
+  }
+  this.http.helpPostRequest(body).subscribe(res=>{
+    console.log("res",res)
+    loading.dismiss()
+  })
+  
 }
 else if(this.helpFor!='Job Layoffs' && this.normalForm.valid)
 {
-  console.log("Normal form submitted successfully")
+ 
+  let body = {      
+    "user_id":"1",
+    "help_for":this.helpFor,
+    "help_info":this.helpText,
+    "phone_no":this.contactNo,
+    "locality": this.location
+    }
+    console.log("body",body)
+    this.http.helpPostRequest(body).subscribe(res=>{
+      console.log("Success")
+      loading.dismiss()
+    })
+  
 } 
 else
 {
   console.log("Please check the input fields")
+  loading.dismiss()
 } 
 }
+
+
 
 }
 
