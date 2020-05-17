@@ -4,10 +4,14 @@
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-      <ion-title><img src="../../../assets/ios-help-circle.svg" alt="">{{'Need_Help' | translate}}</ion-title>
-      <div slot="end">
+      <ion-title class="ion-text-center">
+        <!-- <img src="../../../assets/ios-help-circle.svg" alt=""> -->
+        I Need Help
+        <!-- {{'Need_Help' | translate}} -->
+      </ion-title>
+      <!-- <div slot="end">
         <ion-icon src="assets/material-notifications.svg"></ion-icon>
-      </div>
+      </div> -->
     </ion-toolbar>
   </ion-header>
 
@@ -110,9 +114,10 @@
     </form>
     </div>
   </div>
-  <ion-footer>
-    <ion-toolbar>
-      <ion-button (click)="submit()">Submit</ion-button>
+  <ion-footer no-padding >
+    <ion-toolbar no-padding>
+      <ion-button style="width:100vw;" (click)="submit()">
+        Submit</ion-button>
     </ion-toolbar>
   </ion-footer>
 

@@ -6,7 +6,7 @@
     <ion-title>
       <span>F</span> Farhan Patel
     </ion-title>
-    <ion-icon slot="end" name="ellipsis-vertical"></ion-icon>
+    <!-- <ion-icon slot="end" name="ellipsis-vertical"></ion-icon> -->
   </ion-toolbar>
 </ion-header>
 
@@ -28,7 +28,7 @@
 <ion-footer>
   <div class="input">
     <ion-input placeholder="Type a message" [(ngModel)]="message"></ion-input>
-    <ion-icon src="assets/camera.svg"></ion-icon>
+    <!-- <ion-icon src="assets/camera.svg"></ion-icon> -->
   </div>
-  <ion-icon (click)="send()" src="../../../assets/mike.svg"></ion-icon>
+  <ion-icon (click)="send()" style="width:20px;height:20px"  name="send-outline" ></ion-icon>
 </ion-footer>

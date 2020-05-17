@@ -1,7 +1,11 @@
 <ion-content mode="ios">
   <div *ngIf="!languageSelected && !showOnboard" class="languageSelect" >
-
-    <ion-item button  lines="none" style="--background: #E4ECFD;color: #6C7A92" *ngFor="let language of languages;let i = index" 
+<div sltyle="align-self:center;align-content:center;height:">
+<span>
+  Please select a language 
+</span>
+</div>
+    <ion-item button  lines="none"  *ngFor="let language of languages;let i = index" 
       (click)="switchLanguage(language)">
         <ion-label style="padding:1.78vh; " >{{language}}   
         </ion-label>
@@ -10,26 +14,26 @@
     </ion-item>
   </div>
 
-  <div *ngIf = "languageSelected && !showOnboard && !showVC">
-    <ion-slides   pager dir="ltr" class = "slider" #mySlider (ionSlidesDidLoad)="SlideOnTimeOut()"  (ionSlideDidChange)="SlideOnTimeOut()" >
+  <div style="height:100% " *ngIf = "languageSelected && !showOnboard && !showVC">
+    <ion-slides  style="margin: 0px;height: 100%;width: 100%" pager dir="ltr" class = "slider" #mySlider (ionSlidesDidLoad)="SlideOnTimeOut()"  (ionSlideDidChange)="SlideOnTimeOut()" >
       <ion-slide>
-        <img style="max-width: 100vw !important;max-height: 100vh !important;" src="assets/onboarding/english/Class-Booking.gif"/>
+        <img style="width: 100% !important;height: 100% !important;" src="assets/onboarding1.jpg"/>
       </ion-slide>
     
       <ion-slide>
-        <img style="max-width: 100vw !important;max-height: 100vh !important;" src="assets/onboarding/english/Flixiable-method-Payment.gif"/>
+        <img style="width: 100% !important;height: 100% !important;" src="assets/onboarding2.jpg"/>
       </ion-slide>
     
       <ion-slide>
-        <img style="max-width: 100vw !important;max-height: 100vh !important;" src="assets/onboarding/english/Freeze-Membership.gif"/>
+        <img style="width: 100% !important;height: 100% !important;" src="assets/onboarding3.jpg"/>
+     
+     <div style="display: flex;   position: absolute;      flex-direction: column;  z-index: 1000; align-self: flex-end">
+      <ion-button  style="margin:0px;width:140px;height:30px;align-self: center;margin-bottom:25px " fill="clear" class="login-button" (click)="goToLogin()">Login</ion-button>
+      <ion-button style="margin:0px;width:140px;height:30px;align-self: center;margin-bottom:50px "   fill="clear" class="signup-button" (click)="goToSignUp()">Signup</ion-button>
+     </div>
+     
       </ion-slide>
     
-      <ion-slide>
-        <img style="max-width: 100vw !important;max-height: 100vh !important;" src="assets/onboarding/english/Offers.gif"/>
-        <ion-button fill="clear" class="login-button" (click)="goToLogin()">Login</ion-button>
-    <ion-button fill="clear" class="signup-button" (click)="goToSignUp()">Signup</ion-button>
-      </ion-slide>
-  
     </ion-slides>
     <!-- <ion-button fill="clear" class="login-button" (click)="goToLogin()">Login</ion-button>
     <ion-button fill="clear" class="signup-button" (click)="goToSignUp()">Signup</ion-button> -->

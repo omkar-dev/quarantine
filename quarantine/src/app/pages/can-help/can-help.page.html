@@ -4,10 +4,12 @@
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-      <ion-title><img src="../../../assets/ios-help-circle.svg" alt=""> I Can Help</ion-title>
-      <div slot="end">
+      <ion-title class="ion-text-center">
+        <!-- <img src="../../../assets/ios-help-circle.svg" alt="">  -->
+        I Can Help</ion-title>
+      <!-- <div slot="end">
         <ion-icon src="assets/material-notifications.svg"></ion-icon>
-      </div>
+      </div> -->
     </ion-toolbar>
   </ion-header>
 
@@ -20,7 +22,7 @@
         <ion-label>Resolved</ion-label>
       </ion-segment-button>
     </ion-segment>
-    <h4>Can You Help</h4>
+    <h4>Select a Category to Help</h4>
     <div class="blogList">
       <div class="blog" [class.active]="helpType.selected" *ngFor="let helpType of helpTypes" (click)="selectHelpType(helpType)">
         <img src="../../../assets/{{helpType.imgUrl}}" alt=""> 
@@ -29,7 +31,7 @@
     </div>
 
     <div class="list">
-      <ion-item lines="none" *ngFor="let req of filteredReqs;">
+      <ion-item  style="padding:0px" lines="none" *ngFor="let req of filteredReqs;">
         <ion-avatar slot="start">
           <img [src]="req.avatar">
         </ion-avatar>
@@ -38,7 +40,7 @@
           <p>{{ req.help_info }}</p>
         </ion-label>
         <ion-icon slot="end" src="assets/call.svg" (click)="openDialer(req.phone_no)"></ion-icon>
-        <ion-icon class="ellipsis" name="ellipsis-vertical" (click)="openMenu($event)"></ion-icon>
+        <ion-icon style="margin-top: 6px;"class="ellipsis" name="ellipsis-vertical" (click)="openMenu($event)"></ion-icon>
       </ion-item>
     </div>
   </div>
