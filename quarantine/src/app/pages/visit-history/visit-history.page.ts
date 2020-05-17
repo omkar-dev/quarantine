@@ -2,12 +2,12 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
-import {
-  BackgroundGeolocation,
-  BackgroundGeolocationConfig,
-  BackgroundGeolocationResponse,
-  BackgroundGeolocationEvents
-} from "@ionic-native/background-geolocation/ngx";
+// import {
+//   BackgroundGeolocation,
+//   BackgroundGeolocationConfig,
+//   BackgroundGeolocationResponse,
+//   BackgroundGeolocationEvents
+// } from "@ionic-native/background-geolocation/ngx";
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -22,7 +22,7 @@ export class VisitHistoryPage implements OnInit {
   subscription : any;
   public lat: number = 0;
   public lng: number = 0;
-  backgroundLocObject: BackgroundGeolocationResponse;
+ // backgroundLocObject: BackgroundGeolocationResponse;
   locationData: any;
   locationsArray = []
   startTrack: boolean = true;
@@ -32,7 +32,9 @@ export class VisitHistoryPage implements OnInit {
   combinedLatLong: string;
   mapUrl: string;
 
-  constructor(public sanitizer: DomSanitizer,private nativeGeocoder: NativeGeocoder,private localNotifications : LocalNotifications,public geolocation : Geolocation,public zone : NgZone,private http: HttpClient, private backgroundGeolocation: BackgroundGeolocation) { }
+  constructor(public sanitizer: DomSanitizer,private nativeGeocoder: NativeGeocoder,private localNotifications : LocalNotifications,public geolocation : Geolocation,public zone : NgZone,private http: HttpClient, 
+    //private backgroundGeolocation: BackgroundGeolocation
+    ) { }
 
   ngOnInit() {
   }
@@ -51,39 +53,39 @@ export class VisitHistoryPage implements OnInit {
     console.log("inside start")
          // Background Tracking
 
-         const config: BackgroundGeolocationConfig = {
-              desiredAccuracy: 10,
-              stationaryRadius: 20,
-              distanceFilter: 30,
-              debug: false, //  enable this hear sounds for background-geolocation life-cycle.
-              stopOnTerminate: false, // enable this to clear background location settings when the app terminates
-              notificationsEnabled: false,
-              startForeground  : false
+    //      const config: BackgroundGeolocationConfig = {
+    //           desiredAccuracy: 10,
+    //           stationaryRadius: 20,
+    //           distanceFilter: 30,
+    //           debug: false, //  enable this hear sounds for background-geolocation life-cycle.
+    //           stopOnTerminate: false, // enable this to clear background location settings when the app terminates
+    //           notificationsEnabled: false,
+    //           startForeground  : false
 
-            };
+    //         };
         
-            this.backgroundGeolocation.configure(config).then(() => {
-              this.backgroundGeolocation
-                .on(BackgroundGeolocationEvents.location)
-                .subscribe((location: BackgroundGeolocationResponse) => {
-                  console.log("Location",location);
-                  this.backgroundLocObject = location
+    //         this.backgroundGeolocation.configure(config).then(() => {
+    //           this.backgroundGeolocation
+    //             .on(BackgroundGeolocationEvents.location)
+    //             .subscribe((location: BackgroundGeolocationResponse) => {
+    //               console.log("Location",location);
+    //               this.backgroundLocObject = location
             
-                });
-            });
+    //             });
+    //         });
 
     
-    this.backgroundGeolocation.start();
-    this.localNotifications.schedule({
-          id: 1,
-          text: 'Location is being tracked. Click to Stop',
-        });
+    // this.backgroundGeolocation.start();
+    // this.localNotifications.schedule({
+    //       id: 1,
+    //       text: 'Location is being tracked. Click to Stop',
+    //     });
 
-        this.localNotifications.on('click').subscribe(notification => {
-              // Insert your logic here
-              console.log("Notificationnnn",notification)
-              this.stopTracking();
-               });
+    //     this.localNotifications.on('click').subscribe(notification => {
+    //           // Insert your logic here
+    //           console.log("Notificationnnn",notification)
+    //           this.stopTracking();
+    //            });
 
 
 
@@ -128,7 +130,7 @@ this.nativeGeocoder.reverseGeocode(lat, long, options)
   stopTracking()
   {
     console.log("inside stop")
-    this.backgroundGeolocation.stop();
+  //  this.backgroundGeolocation.stop();
     this.subscription.unsubscribe();
   }
 
