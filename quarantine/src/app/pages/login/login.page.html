@@ -14,9 +14,9 @@
     </ion-item>
   </div>
 
-  <div style="height:100% " *ngIf = "languageSelected && !showOnboard && !showVC">
+  <div style="height:100% " class="onBoard" *ngIf = "languageSelected && !showOnboard && !showVC">
     <ion-slides  style="margin: 0px;height: 100%;width: 100%" pager dir="ltr" class = "slider" #mySlider (ionSlidesDidLoad)="SlideOnTimeOut()"  (ionSlideDidChange)="SlideOnTimeOut()" >
-      <ion-slide>
+      <!-- <ion-slide>
         <img style="width: 100% !important;height: 100% !important;" src="assets/onboarding1.jpg"/>
       </ion-slide>
     
@@ -32,6 +32,38 @@
       <ion-button style="margin:0px;width:140px;height:30px;align-self: center;margin-bottom:50px "   fill="clear" class="signup-button" (click)="goToSignUp()">Signup</ion-button>
      </div>
      
+      </ion-slide> -->
+
+
+
+
+      <ion-slide>
+        <div>
+          <img src="../../../assets/need_help_1.svg" alt="">
+          <h1>Anywhere you Need Help</h1>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+            dolore magna </p>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div>
+          <img src="../../../assets/need_help_2.svg" alt="">
+          <h1>You find a Near Shop</h1>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+            dolore magna </p>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div>
+          <img src="../../../assets/need_help_1.svg" alt="">
+          <h1>Anywhere you Need Help</h1>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+            dolore magna </p>
+            <div class="btn_group">
+              <ion-button  (click)="goToSignUp()" >Create an account</ion-button>
+              <ion-button  (click)="goToLogin()" >Login</ion-button>
+            </div>
+        </div>
       </ion-slide>
     
     </ion-slides>

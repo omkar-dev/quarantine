@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController, ModalController } from '@ionic/angular';
+import { PopoverController, ModalController,AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { AppRatingService } from 'src/app/services/app-rating/app-rating.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home-popover',
@@ -15,7 +16,9 @@ export class HomePopoverComponent implements OnInit {
 
   constructor(private modalController : ModalController,
     private popoverController: PopoverController, private router: Router, private storage: Storage, 
-    private appRating: AppRatingService
+    private appRating: AppRatingService,
+    private translate: TranslateService,
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {}
@@ -50,6 +53,41 @@ this.popoverController.dismiss();
 setTimeout(()=>{    this.router.navigateByUrl('/login')},400);
 
 
+  }
+
+  async openLogoutAlert() {
+    // let logoutConfirm
+    // this.translate.get('DOYOUREALLYWANTTOLOGOUTFROMTHEAPPLICATION').subscribe(value => {
+    //   logoutConfirm = value;
+    // })
+    // let yes
+    // this.translate.get('YES').subscribe(value => {
+    //   yes = value;
+    // })
+
+    // let no
+    // this.translate.get('NO').subscribe(value => {
+    //   no = value;
+    // })
+    const alert = await this.alertController.create({
+      message:  "Do you really want to logout from the application ?",
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            this.popoverController.dismiss();
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Yes',
+          handler: () => {
+           this.logout()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 

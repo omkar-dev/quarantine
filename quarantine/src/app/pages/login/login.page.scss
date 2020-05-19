@@ -148,14 +148,53 @@ ion-button {
     color: var(--ion-color-primary);
 }
 
-ion-slides{
-    margin:50px;
-    position: relative;
+// ion-slides{
+//     margin:50px;
+//     position: relative;
+// }
+
+ion-content {
+    text-align: center;
+
+
+ion-slide {
+    padding-bottom: 50px;
+}
+.onBoard{
+
+
+h1 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 17px;
+    color: #858585;
+}
+
+.swiper-pagination {
+    .swiper-pagination-bullet {
+        --bullet-background: #4E4DE6;
+    }
+}
+
+.btn_group {
+    margin-top: 30px;
 }
 
 
+ion-button {
+    display: block;
+    margin: 0 auto 20px;
+    width: 208px;
+    height: 50px;
+}
 
+}
 
+}
 .account_text {
     position: absolute;
     left: 0;
