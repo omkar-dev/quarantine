@@ -3,6 +3,7 @@ import { HelpLineService } from '../../services/help-line/help-line.service';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpService } from 'src/app/services/http.service';
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-helpline',
@@ -19,6 +20,7 @@ export class HelplinePage implements OnInit {
 
   constructor(private helplineservice:HelpLineService
     ,public translate: TranslateService,
+    private _location: Location,
     public http : HttpService,
     private callNumber: CallNumber ) { 
 

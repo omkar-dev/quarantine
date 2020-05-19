@@ -21,6 +21,9 @@ ion-item {
     min-height: 300px;
     background: #ffffff;
     border: 1px solid #F8F8F8;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10vh;
 
     .inner_padding {
         padding-left: 13px;
@@ -83,32 +86,32 @@ ion-item {
             text-decoration: none;
             text-align: center;
             position: relative;
-            padding-right: 33px;
+      //      padding-right: 33px;
 
-            &:first-child {
-                margin-right: 20px;
-            }
+            // &:first-child {
+            //     margin-right: 20px;
+            // }
 
-            &:before {
-                position: absolute;
-                transition: 0.4s ease all;
-                content: '>';
-                font-size: 14px;
-                right: 11px;
-                top: -2px;
-                color: #fff;
-            }
+            // &:before {
+            //     position: absolute;
+            //     transition: 0.4s ease all;
+            //     content: '>';
+            //     font-size: 14px;
+            //     right: 11px;
+            //     top: -2px;
+            //     color: #fff;
+            // }
 
-            &:after {
-                position: absolute;
-                transition: 0.4s ease all;
-                content: '';
-                width: 1px;
-                height: 28px;
-                right: 30px;
-                top: 5px;
-                background: #fff;
-            }
+            // &:after {
+            //     position: absolute;
+            //     transition: 0.4s ease all;
+            //     content: '';
+            //     width: 1px;
+            //     height: 28px;
+            //     right: 30px;
+            //     top: 5px;
+            //     background: #fff;
+            // }
 
             &:hover {
                 color: #ffffff;

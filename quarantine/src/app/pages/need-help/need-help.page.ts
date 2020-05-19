@@ -5,6 +5,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpService } from 'src/app/services/http.service';
+import {Location} from '@angular/common';
 
 
 
@@ -32,7 +33,9 @@ export class NeedHelpPage implements OnInit {
   normalForm: FormGroup;
   userContactNo: any;
   
-  constructor(private http : HttpService,private formBuilder: FormBuilder,private router : Router,private geolocation : Geolocation, private nativeGeocoder: NativeGeocoder, public loadingCtrl: LoadingController) { 
+  constructor(private http : HttpService,
+    private _location: Location,
+    private formBuilder: FormBuilder,private router : Router,private geolocation : Geolocation, private nativeGeocoder: NativeGeocoder, public loadingCtrl: LoadingController) { 
     this.jobForm = formBuilder.group({
       designation: [this.designation, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
       experience: [this.experience, Validators.compose([Validators.maxLength(30),Validators.pattern('[0-9]+'), Validators.required])],

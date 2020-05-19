@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { PopoverController } from '@ionic/angular';
 import { MarkSpamComponent } from 'src/app/components/mark-spam/mark-spam.component';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -67,7 +68,9 @@ export class CanHelpPage implements OnInit {
   ];
   filteredReqs = this.helpRequests;
 
-  constructor(private callNumber: CallNumber, private popoverController: PopoverController) { }
+  constructor(private callNumber: CallNumber, 
+    private _location: Location,
+    private popoverController: PopoverController) { }
 
   ngOnInit() {
     this.filteredReqs = this.filterRequests(this.isResolved);

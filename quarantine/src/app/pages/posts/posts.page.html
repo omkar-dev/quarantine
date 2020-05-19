@@ -1,9 +1,13 @@
 <ion-content>
   <ion-header>
     <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-      </ion-buttons>
+        <ion-buttons slot="start">
+            <ion-button fill="clear" (click)="_location.back()">
+               <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+            </ion-button>
+         </ion-buttons>
+
+
       <ion-title class="ion-text-center">
         <!-- <img src="../../../assets/post.svg" alt="">  -->
         My Posts
@@ -26,7 +30,7 @@
         <p>{{post.help_info}}</p>
         <div class="btn_group">
           <ion-button (click)="resolve(post)">Resolve</ion-button>
-          <ion-button (click)="delete(post)">Delete</ion-button>
+          <ion-button (click)="callDelete(post)">Delete</ion-button>
         </div>
       </ion-label>
     </ion-item>

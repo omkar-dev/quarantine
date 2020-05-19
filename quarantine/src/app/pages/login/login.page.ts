@@ -138,6 +138,7 @@ export class LoginPage implements OnInit {
     console.log("onBoard",this.showOnboard)
     this.storage.get('user_store').then(data=>{
       console.log('data');
+      console.log(data)
       if(data){
         console.log('data');
         this.router.navigate(['/tabs']);

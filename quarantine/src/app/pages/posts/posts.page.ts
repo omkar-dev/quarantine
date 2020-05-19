@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {Location} from '@angular/common';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-posts',
@@ -10,13 +12,17 @@ export class PostsPage implements OnInit {
   postsArray: any
   jsonURL: string;
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient,
+    private _location: Location,
+    public alertController : AlertController
+    ) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter()
   {
+   // this.jsonURL = 'https://us-central1-quarantine-276114.cloudfunctions.net/helpapi'
     this.jsonURL = '../../../assets/posts.json';
     // this.postsArray = [
     //   {
@@ -64,6 +70,31 @@ export class PostsPage implements OnInit {
       console.log("This matter is already resolved")
     }
   }
+
+
+
+
+async callDelete(data){
+  const alert = await this.alertController.create({
+    message:  "Do you really want to Delete this Post",
+    buttons: [
+      {
+        text: 'No',
+        handler: () => {
+          console.log('Confirm Cancel');
+        }
+      }, {
+        text: 'Yes',
+        handler: () => {
+         this.delete(data)
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+}
+
 
   delete(data)
   {

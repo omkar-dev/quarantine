@@ -26,7 +26,8 @@ export class HomePopoverComponent implements OnInit {
   async openFeedback() {
     this.popoverController.dismiss();
     const modal = this.modalController.create({
-      component: FeedbackComponent
+      component: FeedbackComponent,
+      cssClass: 'my-custom-modal-css'
     });
     return (await modal).present();
   }

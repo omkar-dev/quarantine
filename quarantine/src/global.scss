@@ -32,6 +32,11 @@
     --ion-font-family: 'Roboto', sans-serif;
 }
 
+
+.my-custom-modal-css {
+    --background: transparent !important;
+
+}
 .searchbar-input-container {
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
     border-radius: 5px !important;

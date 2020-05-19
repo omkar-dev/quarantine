@@ -1,12 +1,12 @@
 <div class="popup">
   <h1>Give Feedback<a href="javascript:void(0)" (click)="closeFeedback()" style="cursor: pointer;">
-    <ion-icon name="close-outline"></ion-icon></a>
+    <ion-icon style="font-size:25px" name="close-outline"></ion-icon></a>
   </h1>
   <div class="inner_padding">
     <ion-item>
-      <ion-textarea [(ngModel)]="feedbackMessage" placeholder="Details"></ion-textarea>
+      <ion-textarea style="height: 25vh" [(ngModel)]="feedbackMessage" placeholder="Details"></ion-textarea>
     </ion-item>
-    <div class="center">
+    <div class="center" style="margin-top:2vh;margin-bottom: 4vh">
       <a href="javascript:void(0)" (click)="confirmFeedback();" style="cursor: pointer;" mat-flat-button
         class="btn_line">Confirm</a>
     </div>
