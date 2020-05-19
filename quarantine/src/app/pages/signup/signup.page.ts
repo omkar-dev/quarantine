@@ -72,6 +72,7 @@ validation_messages = {
   flag: any;
   shopDetails: boolean=false;
   signupObject;
+  dataObject
     
     constructor(private modalController : ModalController,private formBuilder: FormBuilder,
       private router:Router,private httpclient:HttpClient,
@@ -81,7 +82,7 @@ validation_messages = {
 
   ngOnInit() {
     this.signupForm=this.formBuilder.group({
-      emailAddress: [this.email, Validators.compose([Validators.maxLength(30), Validators.pattern('[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})'), Validators.required])],
+      emailAddress: [this.email, Validators.compose([Validators.maxLength(60), Validators.pattern('[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})'), Validators.required])],
       name: [this.name, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
       locality:[this.location, Validators.compose([Validators.maxLength(250), Validators.required])],
     })
@@ -165,34 +166,48 @@ SendCode(){
         this.email = this.signupForm.get('emailAddress').value;
         this.locality = this.signupForm.get('locality').value;
         this.type=this.others?'member':'shop'
-        if(this.type == 'member'){
-          this.signupObject =    {
-            "userid": "c4239d9cf3b9",
-            "verfication_code" : " ",
-            "name": this.name,
-            "locality": this.locality,
-            "email": this.email,
-            "account_type": this.type,
-            "shop": {}
-        }
-        }else{
-          this.signupObject = {
-            "userid": "c4239d9cf3b9",
-            "verfication_code" : " ",
-            "name": this.name,
-            "locality": this.locality,
-            "email": this.email,
-            "account_type": this.type,
-            "shop": {
-              shopName:this.shopForm.value.shopName,
-              shopLocality:this.shopForm.value.shopLocality,
-              shopAddress:this.shopForm.value.shopAddress,
-              shopCoordinates:this.shopForm.value.shopCoordinates,
-              fromTime:moment(this.fromTime).format('hh:mm A'),
-              toTime:moment(this.toTime).format('hh:mm A')
-            }
-        } 
-        }
+
+        this.dataObject =    {
+                  "userid": "c4239d9cf3b9",
+                  "verfication_code" : " ",
+                  "name": this.name,
+                  "locality": this.locality,
+                  "email": this.email,
+                  "account_type": this.type,
+                  "shop": {}
+              }
+
+
+
+
+        // if(this.type == 'member'){
+        //   this.signupObject =    {
+        //     "userid": "c4239d9cf3b9",
+        //     "verfication_code" : " ",
+        //     "name": this.name,
+        //     "locality": this.locality,
+        //     "email": this.email,
+        //     "account_type": this.type,
+        //     "shop": {}
+        // }
+        // }else{
+        //   this.signupObject = {
+        //     "userid": "c4239d9cf3b9",
+        //     "verfication_code" : " ",
+        //     "name": this.name,
+        //     "locality": this.locality,
+        //     "email": this.email,
+        //     "account_type": this.type,
+        //     "shop": {
+        //       shopName:this.shopForm.value.shopName,
+        //       shopLocality:this.shopForm.value.shopLocality,
+        //       shopAddress:this.shopForm.value.shopAddress,
+        //       shopCoordinates:this.shopForm.value.shopCoordinates,
+        //       fromTime:moment(this.fromTime).format('hh:mm A'),
+        //       toTime:moment(this.toTime).format('hh:mm A')
+        //     }
+        // } 
+        // }
           
   
   
@@ -205,18 +220,24 @@ SendCode(){
   
         
         this.httpclient.post(
-         'https://us-central1-quarantine-4a6e8.cloudfunctions.net/signup',(params2), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+       'https://us-central1-quarantine-4a6e8.cloudfunctions.net/signup',(this.dataObject), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
         
         )
         .subscribe(res=>{ 
-          if(res)
-          {
-            this.openOTPModal()
-          }
+          console.log("insied",res)
+        this.httpclient.get(
+          'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
+          {params: params2, responseType: 'text'}
+        )
+        .subscribe(res=>{
+          if(res && res==='Otp Send'){
           
+            this.openOTPModal()
+          
+        }
         });
           
-          
+      })   
     
     }
 
@@ -225,7 +246,7 @@ SendCode(){
     console.log("inside modal")
     const modal = await this.modalController.create({
       component: OtpPage,
-      componentProps : { "signupData" :  this.signupObject}
+      componentProps : { "signupData" :  this.dataObject}
     });
     await modal.present()
   }
