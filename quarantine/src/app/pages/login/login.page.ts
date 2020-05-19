@@ -86,6 +86,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    
     this.languages=[
       'English',
       'Hindi',
@@ -135,6 +136,15 @@ export class LoginPage implements OnInit {
   ionViewWillEnter(){
     console.log("lang",this.languageSelected)
     console.log("onBoard",this.showOnboard)
+    this.storage.get('user_store').then(data=>{
+      console.log('data');
+      if(data){
+        console.log('data');
+        this.router.navigate(['/tabs']);
+      }
+    });
+
+
 
     this.ClearData();
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
@@ -181,6 +191,10 @@ export class LoginPage implements OnInit {
     this.presentLoading(loading);
     let accountVerified =  await this.storage.get('VerifiedAccounts');
     if(accountVerified && accountVerified.some(account => account.emailId == this.emailid)){
+      this.storage.get('user_store_verified').then(data=>{
+        this.storage.set('user_store',data)
+      })
+
       this.router.navigate(['/tabs']);
       loading.dismiss()
 

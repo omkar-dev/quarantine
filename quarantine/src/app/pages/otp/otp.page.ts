@@ -149,8 +149,11 @@ export class OtpPage implements OnInit {
         })
         )
         .subscribe(response => {
-          console.log(response,'responseeee')
-          this.storage.set('user_store',response)
+          console.log(response,'responseeee');
+          
+          this.storage.set('user_store',response);
+          this.storage.set('user_store_verified',response);
+
           this.router.navigate(['/tabs']);
           this.showVC = false;
           this.storeVerifiedAccount();

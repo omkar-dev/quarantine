@@ -40,10 +40,14 @@ export class HomePopoverComponent implements OnInit {
     this.storage.get('OnboardingShown').then(OnboardingShown=>{
     this.storage.get('VerifiedAccounts').then(VerifiedAccounts=>{
     this.storage.get('language').then(language=>{
+    this.storage.get('user_store_verified').then(user_store_verified=>{
       this.storage.clear();
       this.storage.set('OnboardingShown',OnboardingShown);
       this.storage.set('VerifiedAccounts',VerifiedAccounts)
       this.storage.set('language',language);
+      this.storage.set('user_store_verified',user_store_verified);
+
+    })
   
   })
 })
