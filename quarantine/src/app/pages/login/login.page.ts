@@ -179,11 +179,14 @@ export class LoginPage implements OnInit {
       message: 'Verifying details'
     });
     this.presentLoading(loading);
-    let accountVerified = this.accountVerified(this.emailid);
-    if (accountVerified) {
+    let accountVerified =  await this.storage.get('VerifiedAccounts');
+    if(accountVerified && accountVerified.some(account => account.emailId == this.emailid)){
       this.router.navigate(['/tabs']);
-    }
+      loading.dismiss()
+
+    } 
     else {
+
       let params = new HttpParams();
       params = params.append('user_name', ' ');
       params = params.append('email', this.emailid);
@@ -211,6 +214,8 @@ export class LoginPage implements OnInit {
       });
     }
   }
+
+
   async openOTPModal()
   {
     let objToSend={
@@ -225,27 +230,7 @@ export class LoginPage implements OnInit {
     await modal.present()
   }
 
-  verifyCode() {
-    let params = new HttpParams();
-    params = params.append('user_code',this.verificationCode );
-    params = params.append('email', this.emailid);
-    params = params.append('attempt', '2');
-    params = params.append('user_name', ' ');
-
-    this.http.get('https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code', { params: params } )
-      .pipe(
-        catchError(e => {
-          this.showAlert('Wrong OTP! Try Again!');
-          this.vc1 = this.vc2 = this.vc3 = this.vc4 = this.vc5 = this.vc6 = "";
-          throw new Error(e.error);
-        })
-        )
-        .subscribe(response => {
-          this.router.navigate(['/tabs']);
-          this.showVC = false;
-          this.storeVerifiedAccount();
-      })
-  }
+ 
 
   storeVerifiedAccount() {
     this.storage.get('VerifiedAccounts').then(verifiedAccounts => {
@@ -269,56 +254,9 @@ export class LoginPage implements OnInit {
     });
   }
 
-  accountVerified(emailid): boolean {
-    let accountVerified: boolean = false;
-    this.storage.get('VerifiedAccounts').then(verifiedAccounts => {
-      if (verifiedAccounts) {
-        accountVerified = verifiedAccounts.some(account => account.email === emailid);
-      }
-      else {
-        accountVerified = false;
-      }
-    })
-    return accountVerified;
-  }
 
   goToSignUp(){
     this.router.navigate(['/signup'])
-  }
-
-
-  Input(e, number) {
-    console.log(e, 'event')
-    let reg = /^\d+$/;
-    if (reg.test(e.target.value) || e.keyCode == 8 || e.keyCode == 46) {
-      if (number == 1) {
-        e.keyCode == 8 || e.keyCode == 46 ? this.myInput1.setFocus() : this.myInput2.setFocus()
-      } else if (number == 2) {
-        e.keyCode == 8 || e.keyCode == 46 ? this.myInput1.setFocus() : this.myInput3.setFocus()
-      } else if (number == 3) {
-        e.keyCode == 8 || e.keyCode == 46 ? this.myInput2.setFocus() : this.myInput4.setFocus()
-      } else if (number == 4) {
-        e.keyCode == 8 || e.keyCode == 46 ? this.myInput3.setFocus() : this.myInput5.setFocus()
-      }else if (number == 5) {
-        e.keyCode == 8 || e.keyCode == 46 ? this.myInput4.setFocus() : this.myInput6.setFocus()
-      }else if (number == 6) {
-        e.keyCode == 8 || e.keyCode == 46 ? this.myInput5.setFocus() : this.verificationCode = String(this.vc1) + String(this.vc2) + String(this.vc3) + String(this.vc4)+ String(this.vc5)+ String(this.vc6);console.log(this.verificationCode);
-      } else {
-        this.myInput2.nativeElement.focus()
-
-      }
-    }
-    
-
-    else {
-      if (number == 1) { this.vc1 = '' }
-      if (number == 2) { this.vc2 = '' }
-      if (number == 3) { this.vc3 = '' }
-      if (number == 4) { this.vc4 = '' }
-      if (number == 5) { this.vc5 = '' }
-      if (number == 6) { this.vc6 = '' }
-
-    }
   }
 
   async GoogleLogin(){

@@ -11,6 +11,7 @@ import { AppRatingService } from 'src/app/services/app-rating/app-rating.service
   styleUrls: ['./home-popover.component.scss'],
 })
 export class HomePopoverComponent implements OnInit {
+  persistentObj: {};
 
   constructor(private modalController : ModalController,
     private popoverController: PopoverController, private router: Router, private storage: Storage, 
@@ -33,11 +34,23 @@ export class HomePopoverComponent implements OnInit {
   }
 
   logout() {
-    // this.router.navigate(['/login'], {skipLocationChange: true,replaceUrl: true});
-    this.router.navigateByUrl('/login')
-    this.storage.remove('role');
-    this.popoverController.dismiss();
+    this.storage.get('OnboardingShown').then(OnboardingShown=>{
+    this.storage.get('VerifiedAccounts').then(VerifiedAccounts=>{
+    this.storage.get('language').then(language=>{
+      this.storage.clear();
+      this.storage.set('OnboardingShown',OnboardingShown);
+      this.storage.set('VerifiedAccounts',VerifiedAccounts)
+      this.storage.set('language',language);
+  
+  })
+})
+    
+});
+this.popoverController.dismiss();
+setTimeout(()=>{    this.router.navigateByUrl('/login')},400);
+
 
   }
+
 
 }

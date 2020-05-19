@@ -6,7 +6,6 @@ import { Geolocation } from '@ionic-native/geolocation/ngx'
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { catchError } from 'rxjs/operators';
 import { Device } from '@ionic-native/device/ngx';
 import { NavController, LoadingController, Platform, AlertController, IonSlides, ModalController, NavParams } from '@ionic/angular';
@@ -48,7 +47,6 @@ export class OtpPage implements OnInit {
 
 
   constructor(public navParams: NavParams,
-    private nativeStorage: NativeStorage,
       public loadingController: LoadingController,
       private platform: Platform,
       public alertController: AlertController,
@@ -152,13 +150,13 @@ export class OtpPage implements OnInit {
         )
         .subscribe(response => {
           console.log(response,'responseeee')
+          this.storage.set('user_store',response)
           this.router.navigate(['/tabs']);
           this.showVC = false;
           this.storeVerifiedAccount();
           loading.dismiss()
           this.modalController.dismiss()
           if(this.signupData){
-
             let User_Store =    {
               "name": this.signupData.name,
               "locality": this.signupData.locality,

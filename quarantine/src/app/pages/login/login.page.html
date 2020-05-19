@@ -54,12 +54,17 @@
         <ion-button expand="block" (click)="onLogin()">{{'Log In'|translate}}
           <ion-ripple-effect></ion-ripple-effect>
         </ion-button>
-        <ion-button expand="block" class="google_bgn ripple-parent" (click)="GoogleLogin()">
+
+
+        <!-- <ion-button expand="block" class="google_bgn ripple-parent" (click)="GoogleLogin()">
 
           <ion-ripple-effect></ion-ripple-effect>
           <ion-icon src="../../../assets/google-icon.svg" slot="start" class="google-logo"></ion-icon>
          {{ 'Log in with Google'|translate }}
-        </ion-button>
+        </ion-button> -->
+
+
+
       </div>
     </div>
 
@@ -73,51 +78,7 @@
 
 </ion-content>
 
-<!-- <div  class="popup_overlay" [class.active]="showVC">
 
-<div   class="verifyOtp"  >
-
-  <h3>
-    Enter OTP
-  </h3>
-    <ion-label>We have sent OTP to your e-mail<br>
-    address for verification
-    </ion-label>
-    <br>
-    <br>
-    <br>
-
-<ion-item lines="none" id="otp">
-    <ion-input [(ngModel)]="vc1" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,1)" #v1>
-    </ion-input>
-    <ion-input [(ngModel)]="vc2" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,2)" #v2>
-    </ion-input>
-    <ion-input [(ngModel)]="vc3" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,3)" #v3>
-    </ion-input>
-    <ion-input [(ngModel)]="vc4" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,4)" #v4>
-    </ion-input>
-    <ion-input [(ngModel)]="vc5" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,5)" #v5>
-    </ion-input>
-    <ion-input [(ngModel)]="vc6" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,6)" #v6>
-    </ion-input>
-  </ion-item>
-  <br>
-
-
-  <ion-button class="verify" (click)="verifyCode()">Verify
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-button>
-    <br>
-    <br>
-    <br>
-
-  <div class="account_text">
-      <ion-text >Didn’t recive OTP? <a href="avascript:void(0)" (click)="onLogin()">Resend</a></ion-text>
-    </div>
-
-</div>  
-   
-</div> -->
 
 
 
