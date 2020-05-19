@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+// import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 // import {
 //   BackgroundGeolocation,
@@ -10,6 +10,8 @@ import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@io
 // } from "@ionic-native/background-geolocation/ngx";
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ModalController } from '@ionic/angular';
+import { TrackerComponentPage } from '../tracker-component/tracker-component.page';
 
 @Component({
   selector: 'app-visit-history',
@@ -32,7 +34,7 @@ export class VisitHistoryPage implements OnInit {
   combinedLatLong: string;
   mapUrl: string;
 
-  constructor(public sanitizer: DomSanitizer,private nativeGeocoder: NativeGeocoder,private localNotifications : LocalNotifications,public geolocation : Geolocation,public zone : NgZone,private http: HttpClient, 
+  constructor(public modalController : ModalController,public sanitizer: DomSanitizer,private nativeGeocoder: NativeGeocoder,public geolocation : Geolocation,public zone : NgZone,private http: HttpClient, 
     //private backgroundGeolocation: BackgroundGeolocation
     ) { }
 
@@ -41,6 +43,7 @@ export class VisitHistoryPage implements OnInit {
 
   ionViewWillEnter()
   {
+    // setInterval(() => { console.log("this is setInterval") }, 5000);
     this.latitude = 40.7127837;
     this.longitude = -74.0059413              // this initial values of lat long will be taken from storage
     this.combinedLatLong = "40.7127837,-74.0059413"
@@ -51,6 +54,7 @@ export class VisitHistoryPage implements OnInit {
   startTracking()
   {
     console.log("inside start")
+    this.openTrackerModal()
          // Background Tracking
 
     //      const config: BackgroundGeolocationConfig = {
@@ -92,18 +96,40 @@ export class VisitHistoryPage implements OnInit {
     // Foreground Tracking
 
 
-  this.watch = this.geolocation.watchPosition();
-this.subscription = this.watch.subscribe((data) => {
- this.zone.run(() => {
-      this.lat =  data.coords.latitude
-      this.lng =  data.coords.longitude
-      console.log("watchhhh",this.lat,this.lng);
-      this.getReverseGeoCode(this.lat,this.lng)
+//   this.watch = this.geolocation.watchPosition();
+// this.subscription = this.watch.subscribe((data) => {
+//  this.zone.run(() => {
+//       this.lat =  data.coords.latitude
+//       this.lng =  data.coords.longitude
+//       console.log("watchhhh",this.lat,this.lng);
+//       this.getReverseGeoCode(this.lat,this.lng)
       
+//     });
+// });
+setInterval(() => {
+  this.watch = this.geolocation.watchPosition();
+  this.subscription = this.watch.subscribe((data) => {
+     this.zone.run(() => {
+          this.lat =  data.coords.latitude
+          this.lng =  data.coords.longitude
+          console.log("watchhhh",this.lat,this.lng);
+          this.getReverseGeoCode(this.lat,this.lng)
+          
+        });
     });
-});
+}, 10000)
 }
 
+async openTrackerModal()
+  {
+   
+    console.log("inside modal")
+    const modal = await this.modalController.create({
+      component: TrackerComponentPage,
+      // componentProps : { "data" :  objToSend}
+    });
+    await modal.present()
+  }
 getReverseGeoCode(lat,long)
 {
   let options: NativeGeocoderOptions = {
@@ -137,7 +163,7 @@ this.nativeGeocoder.reverseGeocode(lat, long, options)
  checkButton()
  {
    this.startTrack = !this.startTrack
-   this.startTrack ? (this.buttonText = "Track Me") && this.stopTracking() : (this.buttonText = "Stop Tracking") && this.startTracking()
+   this.startTrack ? (this.buttonText = "Track Me") && this.stopTracking() : (this.buttonText = "Stop Tracking") && this.startTracking();
   console.log("startTrack",this.startTrack,this.buttonText)
  }
 

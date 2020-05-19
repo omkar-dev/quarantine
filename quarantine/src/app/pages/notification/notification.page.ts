@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
+import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-notification',
@@ -8,34 +9,34 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./notification.page.scss'],
 })
 export class NotificationPage implements OnInit {
+  notifications: any = [];
+  
 
-  notifications = [
-    {
-      message: 'You have a new message',
-      date: '25-03-2020',
-      sender : "Farhan Patel",
-      time : "9:00 PM",
-      type: "message"
-    },
-    {
-      message: 'You have a new notification',
-      date: '05-01-2020',
-      sender : "Vikas Sharma",
-      time : "10:00 AM",
-      type : "notification"
-    }
-  ];
-
-  constructor(private router : Router,private dataService : DataService) { }
+  constructor(private http : HttpService,private router : Router,private dataService : DataService) { }
 
   ngOnInit() {
   }
 
+  ionViewWillEnter()
+  {
+    let uID = 666
+    let sID = 1
+    this.http.getMessages(uID,sID).subscribe(res=>{
+      this.notifications = res['data']
+      console.log("notif",this.notifications)
+    })
+  }
+
   goToChat(data)
   {
+    console.log("data",data)
     if(data.type=='message')
   {
-    this.dataService.setData(2,data)
+    let body = {
+      data : data,
+      from : "notification"
+    }
+    this.dataService.setData(2,body)
     this.router.navigateByUrl('chat/2')
   }
   else {
