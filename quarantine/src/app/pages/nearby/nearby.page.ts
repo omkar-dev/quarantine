@@ -175,10 +175,10 @@ getShopDetails(){
   onchat(data){
 
 // this.navCtrl.navigateForward(["/chat"])
-if(this.dummyMessagesArray[0]['reply'].length>0)
+if(data)
 {
   let dataToSend = {
-    data : this.dummyMessagesArray[0]['reply'],
+    data : data,
     from : "nearbuy"
   }
   this.dataService.setData(1,dataToSend)

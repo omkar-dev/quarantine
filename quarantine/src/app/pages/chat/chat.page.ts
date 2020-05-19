@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { HttpService } from 'src/app/services/http.service';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -18,7 +19,11 @@ export class ChatPage implements OnInit {
   sortedUsersMessagesArray: any;
   sortedShopersMessagesArray :  any
   message : any
-  constructor(private route :  ActivatedRoute,private http:HttpService) { }
+  shopName: String;
+  shopInitials: string;
+  uID: any;
+  shopID: any;
+  constructor(private route :  ActivatedRoute,private http:HttpService,private storage : Storage) { }
 
   ngOnInit() {
     
@@ -29,9 +34,22 @@ export class ChatPage implements OnInit {
     if (this.route.snapshot.data['special']) {
       if(this.route.snapshot.data['special']['from']=='nearbuy') {
         let data = this.route.snapshot.data['special']['data'];
-        let shopID = data.Shopid
-        let userID = data.Userid
-      console.log("received data from nearbuy",this.receivedMessagesArray)
+        console.log("datatatat",data)
+        this.shopID = data.shop_id
+        this.shopName = data['shop_name'].toUpperCase()
+        this.shopInitials = this.shopName.charAt(0).toUpperCase()
+        console.log("initials",this.shopInitials)
+        this.storage.get('user_store').then(userStore=>{
+          console.log("userStore",userStore)
+          this.uID =userStore.userid
+            this.http.getMessages(this.uID,this.shopID).subscribe(res=>{
+              console.log("gotMessages",res)
+              this.receivedMessagesArray = res
+              console.log("messages",this.receivedMessagesArray)
+            })
+        })
+        
+              console.log("received data from nearbuy",data)
       }
       else if(this.route.snapshot.data['special']['from']=='notification') {
         this.receivedMessagesArray = this.route.snapshot.data['special']['data'];
@@ -67,8 +85,8 @@ export class ChatPage implements OnInit {
     let body={
       "type":"message",
       "messege_id":"4667",
-      "Shopid":"999",
-      "Userid":"12",
+      "Shopid": this.shopID,
+      "Userid": this.uID,
       "Message": this.message,
       "Attachment":"new img",
       "timestamp":"45678"

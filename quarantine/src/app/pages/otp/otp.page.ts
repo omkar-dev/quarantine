@@ -156,17 +156,8 @@ export class OtpPage implements OnInit {
           this.storeVerifiedAccount();
           loading.dismiss()
           this.modalController.dismiss()
-          if(this.signupData){
-            let User_Store =    {
-              "name": this.signupData.name,
-              "locality": this.signupData.locality,
-              "email": this.signupData.email,
-              "account_type": this.signupData.type,
-              "shop": this.signupData.shop
-          }
-          console.log(User_Store,'saving user store')
-          this.storage.set('UserStore',JSON.stringify(User_Store))
-          }
+     
+          
       })
   }
 
