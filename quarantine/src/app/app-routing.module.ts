@@ -55,6 +55,10 @@ const routes: Routes = [
   },  {
     path: 'otp',
     loadChildren: () => import('./pages/otp/otp.module').then( m => m.OtpPageModule)
+  },
+  {
+    path: 'tracker-component',
+    loadChildren: () => import('./pages/tracker-component/tracker-component.module').then( m => m.TrackerComponentPageModule)
   }
 
 

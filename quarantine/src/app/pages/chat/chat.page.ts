@@ -27,8 +27,18 @@ export class ChatPage implements OnInit {
   ionViewWillEnter()
   {
     if (this.route.snapshot.data['special']) {
-      this.receivedMessagesArray = this.route.snapshot.data['special'];
-      console.log("received data",this.receivedMessagesArray)
+      if(this.route.snapshot.data['special']['from']=='nearbuy') {
+        let data = this.route.snapshot.data['special']['data'];
+        let shopID = data.Shopid
+        let userID = data.Userid
+      console.log("received data from nearbuy",this.receivedMessagesArray)
+      }
+      else if(this.route.snapshot.data['special']['from']=='notification') {
+        this.receivedMessagesArray = this.route.snapshot.data['special']['data'];
+      console.log("received data from notif",this.receivedMessagesArray)
+      }
+      
+      
 
       this.shopersMessagesArray = this.receivedMessagesArray.filter(a=>a.Shopid!='') //filtering shopers message
       this.sortedShopersMessagesArray = this.receivedMessagesArray.sort((a,b)=>new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()) //sorting shopers message

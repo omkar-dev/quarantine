@@ -29,18 +29,18 @@
 
 <ion-content>
   <div class="main">
-    <ion-item *ngFor="let notif of notifications" button lines="none" (click)="goToChat(notif)">
+    <ion-item button lines="none" (click)="goToChat(notifications)">
       <ion-avatar slot="start">
-        {{notif.sender.charAt(0)}}
+        <!-- {{notif.sender.charAt(0)}} -->
       </ion-avatar>
       <ion-label>
-        <h4>{{notif.sender}}</h4>
+        <!-- <h4>{{notif.sender}}</h4> -->
         <p>
-          {{'notif.message'|translate}}
+          {{notifications.Message}}
         </p>
       </ion-label>
       <div class="date_section msg_comming" slot="">
-        <p>{{notif.time}}</p>
+        <p>{{notifications.timestamp}}</p>
         <span>3</span>
       </div>
     </ion-item>
@@ -61,5 +61,5 @@
     </ion-item> -->
   </div>
 
-  <p *ngIf="notifications && notifications.length==0">No notifications yet!</p>
+  <p *ngIf="!notifications">No notifications yet!</p>
 </ion-content>

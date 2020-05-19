@@ -177,7 +177,11 @@ getShopDetails(){
 // this.navCtrl.navigateForward(["/chat"])
 if(this.dummyMessagesArray[0]['reply'].length>0)
 {
-  this.dataService.setData(1,this.dummyMessagesArray[0]['reply'])
+  let dataToSend = {
+    data : this.dummyMessagesArray[0]['reply'],
+    from : "nearbuy"
+  }
+  this.dataService.setData(1,dataToSend)
   this.router.navigateByUrl('/chat/1')
 }
 else
