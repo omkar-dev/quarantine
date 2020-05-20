@@ -15,7 +15,8 @@ export class TabsPage implements OnInit {
   constructor(private popoverController: PopoverController,private storage:Storage) { }
 
   ngOnInit() {
-    this.storage.get('UserStore').then(user=>{
+    this.storage.get('user_store').then(user=>{
+      console.log("tabsUserstore",user)
       this.username=user.name
     })
     if(this.username.length>24){
