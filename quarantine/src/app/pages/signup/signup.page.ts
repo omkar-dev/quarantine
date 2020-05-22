@@ -73,6 +73,7 @@ validation_messages = {
   shopDetails: boolean=false;
   signupObject;
   dataObject
+  shoptype: any;
     
     constructor(private modalController : ModalController,private formBuilder: FormBuilder,
       private router:Router,private httpclient:HttpClient,
@@ -89,13 +90,14 @@ validation_messages = {
     this.shopForm=this.formBuilder.group({
       shopName: [this.shop_name, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
       shopLocality:[this.shop_locality, Validators.compose([Validators.maxLength(100), Validators.required])],
-      shopAddress:[this.shop_address, Validators.compose([Validators.maxLength(200), Validators.required])],
-      shopCoordinates:[this.shop_coordinates,Validators.compose([Validators.maxLength(200), Validators.required])]
+      shopAddress:[this.shop_address, Validators.compose([Validators.maxLength(200), Validators.required])]
+    //  shopCoordinates:[this.shop_coordinates,Validators.compose([Validators.maxLength(200), Validators.required])]
     })
   }
 
   selectType(type)
   {
+    this.shoptype=type;
     this.others=this.grocery=this.medical=false;
     type=='others'? this.others=true:(type=='grocery'?this.grocery=true:this.medical=true)
     console.log("selected type : ",type)
@@ -167,6 +169,15 @@ SendCode(){
         this.locality = this.signupForm.get('locality').value;
         this.type=this.others?'member':'shop'
 
+
+        let shop = {
+          shop_name:this.shopForm.value.shopName,
+          shop_type:this.shoptype,
+          shop_locality:this.shopForm.value.shopLocality,
+          shop_address:this.shopForm.value.shopAddress,
+          shop_timings: moment(this.fromTime).format('hh:mm A') +'-'+moment(this.toTime).format('hh:mm A')
+          }
+
         this.dataObject =    {
                   "userid": "c4239d9cf3b9",
                   "verfication_code" : " ",
@@ -174,41 +185,9 @@ SendCode(){
                   "locality": this.locality,
                   "email": this.email,
                   "account_type": this.type,
-                  "shop": {}
+                  "shop":this.type == 'member'?{}:shop
               }
 
-
-
-
-        // if(this.type == 'member'){
-        //   this.signupObject =    {
-        //     "userid": "c4239d9cf3b9",
-        //     "verfication_code" : " ",
-        //     "name": this.name,
-        //     "locality": this.locality,
-        //     "email": this.email,
-        //     "account_type": this.type,
-        //     "shop": {}
-        // }
-        // }else{
-        //   this.signupObject = {
-        //     "userid": "c4239d9cf3b9",
-        //     "verfication_code" : " ",
-        //     "name": this.name,
-        //     "locality": this.locality,
-        //     "email": this.email,
-        //     "account_type": this.type,
-        //     "shop": {
-        //       shopName:this.shopForm.value.shopName,
-        //       shopLocality:this.shopForm.value.shopLocality,
-        //       shopAddress:this.shopForm.value.shopAddress,
-        //       shopCoordinates:this.shopForm.value.shopCoordinates,
-        //       fromTime:moment(this.fromTime).format('hh:mm A'),
-        //       toTime:moment(this.toTime).format('hh:mm A')
-        //     }
-        // } 
-        // }
-          
   
   
         let params2 = new HttpParams();
