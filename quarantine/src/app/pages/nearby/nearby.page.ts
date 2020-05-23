@@ -33,10 +33,10 @@ export class NearbyPage implements OnInit {
   ionViewWillEnter()
   {
     console.log("tabs",this.tabPart)
-   this.currentCity = "kalyan"
+  //  this.currentCity = "kalyan"
    this.storage.set("currentCity",this.currentCity);
    this.storage.get('currentCity').then(toc=>{
-   this.currentUserCity = toc;
+  //  this.currentUserCity = toc;
    console.log("currentUserCity", this.currentUserCity)
    })
    this.getGeoLoc();
@@ -129,9 +129,10 @@ this.nativeGeocoder.reverseGeocode(lat, long, options)
       long :result[0].longitude,
       country : result[0].countryName,
       // city : result[0].locality,
-      city : "kalyan",
+      city : result[0].locality,
       postCode : result[0].postalCode
     }
+    this.currentCity = this.locationData.city
     
     this.storage.set('locationData',this.locationData)
 
@@ -140,8 +141,12 @@ this.nativeGeocoder.reverseGeocode(lat, long, options)
 }
 
 getShopDetails(){
-
-  this.httpClient.get("https://us-central1-quarantine-275312.cloudfunctions.net/Shopkeeper?shop_locality="+"kalyan", {
+if(!this.currentCity)
+{
+  this.currentCity='KalyanSub'
+}
+  console.log("currCity",this.currentCity)
+  this.httpClient.get("https://us-central1-quarantine-275312.cloudfunctions.net/Shopkeeper?shop_locality="+this.currentCity, {
   }).subscribe(data => {
 
     console.log("SHOPDETAILS",data)
