@@ -43,13 +43,16 @@
 </ion-content>
 
 <div class="bottomContent">
-  <ion-button (click)="checkButton()">
-    <ion-icon src="assets/ion-pluse.svg"></ion-icon> {{buttonText}}
+  <ion-button *ngIf="showTrack" (click)="startTracking()">
+    <ion-icon src="assets/ion-pluse.svg"></ion-icon> Start Tracking
+  </ion-button>
+  <ion-button *ngIf="!showTrack" (click)="stopTracking()">
+    <ion-icon src="assets/ion-pluse.svg"></ion-icon> Stop Tracking
   </ion-button>
   <div class="list">
     <ion-item *ngFor="let location of locationsArray" (click)="showMarker(location.lat,location.long)"lines="none" no-padding class="no-padding">
       <img src="../../../assets/location_1.svg" slot="start" alt="">
-      <ion-label>{{location.city}}</ion-label>
+      <ion-label>{{location.subLocality}}</ion-label>
       <div class="time" slot="end">23 Min ago</div>
     </ion-item>
     <p *ngIf="locationsArray &&locationsArray.length==0">Nothing to show! Click on Track Me to enable tracking!</p>
