@@ -15,7 +15,19 @@
         <!-- <ion-icon src="assets/awesome-filter.svg"></ion-icon> -->
       </div>
 
-      <div *ngSwitchCase="'medical'">
+<div *ngSwitchCase="'medical'">
+
+        <div style="display: flex;flex-direction: column;"*ngIf="medicalstorelist.length==0">
+          <br><br>
+          <span style="align-self: center ;padding:20px">
+              <h2 >No medical facilities nearby available</h2>
+          </span>
+          <span style="align-self: center;padding:10px">
+              <p>Ask your nearby medical facilities to signup</p>
+          </span>
+          <ion-button style="align-self: center;width:140px"  (click)="share()" >share</ion-button>
+        </div>
+
 
         <ion-item button lines="none" *ngFor="let item of medicalstorelist">
           <ion-avatar slot="start">
@@ -36,6 +48,19 @@
 
 
       <div *ngSwitchCase="'grocery'">
+
+              <div style="display: flex;flex-direction: column;"*ngIf="medicalstorelist.length==0">
+                <br><br>
+
+                <span style="align-self: center ;padding:20px">
+                    <h2 >No stores nearby Available</h2>
+                </span>
+                <span style="align-self: center;padding:10px">
+                    <p >Ask your nearby store to Signup</p>
+                </span>
+                <ion-button style="align-self: center;width:140px"  (click)="share()" >share</ion-button>
+              </div>
+             
         <ion-item button lines="none" *ngFor="let item of grocerystorelist">
           <ion-avatar slot="start">
             <img src="../../../assets/mediacal.png">

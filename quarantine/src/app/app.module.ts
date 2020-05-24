@@ -17,6 +17,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { InAppReview } from '@ionic-native/in-app-review/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { FeedbackComponent } from './components/feedback/feedback.component';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -57,6 +58,7 @@ export function createTranslateLoader(http: HttpClient){
     ],
   providers: [
     StatusBar,
+    SocialSharing,
     HelpLineService,
     SplashScreen,
     AndroidPermissions,

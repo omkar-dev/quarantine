@@ -27,7 +27,8 @@ export class TabsPage implements OnInit {
   async openMenu(event) {
     const popover = this.popoverController.create({
       component: HomePopoverComponent,
-      event: event
+      event: event,
+      backdropDismiss:true
     });
     return (await popover).present();
   }

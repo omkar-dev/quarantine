@@ -6,6 +6,7 @@ import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@io
 import { HttpClient} from '@angular/common/http';
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-nearby',
@@ -28,7 +29,10 @@ export class NearbyPage implements OnInit {
   dummyMessagesArray  :any
   fullMedicalStoreList: any[];
   fullGroceryStoreList: any[];
-  constructor(private router : Router,private dataService : DataService,private navCtrl: NavController,private storage: Storage,private geolocation: Geolocation,private nativeGeocoder: NativeGeocoder,public httpClient: HttpClient) { }
+  constructor(private router : Router,
+    private dataService : DataService,
+    private socialSharing: SocialSharing,
+    private navCtrl: NavController,private storage: Storage,private geolocation: Geolocation,private nativeGeocoder: NativeGeocoder,public httpClient: HttpClient) { }
 
   ionViewWillEnter()
   {
@@ -93,7 +97,18 @@ export class NearbyPage implements OnInit {
   }
   ngOnInit() {
     this.getShopDetails();
+
+
+
   
+  }
+
+
+  share(){
+  
+      let quarantieUrl='www.google.com'
+      this.socialSharing.share('Quarantine APP',quarantieUrl)
+    
   }
 
   getGeoLoc() {
@@ -149,6 +164,8 @@ if(!this.currentCity)
   this.httpClient.get("https://us-central1-quarantine-275312.cloudfunctions.net/Shopkeeper?shop_locality="+this.currentCity, {
   }).subscribe(data => {
 
+
+     
     console.log("SHOPDETAILS",data)
 
     this.shopDetails = data;
@@ -158,7 +175,7 @@ if(!this.currentCity)
     console.log("backupjsondata",this.backupjsondata)
 
     console.log("shopDetails", this.shopDetails)
-
+    
     this.medicalstorelist = this.shopDetails['data'].filter(stat =>  stat.shop_type.includes('medical') )
     this.fullMedicalStoreList = this.medicalstorelist
 
