@@ -127,6 +127,8 @@ export class OtpPage implements OnInit {
   }
 
   async verifyCode() {
+    this.verificationCode = String(this.vc1) + String(this.vc2) + String(this.vc3) + String(this.vc4)+ String(this.vc5)+ String(this.vc6);
+
     console.log("inside verify code")
     const loading = await this.loadingController.create({
       message: 'Verifying details'
