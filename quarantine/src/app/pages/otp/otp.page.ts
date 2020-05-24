@@ -21,12 +21,12 @@ export class OtpPage implements OnInit {
   @Input() data;
   @Input() signupData;
 
-  @ViewChild('v1', { static: false }) myInput1;
-  @ViewChild('v2', { static: false }) myInput2;
-  @ViewChild('v3', { static: false }) myInput3;
-  @ViewChild('v4', { static: false }) myInput4;
-  @ViewChild('v5', { static: false }) myInput5;
-  @ViewChild('v6', { static: false }) myInput6;
+  @ViewChild('v1', { static: false }) myInput1 : ElementRef;
+  @ViewChild('v2', { static: false }) myInput2 : ElementRef;
+  @ViewChild('v3', { static: false }) myInput3 : ElementRef;
+  @ViewChild('v4', { static: false }) myInput4 : ElementRef;
+  @ViewChild('v5', { static: false }) myInput5 : ElementRef;
+  @ViewChild('v6', { static: false }) myInput6 : ElementRef;
 
   vc1="";
   vc2="";
@@ -91,19 +91,20 @@ export class OtpPage implements OnInit {
   Input(e, number) {
     console.log(e, 'event')
     let reg = /^\d+$/;
+    console.log("myInput1",this.myInput1['value'])
     if (reg.test(e.target.value) || e.keyCode == 8 || e.keyCode == 46) {
       if (number == 1) {
-        e.keyCode == 8 || e.keyCode == 46 ? this.myInput1.setFocus() : this.myInput2.setFocus()
+        e.keyCode == 8 || e.keyCode == 46 ? this.myInput1.nativeElement.focus() : this.myInput2.nativeElement.focus()
       } else if (number == 2) {
-        e.keyCode == 8 || e.keyCode == 46 ? this.myInput1.setFocus() : this.myInput3.setFocus()
+        e.keyCode == 8 || e.keyCode == 46 ? this.myInput1.nativeElement.focus() : this.myInput3.nativeElement.focus()
       } else if (number == 3) {
-        e.keyCode == 8 || e.keyCode == 46 ? this.myInput2.setFocus() : this.myInput4.setFocus()
+        e.keyCode == 8 || e.keyCode == 46 ? this.myInput2.nativeElement.focus() : this.myInput4.nativeElement.focus()
       } else if (number == 4) {
-        e.keyCode == 8 || e.keyCode == 46 ? this.myInput3.setFocus() : this.myInput5.setFocus()
+        e.keyCode == 8 || e.keyCode == 46 ? this.myInput3.nativeElement.focus() : this.myInput5.nativeElement.focus()
       }else if (number == 5) {
-        e.keyCode == 8 || e.keyCode == 46 ? this.myInput4.setFocus() : this.myInput6.setFocus()
+        e.keyCode == 8 || e.keyCode == 46 ? this.myInput4.nativeElement.focus() : this.myInput6.nativeElement.focus()
       }else if (number == 6) {
-        e.keyCode == 8 || e.keyCode == 46 ? this.myInput5.setFocus() : this.verificationCode = String(this.vc1) + String(this.vc2) + String(this.vc3) + String(this.vc4)+ String(this.vc5)+ String(this.vc6);console.log(this.verificationCode);
+        e.keyCode == 8 || e.keyCode == 46 ? this.myInput5.nativeElement.focus() : this.verificationCode = String(this.vc1) + String(this.vc2) + String(this.vc3) + String(this.vc4)+ String(this.vc5)+ String(this.vc6);console.log(this.verificationCode);
       } else {
         this.myInput2.nativeElement.focus()
 
