@@ -2,16 +2,11 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 // import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
-// import {
-//   BackgroundGeolocation,
-//   BackgroundGeolocationConfig,
-//   BackgroundGeolocationResponse,
-//   BackgroundGeolocationEvents
-// } from "@ionic-native/background-geolocation/ngx";
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ModalController } from '@ionic/angular';
 import { TrackerComponentPage } from '../tracker-component/tracker-component.page';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-visit-history',
@@ -29,12 +24,14 @@ export class VisitHistoryPage implements OnInit {
   locationsArray = []
   startTrack: boolean = true;
   buttonText: string = "Track me";
-  latitude: number;
+  latitude: any;
   longitude: any;
   combinedLatLong: string;
   mapUrl: string;
+  showTrack =true
+  interval: any;
 
-  constructor(public modalController : ModalController,public sanitizer: DomSanitizer,private nativeGeocoder: NativeGeocoder,public geolocation : Geolocation,public zone : NgZone,private http: HttpClient, 
+  constructor(public storage : Storage,public modalController : ModalController,public sanitizer: DomSanitizer,private nativeGeocoder: NativeGeocoder,public geolocation : Geolocation,public zone : NgZone,private http: HttpClient, 
     //private backgroundGeolocation: BackgroundGeolocation
     ) { }
 
@@ -43,82 +40,37 @@ export class VisitHistoryPage implements OnInit {
 
   ionViewWillEnter()
   {
-    // setInterval(() => { console.log("this is setInterval") }, 5000);
-    this.latitude = 40.7127837;
-    this.longitude = -74.0059413              // this initial values of lat long will be taken from storage
-    this.combinedLatLong = "40.7127837,-74.0059413"
+    this.storage.get("locationsArray").then(res=>{
+      if(res)
+      {
+        this.locationsArray=res
+      }
+    })
+    
     this.mapUrl = "https://www.google.com/maps/embed/v1/place?q="+this.combinedLatLong+"&key=AIzaSyCEibeFAFYEpG6xh4eq8R_F_BQxba2XcQc&zoom=17"
     console.log("combined",this.combinedLatLong)
   }
 
-  startTracking()
+
+
+startTracking()
   {
-    console.log("inside start")
-    this.openTrackerModal()
-         // Background Tracking
-
-    //      const config: BackgroundGeolocationConfig = {
-    //           desiredAccuracy: 10,
-    //           stationaryRadius: 20,
-    //           distanceFilter: 30,
-    //           debug: false, //  enable this hear sounds for background-geolocation life-cycle.
-    //           stopOnTerminate: false, // enable this to clear background location settings when the app terminates
-    //           notificationsEnabled: false,
-    //           startForeground  : false
-
-    //         };
-        
-    //         this.backgroundGeolocation.configure(config).then(() => {
-    //           this.backgroundGeolocation
-    //             .on(BackgroundGeolocationEvents.location)
-    //             .subscribe((location: BackgroundGeolocationResponse) => {
-    //               console.log("Location",location);
-    //               this.backgroundLocObject = location
-            
-    //             });
-    //         });
-
-    
-    // this.backgroundGeolocation.start();
-    // this.localNotifications.schedule({
-    //       id: 1,
-    //       text: 'Location is being tracked. Click to Stop',
-    //     });
-
-    //     this.localNotifications.on('click').subscribe(notification => {
-    //           // Insert your logic here
-    //           console.log("Notificationnnn",notification)
-    //           this.stopTracking();
-    //            });
-
-
-
     // Foreground Tracking
-
-
-//   this.watch = this.geolocation.watchPosition();
-// this.subscription = this.watch.subscribe((data) => {
-//  this.zone.run(() => {
-//       this.lat =  data.coords.latitude
-//       this.lng =  data.coords.longitude
-//       console.log("watchhhh",this.lat,this.lng);
-//       this.getReverseGeoCode(this.lat,this.lng)
-      
-//     });
-// });
-setInterval(() => {
+    this.showTrack = false
+this.interval = setInterval(()=>{
   this.watch = this.geolocation.watchPosition();
   this.subscription = this.watch.subscribe((data) => {
-     this.zone.run(() => {
-          this.lat =  data.coords.latitude
-          this.lng =  data.coords.longitude
-          console.log("watchhhh",this.lat,this.lng);
-          this.getReverseGeoCode(this.lat,this.lng)
-          
-        });
-    });
-}, 10000)
+   this.zone.run(() => {
+        this.lat =  data.coords.latitude
+        this.lng =  data.coords.longitude
+        console.log("watchhhh",this.lat,this.lng);
+        this.getReverseGeoCode(this.lat,this.lng)
+        
+      });
+  });
+},20000)
 }
+
 
 async openTrackerModal()
   {
@@ -149,12 +101,15 @@ this.nativeGeocoder.reverseGeocode(lat, long, options)
     }
     this.locationsArray.push(this.locationData);
     console.log("LocationsArray",this.locationsArray);
+    this.storage.set("locationsArray",this.locationsArray)
   })
   .catch((error: any) => console.log(error));
 }
 
   stopTracking()
   {
+    clearInterval(this.interval)
+    this.showTrack=true
     console.log("inside stop")
   //  this.backgroundGeolocation.stop();
     this.subscription.unsubscribe();
