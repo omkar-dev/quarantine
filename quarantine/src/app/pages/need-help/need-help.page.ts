@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpService } from 'src/app/services/http.service';
 import {Location} from '@angular/common';
+import { Storage } from '@ionic/storage';
 
 
 
@@ -35,6 +36,7 @@ export class NeedHelpPage implements OnInit {
   
   constructor(private http : HttpService,
     private _location: Location,
+    private storage: Storage,
     private formBuilder: FormBuilder,private router : Router,private geolocation : Geolocation, private nativeGeocoder: NativeGeocoder, public loadingCtrl: LoadingController) { 
     this.jobForm = formBuilder.group({
       designation: [this.designation, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
@@ -202,10 +204,16 @@ loading.dismiss();
   this.linkedIn = this.jobForm.get('linkedIn').value
   this.designation = this.jobForm.get('designation').value
   this.industry = this.jobForm.get('industry').value
+
+  this.storage.get('user_store').then(userStore=>{
+
+console.log(this.helpFor!=='Job Layoffs', this.helpFor,this.normalForm.valid)
+
 if(this.helpFor=='Job Layoffs' && this.jobForm.valid)
 {
+
   let body = {
-    "user_id":"1",
+    "user_id":userStore['userid'],
     "help_for":this.helpFor,
     "help_info":this.helpText,
     "phone_no":this.contactNo,
@@ -223,11 +231,13 @@ if(this.helpFor=='Job Layoffs' && this.jobForm.valid)
   })
   
 }
+
+
 else if(this.helpFor!='Job Layoffs' && this.normalForm.valid)
 {
  
   let body = {      
-    "user_id":"1",
+    "user_id":userStore['userid'],
     "help_for":this.helpFor,
     "help_info":this.helpText,
     "phone_no":this.contactNo,
@@ -244,7 +254,9 @@ else
 {
   console.log("Please check the input fields")
   loading.dismiss()
-} 
+}
+
+})
 }
 
 

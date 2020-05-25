@@ -3,6 +3,10 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
 import { PopoverController } from '@ionic/angular';
 import { MarkSpamComponent } from 'src/app/components/mark-spam/mark-spam.component';
 import {Location} from '@angular/common';
+import { Storage } from '@ionic/storage';
+import { HttpClient } from '@angular/common/http';
+import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 
 @Component({
@@ -36,40 +40,45 @@ export class CanHelpPage implements OnInit {
     }
   ];
 
-  helpRequests = [
-    {
-      helpType: "Food Requests",
-      avatar: "../../../assets/kitchen.svg",
-      help_info: "Lorem ipsum dolor sit amet",
-      phone_no: '911',
-      resolved: 'active'
-    },
-    {
-      helpType: "Job Layoffs",
-      avatar: "../../../assets/job_layout.svg",
-      help_info: "Lorem ipsum dolor sit amet",
-      phone_no: '911',
-      resolved: 'resolved'
-    },
-    {
-      helpType: "Medical Help",
-      avatar: "../../../assets/medical_2.svg",
-      help_info: "Lorem ipsum dolor sit amet",
-      phone_no: '911',
-      resolved: 'resolved'
-    },
-    {
-      helpType: "Handicap",
-      avatar: "../../../assets/handicaf_1.svg",
-      help_info: "Lorem ipsum dolor sit amet",
-      phone_no: '911',
-      resolved: 'active'
-    },
-  ];
+  helpRequests = []
+
+  //   {
+  //     helpType: "Food Requests",
+  //     avatar: "../../../assets/kitchen.svg",
+  //     help_info: "Lorem ipsum dolor sit amet",
+  //     phone_no: '911',
+  //     resolved: 'active'
+  //   },
+  //   {
+  //     helpType: "Job Layoffs",
+  //     avatar: "../../../assets/job_layout.svg",
+  //     help_info: "Lorem ipsum dolor sit amet",
+  //     phone_no: '911',
+  //     resolved: 'resolved'
+  //   },
+  //   {
+  //     helpType: "Medical Help",
+  //     avatar: "../../../assets/medical_2.svg",
+  //     help_info: "Lorem ipsum dolor sit amet",
+  //     phone_no: '911',
+  //     resolved: 'resolved'
+  //   },
+  //   {
+  //     helpType: "Handicap",
+  //     avatar: "../../../assets/handicaf_1.svg",
+  //     help_info: "Lorem ipsum dolor sit amet",
+  //     phone_no: '911',
+  //     resolved: 'active'
+  //   },
+  // ];
   filteredReqs = this.helpRequests;
 
   constructor(private callNumber: CallNumber, 
+    private storage: Storage,
+    private http : HttpClient,
     private _location: Location,
+    private geolocation: Geolocation,
+    private nativeGeocoder: NativeGeocoder,
     private popoverController: PopoverController) { }
 
   ngOnInit() {
@@ -88,6 +97,49 @@ export class CanHelpPage implements OnInit {
       data.selected = false;
     }
   }
+
+  ionViewWillEnter()
+  {
+
+
+
+    this.geolocation.getCurrentPosition().then((resp) => {
+  
+      let options: NativeGeocoderOptions = {
+        useLocale: true,
+        maxResults: 5
+    };
+    
+    this.nativeGeocoder.reverseGeocode( resp.coords.latitude,resp.coords.longitude, options)
+      .then((result: NativeGeocoderResult[]) => {
+     
+  
+        let URL = 'https://us-central1-quarantine-276114.cloudfunctions.net/helpapi?locality='+result[0].locality;
+        this.http.get(URL).subscribe(res=>{
+          console.log("response",res)
+          this.helpRequests = res['data'];
+          this.filteredReqs = this.helpRequests;
+        })
+      })
+      .catch((error: any) => console.log(error));     
+
+    })
+  
+ 
+    
+
+  
+  }
+
+
+
+
+
+
+
+
+
+
 
   openDialer(phoneNo) {
     this.callNumber.callNumber(phoneNo, true)

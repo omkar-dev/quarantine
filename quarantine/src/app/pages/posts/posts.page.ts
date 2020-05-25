@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Location} from '@angular/common';
 import { AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-posts',
@@ -14,6 +15,7 @@ export class PostsPage implements OnInit {
 
   constructor(private http : HttpClient,
     private _location: Location,
+    private storage: Storage,
     public alertController : AlertController
     ) { }
 
@@ -22,22 +24,16 @@ export class PostsPage implements OnInit {
 
   ionViewWillEnter()
   {
-   // this.jsonURL = 'https://us-central1-quarantine-276114.cloudfunctions.net/helpapi'
-    this.jsonURL = '../../../assets/posts.json';
-    // this.postsArray = [
-    //   {
-    //     "postTitle" : "Food Request",
-    //     "description" : "Provide food kits"
-    //   },
-    //   {
-    //     "postTitle" : "Medical Help",
-    //     "description" : "Feeling uneasy. Need some medication"
-    //   }
-    // ]
-    this.http.get(this.jsonURL).subscribe(res=>{
-      console.log("response",res)
-      this.postsArray = res
+
+    this.storage.get('user_store').then(userStore=>{
+      this.jsonURL = 'https://us-central1-quarantine-276114.cloudfunctions.net/helpapi?user_id='+userStore['userid'];
+      this.http.get(this.jsonURL).subscribe(res=>{
+        console.log("response",res)
+        this.postsArray = res['data']
+      })
     })
+
+
 
   
   }
@@ -47,11 +43,14 @@ export class PostsPage implements OnInit {
 
   resolve(data)
   { 
+
+    this.storage.get('user_store').then(userStore=>{
+
     let body = {
         "resolve" : true,
         "delete"  : "",
-        "help_id" : "",
-        "user_id" : ""
+        "help_id" : data['help_id'],
+        "user_id" : userStore['userid']
         }
 
         let options= {
@@ -69,6 +68,8 @@ export class PostsPage implements OnInit {
     {
       console.log("This matter is already resolved")
     }
+
+  })
   }
 
 
@@ -99,11 +100,14 @@ async callDelete(data){
   delete(data)
   {
     console.log("data",data)
+
+    this.storage.get('user_store').then(userStore=>{
+
     let body = {
       "resolve" : "",
       "delete"  : true,
-      "help_id" : "",
-      "user_id" : ""
+      "help_id" : data['help_id'],
+      "user_id" : userStore['userid']
       }
 
       let options= {
@@ -113,6 +117,7 @@ async callDelete(data){
       this.http.put(this.jsonURL,body,options).subscribe(res=>{
         console.log("after put",res)
       })
+    })
   }
 
 
