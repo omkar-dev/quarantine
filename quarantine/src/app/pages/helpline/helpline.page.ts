@@ -69,7 +69,7 @@ export class HelplinePage implements OnInit {
   openBrowser(data)
   {
     console.log(data);
-    let link = "https://"+data['donation_link']
+    let link = data['donation_link']
     window.open(link, '_system', 'location=yes')
   }
   switchLanguage() {
