@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController ,NavParams} from '@ionic/angular';
 
 @Component({
   selector: 'app-mark-spam',
@@ -7,12 +7,19 @@ import { PopoverController } from '@ionic/angular';
   styleUrls: ['./mark-spam.component.scss'],
 })
 export class MarkSpamComponent implements OnInit {
+  spam=[];
+  constructor(private popoverController: PopoverController,
+    public navParams: NavParams
+    ) { }
 
-  constructor(private popoverController: PopoverController) { }
+  ngOnInit() {
 
-  ngOnInit() {}
+ console.log(this.navParams.get('data'));
+
+  }
 
   onMarkSpam() {
+    this.spam=[]
     this.popoverController.dismiss();
   }
 

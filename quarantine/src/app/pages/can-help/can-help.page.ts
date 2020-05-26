@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { PopoverController } from '@ionic/angular';
 import { MarkSpamComponent } from 'src/app/components/mark-spam/mark-spam.component';
@@ -15,6 +15,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
   styleUrls: ['./can-help.page.scss'],
 })
 export class CanHelpPage implements OnInit {
+
+  @ViewChild(MarkSpamComponent) child;
 
   isResolved = 'active';
   helpTypes: any[] = [
@@ -72,6 +74,7 @@ export class CanHelpPage implements OnInit {
   //   },
   // ];
   filteredReqs = this.helpRequests;
+  message: any;
 
   constructor(private callNumber: CallNumber, 
     private storage: Storage,
@@ -85,6 +88,9 @@ export class CanHelpPage implements OnInit {
     this.filteredReqs = this.filterRequests(this.isResolved);
   }
 
+  ngAfterViewInit() {
+    this.message = this.child.message
+  }
   selectHelpType(data)
   {
     if (!data.selected){
@@ -147,9 +153,10 @@ export class CanHelpPage implements OnInit {
       .catch(err => console.log('Error launching dialer', err));
   }
 
-  async openMenu() {
+  async openMenu(data) {
     const popover = this.popoverController.create({
       component: MarkSpamComponent,
+      componentProps:{data:data},
       event: event
     });
     return (await popover).present();

@@ -42,7 +42,7 @@
           <p>{{ req.help_info }}</p>
         </ion-label>
         <ion-icon slot="end" src="assets/call.svg" (click)="openDialer(req.phone_no)"></ion-icon>
-        <ion-icon style="margin-top: 6px;"class="ellipsis" name="ellipsis-vertical" (click)="openMenu($event)"></ion-icon>
+        <ion-icon style="margin-top: 6px;"class="ellipsis" name="ellipsis-vertical" (click)="openMenu(req)"></ion-icon>
       </ion-item>
     </div>
   </div>
