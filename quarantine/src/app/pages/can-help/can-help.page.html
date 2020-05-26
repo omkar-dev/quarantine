@@ -33,17 +33,21 @@
     </div>
 
     <div class="list">
-      <ion-item  style="padding:0px" lines="none" *ngFor="let req of filteredReqs;">
-        <ion-avatar slot="start">
-          <img [src]="req.avatar">
-        </ion-avatar>
-        <ion-label>
-          <h3>{{ req.helpType }}</h3>
-          <p>{{ req.help_info }}</p>
-        </ion-label>
-        <ion-icon slot="end" src="assets/call.svg" (click)="openDialer(req.phone_no)"></ion-icon>
-        <ion-icon style="margin-top: 6px;"class="ellipsis" name="ellipsis-vertical" (click)="openMenu(req)"></ion-icon>
-      </ion-item>
+
+      <div *ngFor="let req of filteredReqs;">
+      <ion-item  style="padding:0px" lines="none"  *ngIf="req.spam.split(',').length <= 2">
+          <ion-avatar slot="start">
+            <img [src]="req.avatar">
+          </ion-avatar>
+          <ion-label>
+            <h3>{{ req.helpType }}</h3>
+            <p>{{ req.help_info }}</p>
+          </ion-label>
+          <ion-icon slot="end" src="assets/call.svg" (click)="openDialer(req.phone_no)"></ion-icon>
+          <ion-icon style="margin-top: 6px;"class="ellipsis" name="ellipsis-vertical" (click)="openMenu(req)"></ion-icon>
+        </ion-item>
+      </div>
+    
     </div>
   </div>
 
