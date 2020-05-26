@@ -39,15 +39,13 @@ export class ChatPage implements OnInit {
         this.shopName = data['shop_name'].toUpperCase()
         this.shopInitials = this.shopName.charAt(0).toUpperCase()
         console.log("initials",this.shopInitials)
-        this.storage.get('user_store').then(userStore=>{
-          console.log("userStore",userStore)
-          this.uID =userStore.userid
-            this.http.getMessages(this.uID,this.shopID).subscribe(res=>{
+           this.uID =data['shop_userId']
+            this.http.getMessages(this.uID).subscribe(res=>{
               console.log("gotMessages",res)
               this.receivedMessagesArray = res
               console.log("messages",this.receivedMessagesArray)
             })
-        })
+      
         
               console.log("received data from nearbuy",data)
       }

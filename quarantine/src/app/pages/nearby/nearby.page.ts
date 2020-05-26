@@ -158,7 +158,7 @@ this.nativeGeocoder.reverseGeocode(lat, long, options)
 getShopDetails(){
 if(!this.currentCity)
 {
-  this.currentCity='KalyanSub'
+  this.currentCity='bhandup'
 }
   console.log("currCity",this.currentCity)
   this.httpClient.get("https://us-central1-quarantine-275312.cloudfunctions.net/Shopkeeper?shop_locality="+this.currentCity, {

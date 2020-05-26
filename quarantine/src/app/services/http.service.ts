@@ -24,9 +24,9 @@ export class HttpService {
     return this.http.post('https://us-central1-quarantine-13853.cloudfunctions.net/messages',body,this.options)
   }
 
-  getMessages(uID,sID)
+  getMessages(uID)
   {
-    return this.http.get('https://us-central1-quarantine-13853.cloudfunctions.net/messages?shopid='+sID+'&Userid='+uID)
+    return this.http.get('https://us-central1-quarantine-13853.cloudfunctions.net/messages?Userid='+uID)
   }
 
     helpPostRequest(body)
