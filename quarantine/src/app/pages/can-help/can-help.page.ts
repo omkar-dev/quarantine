@@ -72,6 +72,9 @@ export class CanHelpPage implements OnInit {
   //   },
   // ];
   filteredReqs = this.helpRequests;
+  backupReq: any[];
+  activeReq: any[];
+  resolvedReq: any[];
 
   constructor(private callNumber: CallNumber, 
     private storage: Storage,
@@ -87,15 +90,25 @@ export class CanHelpPage implements OnInit {
 
   selectHelpType(data)
   {
-    if (!data.selected){
-      this.helpTypes.map(help => help.selected = false);
-      data.selected = true;
-      this.filteredReqs = this.filterRequests(this.isResolved, data.name);
-    }
-    else {
-      this.filteredReqs = this.filterRequests(this.isResolved);
-      data.selected = false;
-    }
+    console.log("isRes",this.isResolved)
+
+          this.isResolved=='active' ? this.filteredReqs = this.activeReq : this.filteredReqs=this.resolvedReq
+
+    console.log("data",data)
+    // if (!data.selected){
+    //   this.helpTypes.map(help => help.selected = false);
+    //   data.selected = true;
+    //   this.filteredReqs = this.filterRequests(this.isResolved, data.name);
+    // }
+    // else {
+    //   this.filteredReqs = this.filterRequests(this.isResolved);
+    //   data.selected = false;
+    // }
+    let helpType = data.name
+    console.log("helpType",helpType)
+    this.filteredReqs = this.filteredReqs.filter(res=>{
+      return res.help_for == helpType
+    })
   }
 
   ionViewWillEnter()
@@ -114,17 +127,40 @@ export class CanHelpPage implements OnInit {
       .then((result: NativeGeocoderResult[]) => {
      
   
-        let URL = 'https://us-central1-quarantine-276114.cloudfunctions.net/helpapi?locality='+result[0].locality;
+        let URL = 'https://us-central1-quarantine-276114.cloudfunctions.net/helpapi?locality=Mumbai';
         this.http.get(URL).subscribe(res=>{
           console.log("response",res)
           this.helpRequests = res['data'];
+         // this.helpRequests = this.helpRequests.filter(res=>{ !res.delete })
           this.filteredReqs = this.helpRequests;
+          this.activeReq = this.filteredReqs.filter(res=>{
+            return res.resolve==false
+          })
+          this.resolvedReq = this.filteredReqs.filter(res=>{
+            return res.resolve==true
+          })
+          this.backupReq=this.filteredReqs
         })
       })
       .catch((error: any) => console.log(error));     
 
     })
-  
+
+    let URL = 'https://us-central1-quarantine-276114.cloudfunctions.net/helpapi?locality=Mumbai';
+        this.http.get(URL).subscribe(res=>{
+          console.log("response",res)
+          this.helpRequests = res['data'];
+         // this.helpRequests = this.helpRequests.filter(res=>{ !res.delete })
+          this.filteredReqs = this.helpRequests;
+          this.activeReq = this.filteredReqs.filter(res=>{
+            return res.resolve==false
+          })
+          this.resolvedReq = this.filteredReqs.filter(res=>{
+            return res.resolve==true
+          })
+          this.backupReq=this.filteredReqs
+        })
+   
  
     
 
@@ -156,8 +192,20 @@ export class CanHelpPage implements OnInit {
   }
 
   segmentChanged(event) {
-    this.helpTypes.map(help => help.selected = false);
-    this.filteredReqs = this.filterRequests(this.isResolved);
+    console.log("isRes",this.isResolved)
+    
+    // console.log("segChange",event)
+    // this.helpTypes.map(help => help.selected = false);
+    // this.filteredReqs = this.filterRequests(this.isResolved);
+    if(event.target.value=='resolved')
+    {
+      this.filteredReqs = this.resolvedReq
+      console.log("resolvedFilter",this.filteredReqs)
+    }
+    else
+    {
+      this.filteredReqs = this.activeReq
+    }
   }
 
   filterRequests(isResolved, helpType?) {
