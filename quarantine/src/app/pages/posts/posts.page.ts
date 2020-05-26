@@ -47,6 +47,7 @@ export class PostsPage implements OnInit {
     this.storage.get('user_store').then(userStore=>{
 
     let body = {
+        "edit":true,
         "resolve" : true,
         "delete"  : "",
         "help_id" : data['help_id'],
@@ -60,7 +61,7 @@ export class PostsPage implements OnInit {
     console.log("data",data)  
     if(!data.resolve)
     {
-        this.http.put(this.jsonURL,body,options).subscribe(res=>{
+        this.http.post("https://us-central1-quarantine-276114.cloudfunctions.net/helpapi",body,options).subscribe(res=>{
           console.log("after put",res)
         })
     }  
@@ -104,17 +105,17 @@ async callDelete(data){
     this.storage.get('user_store').then(userStore=>{
 
     let body = {
+      "edit":true,
       "resolve" : "",
       "delete"  : true,
       "help_id" : data['help_id'],
       "user_id" : userStore['userid']
       }
 
-      let options= {
+      let  options =  {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }
-
-      this.http.put(this.jsonURL,body,options).subscribe(res=>{
+      this.http.post('https://us-central1-quarantine-276114.cloudfunctions.net/helpapi',body,options).subscribe(res=>{
         console.log("after put",res)
       })
     })
