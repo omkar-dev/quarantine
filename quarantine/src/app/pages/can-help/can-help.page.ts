@@ -92,7 +92,7 @@ export class CanHelpPage implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.message = this.child.message
+    // this.message = this.child.message
   }
   selectHelpType(data)
   {
@@ -123,6 +123,7 @@ export class CanHelpPage implements OnInit {
 
 
     this.geolocation.getCurrentPosition().then((resp) => {
+      console.log("inside get",resp)
   
       let options: NativeGeocoderOptions = {
         useLocale: true,
@@ -131,9 +132,11 @@ export class CanHelpPage implements OnInit {
     
     this.nativeGeocoder.reverseGeocode( resp.coords.latitude,resp.coords.longitude, options)
       .then((result: NativeGeocoderResult[]) => {
+        console.log("inside nativegeo",result)
+
      
   
-        let URL = 'https://us-central1-quarantine-276114.cloudfunctions.net/helpapi?locality=Mumbai';
+        let URL = 'https://us-central1-quarantine-276114.cloudfunctions.net/helpapi?locality='+result[0]['locality'];
         this.http.get(URL).subscribe(res=>{
           console.log("response",res)
           this.helpRequests = res['data'];
@@ -152,6 +155,8 @@ export class CanHelpPage implements OnInit {
 
     })
 
+    
+   
  
   }
 
