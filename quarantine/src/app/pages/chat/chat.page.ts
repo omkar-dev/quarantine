@@ -79,17 +79,18 @@ export class ChatPage implements OnInit {
   }
 
   send()
-  {
-    console.log(this.message)
+  {  
+    
+    this.storage.get('user_store').then(userStore=>{
     console.log("Inside send")
     let body={
       "type":"message",
       "messege_id":"4667",
-      "Shopid": this.shopID,
-      "Userid": this.uID,
+      "Shopid": '',
+      "Userid": userStore.userid,
       "Message": this.message,
-      "Attachment":"new img",
-      "timestamp":"45678"
+      "Attachment":"",
+      "timestamp":Date.now()
 }
 if(this.message){
   this.http.sendMessage(body).subscribe(res=>{
@@ -100,6 +101,10 @@ else
 {
   console.log("Cannot send empty message!")
 }
+
+  })
+
+    console.log(this.message)
     
   }
 
