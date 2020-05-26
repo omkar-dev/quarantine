@@ -46,7 +46,7 @@
   <ion-button *ngIf="showTrack" (click)="startTracking()">
     <ion-icon src="assets/ion-pluse.svg"></ion-icon> Start Tracking
   </ion-button>
-  <ion-button *ngIf="!showTrack" (click)="stopTracking()">
+  <ion-button color="danger" *ngIf="!showTrack" (click)="stopTracking()">
     <ion-icon src="assets/ion-pluse.svg"></ion-icon> Stop Tracking
   </ion-button>
   <div class="list">

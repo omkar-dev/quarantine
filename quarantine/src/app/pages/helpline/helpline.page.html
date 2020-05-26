@@ -78,7 +78,7 @@
     </div><br><br>
     <h4>Donate - </h4>
     <div class="donate">
-      <ion-item *ngFor="let donate of donationsArray" button lines="none">
+      <ion-item *ngFor="let donate of donationsArray" button lines="none" (click)="openBrowser(donate)">
         <ion-avatar slot="start">
           <img src="../../../assets/donate.svg">
         </ion-avatar>

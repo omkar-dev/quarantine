@@ -4,7 +4,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { TrackerComponentPage } from '../tracker-component/tracker-component.page';
 import { Storage } from '@ionic/storage';
 
@@ -31,7 +31,7 @@ export class VisitHistoryPage implements OnInit {
   showTrack =true
   interval: any;
 
-  constructor(public storage : Storage,public modalController : ModalController,public sanitizer: DomSanitizer,private nativeGeocoder: NativeGeocoder,public geolocation : Geolocation,public zone : NgZone,private http: HttpClient, 
+  constructor(public toastController : ToastController,public storage : Storage,public modalController : ModalController,public sanitizer: DomSanitizer,private nativeGeocoder: NativeGeocoder,public geolocation : Geolocation,public zone : NgZone,private http: HttpClient, 
     //private backgroundGeolocation: BackgroundGeolocation
     ) { }
 
@@ -55,6 +55,8 @@ export class VisitHistoryPage implements OnInit {
 
 startTracking()
   {
+    let startMessage = "Tracking has been started!"
+    this.presentToast(startMessage)
     // Foreground Tracking
     this.showTrack = false
 this.interval = setInterval(()=>{
@@ -72,16 +74,16 @@ this.interval = setInterval(()=>{
 }
 
 
-async openTrackerModal()
-  {
+// async openTrackerModal()
+//   {
    
-    console.log("inside modal")
-    const modal = await this.modalController.create({
-      component: TrackerComponentPage,
-      // componentProps : { "data" :  objToSend}
-    });
-    await modal.present()
-  }
+//     console.log("inside modal")
+//     const modal = await this.modalController.create({
+//       component: TrackerComponentPage,
+//       // componentProps : { "data" :  objToSend}
+//     });
+//     await modal.present()
+//   }
 getReverseGeoCode(lat,long)
 {
   let options: NativeGeocoderOptions = {
@@ -108,6 +110,8 @@ this.nativeGeocoder.reverseGeocode(lat, long, options)
 
   stopTracking()
   {
+    let stopMessage = "Tracking has been stopped!"
+    this.presentToast(stopMessage)
     clearInterval(this.interval)
     this.showTrack=true
     console.log("inside stop")
@@ -128,5 +132,15 @@ this.nativeGeocoder.reverseGeocode(lat, long, options)
   this.mapUrl = "https://www.google.com/maps/embed/v1/place?q="+this.combinedLatLong+"&key=AIzaSyCEibeFAFYEpG6xh4eq8R_F_BQxba2XcQc&zoom=17"
   console.log("combined",this.combinedLatLong)
  }
+
+ async presentToast(message) {
+  let toast = await this.toastController.create({
+    message: message,
+    duration: 2000,
+    position: 'bottom'
+  });
+
+  return await (await toast).present();
+}
 
 }
