@@ -33,6 +33,7 @@ import { Device } from '@ionic-native/device/ngx';
 import { OtpPage } from './pages/otp/otp.page';
 import { LoaderInterceptorService } from './loader-interceptor.service';
 import { LoaderComponent } from './components/loader/loader.component';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 
 export function createTranslateLoader(http: HttpClient){ 
@@ -44,7 +45,7 @@ export function createTranslateLoader(http: HttpClient){
   entryComponents: [ FeedbackComponent,OtpPage],
 
 
-  imports: [BrowserModule, IonicModule.forRoot(),
+  imports: [BrowserModule, IonicModule.forRoot(), IonicSelectableModule,
     IonicStorageModule.forRoot(), AppRoutingModule,HttpClientModule,
     FormsModule,
     SafePipeModule,
