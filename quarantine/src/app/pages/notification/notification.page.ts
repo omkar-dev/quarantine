@@ -21,7 +21,7 @@ export class NotificationPage implements OnInit {
   {
     let uID = 666
     let sID = 1
-    this.http.getMessages(uID,sID).subscribe(res=>{
+    this.http.getMessages(uID).subscribe(res=>{
       this.notifications = res['data']
       console.log("notif",this.notifications)
     })
