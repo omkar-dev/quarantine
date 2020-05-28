@@ -35,13 +35,13 @@ export class ChatPage implements OnInit {
       if(this.route.snapshot.data['special']['from']=='nearbuy') {
         let data = this.route.snapshot.data['special']['data'];
         console.log("datatatat",data)
-        this.shopID = data.shop_id
+        this.shopID = data.shop_userId
         this.shopName = data['shop_name'].toUpperCase()
         this.shopInitials = this.shopName.charAt(0).toUpperCase()
         console.log("initials",this.shopInitials)
            this.storage.get('user_store').then(data=>{
             this.uID =data['userid']
-            this.http.getMessages(this.uID).subscribe(res=>{
+            this.http.getMessages(this.shopID).subscribe(res=>{
               console.log("gotMessages",res)
               this.receivedMessagesArray = res
               console.log("messages",this.receivedMessagesArray)
