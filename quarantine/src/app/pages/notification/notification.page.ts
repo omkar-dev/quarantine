@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { HttpService } from 'src/app/services/http.service';
 import { Storage } from '@ionic/storage';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NativeGeocoder, NativeGeocoderOptions , NativeGeocoderResult} from '@ionic-native/native-geocoder/ngx';
 
 @Component({
   selector: 'app-notification',
@@ -14,7 +16,7 @@ export class NotificationPage implements OnInit {
   uID: any;
   
 
-  constructor(private http : HttpService,private router : Router,private dataService : DataService,private storage : Storage) { }
+  constructor(private geolocation : Geolocation,private nativeGeocoder : NativeGeocoder,private http : HttpService,private router : Router,private dataService : DataService,private storage : Storage) { }
 
   ngOnInit() {
   }
@@ -33,10 +35,40 @@ export class NotificationPage implements OnInit {
         console.log("User is a shopkeeper")
         this.uID = userStore['shop']['data']['shop_userId']
       }
-      this.http.getMessages(this.uID).subscribe(res=>{
-        this.notifications = res['data']
-        console.log("notif",this.notifications)
+
+      this.geolocation.getCurrentPosition().then((resp) => {
+        console.log("inside get",resp)
+    
+        let options: NativeGeocoderOptions = {
+          useLocale: true,
+          maxResults: 5
+      };
+      
+      this.nativeGeocoder.reverseGeocode( resp.coords.latitude,resp.coords.longitude, options)
+        .then((result: NativeGeocoderResult[]) => {
+  
+  
+  
+         
+      
+          this.storage.get('user_store').then(data=>{
+            this.uID =data['userid']
+            this.http.getMessages(this.uID,result[0].postalCode,result[0].locality
+              ).subscribe(res=>{
+                this.notifications = res['messeges']
+
+
+            })
+  
+  
+           })
+          console.log("inside nativegeo",result)
+  
+        })
       })
+
+
+     
       
     })
     

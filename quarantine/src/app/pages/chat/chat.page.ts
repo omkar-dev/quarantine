@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { HttpService } from 'src/app/services/http.service';
 import { Storage } from '@ionic/storage';
+import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 
 
 @Component({
@@ -23,7 +26,7 @@ export class ChatPage implements OnInit {
   shopInitials: string;
   uID: any;
   shopID: any;
-  constructor(private route :  ActivatedRoute,private http:HttpService,private storage : Storage) { }
+  constructor(private geolocation : Geolocation, private nativeGeocoder : NativeGeocoder,private route :  ActivatedRoute,private http:HttpService,private storage : Storage) { }
 
   ngOnInit() {
     
@@ -31,6 +34,44 @@ export class ChatPage implements OnInit {
 
   ionViewWillEnter()
   {
+
+
+
+    this.geolocation.getCurrentPosition().then((resp) => {
+      console.log("inside get",resp)
+  
+      let options: NativeGeocoderOptions = {
+        useLocale: true,
+        maxResults: 5
+    };
+    
+    this.nativeGeocoder.reverseGeocode( resp.coords.latitude,resp.coords.longitude, options)
+      .then((result: NativeGeocoderResult[]) => {
+
+
+
+       
+    
+        this.storage.get('user_store').then(data=>{
+          this.uID =data['userid']
+          this.http.getMessages(this.uID,result[0].postalCode,result[0].locality
+            ).subscribe(res=>{
+            console.log("gotMessages",res)
+            this.receivedMessagesArray = res;
+            console.log("messages",this.receivedMessagesArray)
+          })
+
+
+         })
+        console.log("inside nativegeo",result)
+
+      })
+    })
+
+
+
+
+
     if (this.route.snapshot.data['special']) {
       if(this.route.snapshot.data['special']['from']=='nearbuy') {
         let data = this.route.snapshot.data['special']['data'];
@@ -39,16 +80,7 @@ export class ChatPage implements OnInit {
         this.shopName = data['shop_name'].toUpperCase()
         this.shopInitials = this.shopName.charAt(0).toUpperCase()
         console.log("initials",this.shopInitials)
-           this.storage.get('user_store').then(data=>{
-            this.uID =data['userid']
-            this.http.getMessages(this.shopID).subscribe(res=>{
-              console.log("gotMessages",res)
-              this.receivedMessagesArray = res
-              console.log("messages",this.receivedMessagesArray)
-            })
 
-
-           })
          
       
         
@@ -86,25 +118,42 @@ export class ChatPage implements OnInit {
     
     this.storage.get('user_store').then(userStore=>{
     console.log("Inside send")
+    this.geolocation.getCurrentPosition().then((resp) => {
+      console.log("inside get",resp)
+  
+      let options: NativeGeocoderOptions = {
+        useLocale: true,
+        maxResults: 5
+    };
+    
+    this.nativeGeocoder.reverseGeocode( resp.coords.latitude,resp.coords.longitude, options)
+      .then((result: NativeGeocoderResult[]) => {
+        console.log("inside nativegeo",result)
+   
+
+
+
     let body={
-      "type":"message",
-      "messege_id":"",
-      "Shopid":  userStore['shop']?userStore['shop']['data']['shop_userId']:"",
-      "Userid": userStore.userid,
-      "Message": this.message,
-      "Attachment":"",
-      "timestamp":Date.now()
+      "to":  userStore['shop']?userStore['shop']['data']['shop_userId']:"",
+      "from": userStore.userid,
+      "message": this.message,
+      "attachment":"",
 }
+
+if(result[0].postalCode)body['zipcode']=result[0].postalCode
+else body['locality']=result[0].locality
 if(this.message){
   this.http.sendMessage(body).subscribe(res=>{
     console.log(res)
+    //
   })
 }
 else
 {
   console.log("Cannot send empty message!")
 }
-
+});
+})
   })
 
     console.log(this.message)
