@@ -1,19 +1,4 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>Notifications</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
-  <div >
-    <ion-list *ngFor="let notification of notifications">
-      <ion-label>
-        <p>{{ notification.title }}</p>
-        <p>{{ notification.timestamp }}</p>
-      </ion-label>
-    </ion-list>
-  </div>
-</ion-content> -->
 
 <ion-header>
   <ion-toolbar>
@@ -28,38 +13,29 @@
 </ion-header>
 
 <ion-content>
-  <div class="main">
-    <ion-item button lines="none" (click)="goToChat(notifications)">
-      <ion-avatar slot="start">
-        <!-- {{notif.sender.charAt(0)}} -->
+  <div class="main" *ngIf="notifications.length>0" >
+
+    <ion-item *ngFor="let messege of notifications" button lines="none" (click)="goToChat(messege)">
+          <ion-avatar slot="start">
+      <span *ngIf="messege[messege.length-1] && messege[messege.length-1].fromName">
+        {{messege[messege.length-1].fromName.charAt(0).toUpperCase()}} 
+      </span> 
       </ion-avatar>
       <ion-label>
-        <!-- <h4>{{notif.sender}}</h4> -->
+         <h4>{{messege[messege.length-1].fromName}}</h4> 
         <p>
-          {{notifications.Message}}
+          {{messege[messege.length-1].Message}}
         </p>
       </ion-label>
       <div class="date_section msg_comming" slot="">
-        <p>{{notifications.timestamp}}</p>
-        <span>3</span>
+        <span style="margin-bottom: 5px">{{messege.length}}</span>
+        <p> {{ TimeAgo(messege[messege.length-1].timestamp)}}</p>
       </div>
     </ion-item>
 
-    <!-- <ion-item button lines="none">
-      <ion-avatar slot="start">
-        
-      </ion-avatar>
-      <ion-label>
-        <h4>Farhan Patel</h4>
-        <p>
-         {{ "Please don't say that..."|translate}}
-        </p>
-      </ion-label>
-      <div class="date_section" slot="">
-        <p>{{ 'Yesterday'|translate}}</p>
-      </div>
-    </ion-item> -->
   </div>
+<div style="display: flex; align-content: center;justify-content: center; padding-top: 20px;font-size:20px">
+  <p   *ngIf="notifications && notifications.length==0">No notifications yet!</p>
 
-  <p *ngIf="!notifications">No notifications yet!</p>
+</div>
 </ion-content>

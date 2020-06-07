@@ -62,9 +62,11 @@ export class HelplinePage implements OnInit {
       this.helpLineArray = []
       for(i=0;i<this.data.length;i++)
       {
-        this.donationsArray.push(this.data[i]['Donations'])
-        this.epidemicsArray.push(this.data[i]['Epidemics'])
-        this.helpLineArray.push(this.data[i]['Helplines'])
+
+
+        if(this.data[i]['Donations']['Donation_id'])this.donationsArray.push(this.data[i]['Donations'])
+        if(this.data[i]['Epidemics']['Epidemic_id']) this.epidemicsArray.push(this.data[i]['Epidemics'])
+        if(this.data[i]['Helplines']['helpline_id']) this.helpLineArray.push(this.data[i]['Helplines'])
       }
       console.log("Donate Array", this.donationsArray) 
       console.log("Epi Array", this.epidemicsArray) 

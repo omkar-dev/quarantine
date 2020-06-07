@@ -1,4 +1,12 @@
 <ion-content>
+<div class="close">
+  <a href="javascript:void(0)" (click)="modalController.dismiss()" style="cursor: pointer;padding:10px">
+    <ion-icon style="font-size:10vw" name="close-outline"></ion-icon>
+  </a>
+</div>
+
+  <br>
+
   <img class="home-logo" src="../../../assets/logo-home.svg">
 
   <!-- <ion-row>
@@ -13,39 +21,41 @@
     <ion-col size="3">
     </ion-col>
   </ion-row> -->
+  <br>
   <h5>Enter the Verification code we just
     sent you on your email address</h5>
+    <br>
   <ion-row class="otp_part">
-    <ion-col size="3">
+    <ion-col size="2">
       <ion-item lines="none">
         <ion-input type="tel" [(ngModel)]="vc1" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,1)" #v1>
         </ion-input>
       </ion-item>
     </ion-col>
-    <ion-col size="3">
+    <ion-col size="2">
       <ion-item lines="none">
         <ion-input type="tel" [(ngModel)]="vc2" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,2)" #v2>
         </ion-input>
       </ion-item>
     </ion-col>
-    <ion-col size="3">
+    <ion-col size="2">
       <ion-item lines="none">
         <ion-input type="tel"  [(ngModel)]="vc3" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,3)" #v3>
         </ion-input>
       </ion-item>
     </ion-col>
-    <ion-col size="3">
+    <ion-col size="2">
       <ion-item lines="none">
         <ion-input type="tel"  [(ngModel)]="vc4" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,4)" #v4>
         </ion-input>      </ion-item>
     </ion-col>
-    <ion-col size="3">
+    <ion-col size="2">
       <ion-item lines="none">
         <ion-input type="tel" [(ngModel)]="vc5" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,5)" #v5>
         </ion-input>      
       </ion-item>
     </ion-col>
-    <ion-col size="3">
+    <ion-col size="2">
       <ion-item lines="none">
         <ion-input type="tel" [(ngModel)]="vc6" [ngModelOptions]="{standalone: true}" maxlength=1 (keyup)="Input($event,6)" #v6>
         </ion-input>

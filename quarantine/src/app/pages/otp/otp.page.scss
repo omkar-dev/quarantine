@@ -6,6 +6,17 @@
     margin-top: 50px;
 }
 
+.close a {
+    float: right;
+    position: relative;
+    top: 0px;
+    right: 10px;
+
+    img {
+        width: 12px;
+    }
+}
+
 ion-row {
     justify-content: center;
     margin-top: 13px;
@@ -57,7 +68,7 @@ h5 {
 }
 
 .otp_part {
-    width: 65%;
+    width: 80%;
     margin: 0 auto;
 
     ion-item {
@@ -92,9 +103,9 @@ p {
 }
 
 ion-button {
-    height: 50px;
+    height: 6vh;
     font-size: 18px;
-    width: 296px;
+    width: 70vw;
     margin-left: auto;
     margin-right: auto;
     font-weight: bold;

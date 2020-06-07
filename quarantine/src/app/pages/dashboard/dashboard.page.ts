@@ -27,6 +27,20 @@ export class DashboardPage implements OnInit {
   constructor(private storage: Storage,private router : Router) { }
 
   ngOnInit() {
+
+    this.storage.get('messegeID').then(data=>{
+      if(!data) {
+        let obj=   {
+          'zipcode': 'LocationNotCaptured',
+          'locality': 'LocationNotCaptured'
+        }
+          this.storage.set('messegeID',obj);
+      }
+    })
+    
+
+
+
     this.storage.set('role', 'medical')
       .then(res => {
         console.log(res);

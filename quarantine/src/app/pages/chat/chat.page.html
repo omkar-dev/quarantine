@@ -8,27 +8,44 @@
     </ion-title>
     <!-- <ion-icon slot="end" name="ellipsis-vertical"></ion-icon> -->
   </ion-toolbar>
+  <div  (click)="GetMessseges()"   *ngIf="showRefresh" class="animate__animated  animate__slideInDown"
+  style="
+  background-color: #DAE4EE;
+  display: flex;
+  height: 48px;
+  justify-content: center;padding-top:10px;font-size:16px;">
+    <ion-icon color="primary" style="font-size:20px;padding-top:2px;" name="refresh-outline"></ion-icon>
+ Click here to Refresh
+  </div>
 </ion-header>
 
 <ion-content>
-  <p>NOVEMBER 28, 2019</p>
+  <!-- <p>NOVEMBER 28, 2019</p> -->
 
+  <p> {{TodaysTime()}} </p>
   <div class="cf">
-    <div class="chat_body left" *ngFor="let shopers of shopersMessagesArray">
-      <p>{{shopers.Message}}</p>
-      <span>10:47 AM</span>
+
+    <div  *ngFor="let messege of receivedMessagesArray">
+
+    <div class="chat_body left" *ngIf="messege.from==shopData.shop_userId">
+      <p>{{messege.message}}</p>
+
+      <span>      {{ TimeAgo(messege.timestamp)}}
+        </span>
     </div>
-    <div class="chat_body right" *ngFor="let users of usersMessagesArray">
-      <p>{{users.Message}}</p>
-      <span>10:47 AM <img src="../../../assets/right_icon.svg" alt=""></span>
+    <div class="chat_body right" *ngIf="messege.to==shopData.shop_userId">
+      <p>{{messege.message}}</p>
+      <span>{{ TimeAgo(messege.timestamp)}}<img src="../../../assets/right_icon.svg" alt=""></span>
     </div>
+  </div>
+
     <div class="clear"></div>
   </div>
 </ion-content>
-<ion-footer>
+<ion-footer style="padding-top:10px;" >
   <div class="input">
     <ion-input placeholder="Type a message" [(ngModel)]="message"></ion-input>
     <!-- <ion-icon src="assets/camera.svg"></ion-icon> -->
   </div>
-  <ion-icon (click)="send()" style="width:20px;height:20px"  name="send-outline" ></ion-icon>
+  <ion-icon (click)="send()" style="width:20px;height:20px"  color="primary"  name="send-outline" ></ion-icon>
 </ion-footer>

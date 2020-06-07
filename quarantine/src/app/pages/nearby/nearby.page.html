@@ -25,11 +25,14 @@
           <span style="align-self: center;padding:10px">
               <p>Ask your nearby medical facilities to signup</p>
           </span>
-          <ion-button style="align-self: center;width:140px"  (click)="share()" >share</ion-button>
+
+          
+
+          <ion-button class="animate__animated animate__heartBeat  animate__repeat-2"  style="align-self: center;width:140px"  (click)="share()" >share</ion-button>
         </div>
 
 
-        <ion-item button lines="none" *ngFor="let item of medicalstorelist">
+        <ion-item button lines="none" class="animate__animated animate__fadeInLeft"  *ngFor="let item of medicalstorelist">
           <ion-avatar slot="start">
             <img src="../../../assets/mediacal.png">
           </ion-avatar>
@@ -58,10 +61,10 @@
                 <span style="align-self: center;padding:10px">
                     <p >Ask your nearby store to Signup</p>
                 </span>
-                <ion-button style="align-self: center;width:140px"  (click)="share()" >share</ion-button>
+                <ion-button  class="animate__animated animate__heartBeat  animate__repeat-2"  style="align-self: center;width:140px"  (click)="share()" >share</ion-button>
               </div>
              
-        <ion-item button lines="none" *ngFor="let item of grocerystorelist">
+        <ion-item button lines="none" class="animate__animated animate__fadeInLeft" *ngFor="let item of grocerystorelist">
           <ion-avatar slot="start">
             <img src="../../../assets/mediacal.png">
           </ion-avatar>

@@ -1,18 +1,25 @@
 <ion-content mode="ios">
-  <div *ngIf="!languageSelected && !showOnboard" class="languageSelect" >
-<div sltyle="align-self:center;align-content:center;height:">
-<span>
-  Please select a language 
-</span>
-</div>
-    <ion-item button  lines="none"  *ngFor="let language of languages;let i = index" 
+
+  <div *ngIf="!languageSelected && !showOnboard">
+    <div style="align-self:center;align-content:center;margin-top:30px;">
+      <span style="font-size:24px;margin-top:25px">
+       Choose Language
+       <br>
+      </span>
+      </div>
+  <div  class="languageSelect" style="    position: absolute;
+bottom: 0px;;  " >
+
+    <ion-item button  lines="none" [style.--background]="language['color']"  *ngFor="let language of languages;let i = index" 
       (click)="switchLanguage(language)">
-        <ion-label style="padding:1.78vh; " >{{language}}   
+        <ion-label style="padding:1.78vh; " >{{language['name']}}   
         </ion-label>
-        <ion-icon solt="end"  style="color:#5EC4BA;font-weight: bolder;"name="checkmark"></ion-icon>
+        <!-- <ion-icon solt="end"  style="color:#5EC4BA;font-weight: bolder;"name="checkmark"></ion-icon> -->
         &nbsp;        &nbsp;
     </ion-item>
   </div>
+
+</div>
 
   <div style="height:100% " class="onBoard" *ngIf = "languageSelected && !showOnboard && !showVC">
     <ion-slides  style="margin: 0px;height: 100%;width: 100%" pager dir="ltr" class = "slider" #mySlider (ionSlidesDidLoad)="SlideOnTimeOut()"  (ionSlideDidChange)="SlideOnTimeOut()" >
@@ -38,21 +45,21 @@
 
 
       <ion-slide>
-        <div>
+        <div  class="animate__animated animate__fadeInLeft ">
           <img src="../../../assets/need_help_1.svg" alt="">
           <h1>Anywhere you Need Help</h1>
           <p>In trouble ? Don't worry. Help is just a few clicks away, just post your problem and the help will be on its way.</p>
         </div>
       </ion-slide>
       <ion-slide>
-        <div>
+        <div   class="animate__animated animate__fadeInLeft ">
           <img src="../../../assets/need_help_2.svg" alt="">
           <h1>Nearby Medical and Grocery Shops</h1>
           <p> Before getting out of your house just find and contact nearby Pharmacies and grocery shops to check stock availability and timings </p>
         </div>
       </ion-slide>
       <ion-slide>
-        <div>
+        <div class="animate__animated animate__fadeInLeft ">
           <br>
           <img src="../../../assets/need_help_1.svg" alt="">
           <h1>Help from Anywhere</h1>
@@ -73,15 +80,15 @@
 
   <div *ngIf="languageSelected && showOnboard && !showVC" class="ion-padding">
     <div class="mid" [class.active]="logoAnimation">
-      <img class="home-logo" src="../../../assets/logo-home.svg" [class.active]="logoAnimation">
-      <div class="after_show">
-        <ion-item class="email-box" lines="none">
+      <img class="home-logo   animate__animated animate__fadeIn" src="../../../assets/logo-home.svg" [class.active]="logoAnimation">
+      <div class="after_show ">
+        <ion-item class="email-box animate__animated animate__fadeIn" lines="none">
           <ion-icon class="email-logo-box" src="../../../assets/mail-logo.svg" color="dark"></ion-icon>
           <ion-input #email="ngModel" [(ngModel)]="emailid" placeholder="Enter your email address" email required></ion-input>
         </ion-item>
         <p *ngIf="!email.valid &&(email.touched|| email.dirty)">Enter a valid email id</p>
 
-        <ion-button expand="block" (click)="onLogin()">{{'Log In'|translate}}
+        <ion-button expand="block"  class=" animate__animated animate__fadeIn" (click)="onLogin()">{{'Log In'|translate}}
           <ion-ripple-effect></ion-ripple-effect>
         </ion-button>
 

@@ -10,7 +10,8 @@ import { catchError } from 'rxjs/operators';
 import { Device } from '@ionic-native/device/ngx';
 import { NavController, LoadingController, Platform, AlertController, IonSlides, ModalController, NavParams } from '@ionic/angular';
 import { HttpClient, HttpParams } from '@angular/common/http';
-
+import { FCM } from '@ionic-native/fcm/ngx';
+import { NativeGeocoder, NativeGeocoderOptions , NativeGeocoderResult} from '@ionic-native/native-geocoder/ngx';
 
 @Component({
   selector: 'app-otp',
@@ -20,6 +21,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class OtpPage implements OnInit {
   @Input() data;
   @Input() signupData;
+
+  @ViewChild('ip', { static: false }) ip;
 
   @ViewChild('v1', { static: false }) myInput1;
   @ViewChild('v2', { static: false }) myInput2;
@@ -47,7 +50,9 @@ export class OtpPage implements OnInit {
 
 
   constructor(public navParams: NavParams,
+    private fcm: FCM,
       public loadingController: LoadingController,
+      private nativeGeocoder : NativeGeocoder,
       private platform: Platform,
       public alertController: AlertController,
       private storage:Storage,
@@ -61,8 +66,20 @@ export class OtpPage implements OnInit {
   ngOnInit() {
   }
 
+
+  ionViewDidEnter(){
+    setTimeout(() => {
+      this.myInput1.setFocus()
+    }, 1000);
+  //   console.log(this.ip,this.ip.nativeElement,'input')
+  // if(this.ip) this.ip.nativeElement.firstChild['autofocus'] = 'true';
+  }
+
   ionViewWillEnter()
   {
+
+
+
     // this.dataFromLogin = (this.navParams.get('data'));
     // this.emailid = this.dataFromLogin.email
 
@@ -155,6 +172,49 @@ export class OtpPage implements OnInit {
           
           this.storage.set('user_store',response);
           this.storage.set('user_store_verified',response);
+
+
+
+
+          this.geolocation.getCurrentPosition().then((resp) => {
+            console.log("inside get",resp)
+        
+            let options: NativeGeocoderOptions = {
+              useLocale: true,
+              maxResults: 5
+          };
+          
+          this.nativeGeocoder.reverseGeocode( resp.coords.latitude,resp.coords.longitude, options)
+            .then((result: NativeGeocoderResult[]) => {
+
+           let obj=   {
+                'zipcode': result[0].postalCode,
+                'locality':result[0].locality
+              }
+                this.storage.set('messegeID',obj);
+            })
+        })
+
+
+        this.fcm.getToken().then(token => {
+          console.log('FCM TOKENN', token);
+            let bo = {
+              "gcmToken": token
+            }
+            console.log("bo", bo, token)
+            
+              // this.HTPS.Fcmtokenget(bo, v).then(fcmres => {
+              //   console.log(fcmres, "FCMRESPONSE")
+              // }, error => {
+              //   console.log(error)
+              // })
+
+          
+
+        
+
+        });
+
 
           this.router.navigate(['/tabs']);
           this.showVC = false;

@@ -25,7 +25,7 @@
       </ion-segment-button>
     </ion-segment>
     <h4>Select a Category to Help</h4>
-    <div class="blogList">
+    <div class="blogList animate__animated animate__fadeInLeft">
       <div class="blog" [class.active]="helpType.selected" *ngFor="let helpType of helpTypes" (click)="selectHelpType(helpType)">
         <img src="../../../assets/{{helpType.imgUrl}}" alt=""> 
         <p>{{helpType.name }}</p>
@@ -35,7 +35,7 @@
     <div class="list">
 
       <div *ngFor="let req of filteredReqs;">
-      <ion-item  style="padding:0px" lines="none"  *ngIf="req.spam.split(',').length <= 2">
+      <ion-item  style="padding:0px"  class="animate__animated animate__fadeInLeft" lines="none"  *ngIf="req.spam.split(',').length <= 2">
           <ion-avatar slot="start">
             <img [src]="req.avatar">
           </ion-avatar>

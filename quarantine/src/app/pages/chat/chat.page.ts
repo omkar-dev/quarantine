@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { HttpService } from 'src/app/services/http.service';
 import { Storage } from '@ionic/storage';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Router } from '@angular/router';
+import {  Observable,Subject,pipe } from 'rxjs';
+import { debounceTime,switchMap } from 'rxjs/operators';
 
 
 
@@ -26,139 +29,183 @@ export class ChatPage implements OnInit {
   shopInitials: string;
   uID: any;
   shopID: any;
-  constructor(private geolocation : Geolocation, private nativeGeocoder : NativeGeocoder,private route :  ActivatedRoute,private http:HttpService,private storage : Storage) { }
+  shopData: any;
+  private clickStream = new Subject();
+  sending: boolean;
+  showRefresh;
+  interval;
+  constructor(private geolocation : Geolocation,
+    private router : Router,
+    public zone: NgZone,
+    private nativeGeocoder : NativeGeocoder,private route :  ActivatedRoute,private http:HttpService,private storage : Storage) { }
 
   ngOnInit() {
-    
+    this.clickStream.pipe(  switchMap(body => {
+      console.log(body)
+      return  this.http.sendMessage(body)
+      }))
+      .subscribe(response => {
+        this.GetMessseges()
+        console.log(response)
+      });
+
+  //  switchMap(e=> this.send()))
   }
 
+  ionViewWillLeave(){
+    clearInterval(this.interval)
+  }
+
+
+
+  TodaysTime(){
+    return moment().format('MMM  Do, YYYY')
+  }
+
+
+
+  GetMessseges(){
+    this.storage.get('user_store').then(data=>{
+      this.storage.get('messegeID').then(messegeID=>{
+        this.uID =data['userid']       
+              this.http.getMessages(this.uID,messegeID['zipcode'],messegeID['locality']
+                ).subscribe(res=>{
+                  let responsemssg = res['messeges']? res['messeges']:[]
+                  this.storage.get('messeges').then(messege=>{
+                  let savearay =  messege?[...messege,...responsemssg]:responsemssg;
+                  this.storage.set('messeges',savearay)
+                  this.refreshMessegeInput(savearay)
+                  })
+  
+              })
+      })
+    })    
+  }
+
+
+
+
+  refreshMessegeInput(messege){
+    if(this.route.snapshot.data['special']['from']=='nearbuy') {
+      messege = messege.filter(val=>(val['from']==this.shopData.shop_userId || val['to']==this.shopData.shop_userId) );
+      const sortedArray = messege.sort((a, b) => moment(a).diff(moment(b)))
+      this.zone.run(() => {
+        this.receivedMessagesArray =sortedArray;
+      })
+
+    }
+    else if(this.route.snapshot.data['special']['from']=='notification') {
+
+
+    }
+
+
+
+  }
   ionViewWillEnter()
   {
+    this.showRefresh=false;
 
 
-
-    this.geolocation.getCurrentPosition().then((resp) => {
-      console.log("inside get",resp)
-  
-      let options: NativeGeocoderOptions = {
-        useLocale: true,
-        maxResults: 5
-    };
-    
-    this.nativeGeocoder.reverseGeocode( resp.coords.latitude,resp.coords.longitude, options)
-      .then((result: NativeGeocoderResult[]) => {
+    setTimeout(()=>{
+      this.showRefresh=true;
+    },9000)
+        this.iterativeGet();
 
 
-
-       
-    
-        this.storage.get('user_store').then(data=>{
-          this.uID =data['userid']
-          this.http.getMessages(this.uID,result[0].postalCode,result[0].locality
-            ).subscribe(res=>{
-            console.log("gotMessages",res)
-            this.receivedMessagesArray = res;
-            console.log("messages",this.receivedMessagesArray)
-          })
-
-
-         })
-        console.log("inside nativegeo",result)
-
-      })
-    })
-
-
-
-
+      this.GetMessseges()
 
     if (this.route.snapshot.data['special']) {
       if(this.route.snapshot.data['special']['from']=='nearbuy') {
-        let data = this.route.snapshot.data['special']['data'];
-        console.log("datatatat",data)
-        this.shopID = data.shop_userId
-        this.shopName = data['shop_name'].toUpperCase()
+        let shopData = this.route.snapshot.data['special']['data'];
+        this.shopData=this.route.snapshot.data['special']['data'];
+        this.shopID = shopData.shop_id
+        this.shopName = shopData['shop_name']
         this.shopInitials = this.shopName.charAt(0).toUpperCase()
-        console.log("initials",this.shopInitials)
+        console.log(this.shopID)
+        console.log(shopData)
+        this.storage.get('messeges').then(messege=>{
+          messege = messege.filter(val=>(val['from']==this.shopData.shop_userId || val['to']==this.shopData.shop_userId) );
+          const sortedArray = messege.sort((a, b) => moment(a).diff(moment(b)))
+          this.receivedMessagesArray =sortedArray;
 
-         
-      
-        
-              console.log("received data from nearbuy",data)
+        })
+
+   
+
+    
       }
       else if(this.route.snapshot.data['special']['from']=='notification') {
         this.receivedMessagesArray = this.route.snapshot.data['special']['data'];
       console.log("received data from notif",this.receivedMessagesArray)
+      this.shopData={}
+      this.shopInitials= this.receivedMessagesArray[0].fromName?this.receivedMessagesArray[0].fromName.charAt(0).toUpperCase():'';
+      this.storage.get('user_store').then(userStore=>{
+      this.shopName=this.receivedMessagesArray[0].fromName;
+      this.shopData['shop_userId']=userStore.userid==this.receivedMessagesArray[0].from?this.receivedMessagesArray[0].to:this.receivedMessagesArray[0].from;
+      this.shopID =this.receivedMessagesArray[0].from;
+      console.log(    this.shopID)
+      })
+      }else{
+        this.router.navigateByUrl('/notification')
       }
-      
-      
 
-      this.shopersMessagesArray = this.receivedMessagesArray.filter(a=>a.Shopid!='') //filtering shopers message
-      this.sortedShopersMessagesArray = this.receivedMessagesArray.sort((a,b)=>new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()) //sorting shopers message
-      console.log("shopers",this.shopersMessagesArray)
 
-      this.usersMessagesArray = this.receivedMessagesArray.filter(a=>a.Userid!='')  //filtering users messages
-      this.sortedUsersMessagesArray= this.receivedMessagesArray.sort((a,b)=>new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())  //sorting users message
-      console.log("shopers",this.usersMessagesArray)
-      // this.receivedMessagesArray = this.data.
-
-     
-      // this.sortedActivities = this.receivedMessagesArray.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp);
-      console.log("sorted",this.sortedActivities)
-      
-      const sortedArray = this.receivedMessagesArray.sort((a,b)=>new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
-      console.log("sorted",sortedArray)
+    }else{
+      this.router.navigateByUrl('/tabs')
     }
 
     
   }
 
-  send()
-  {  
-    
-    this.storage.get('user_store').then(userStore=>{
-    console.log("Inside send")
-    this.geolocation.getCurrentPosition().then((resp) => {
-      console.log("inside get",resp)
-  
-      let options: NativeGeocoderOptions = {
-        useLocale: true,
-        maxResults: 5
-    };
-    
-    this.nativeGeocoder.reverseGeocode( resp.coords.latitude,resp.coords.longitude, options)
-      .then((result: NativeGeocoderResult[]) => {
-        console.log("inside nativegeo",result)
+  TimeAgo(time){
+    return moment(time).format('hh:mm A')
+   }
+
+
+
+   iterativeGet(){
+    console.log('calledI')
+    this.interval = setInterval(()=>{
+      console.log('called')
+      this.GetMessseges()
+    },60000)
+
+  }
    
 
-
-
-    let body={
-      "to":  userStore['shop']?userStore['shop']['data']['shop_userId']:"",
-      "from": userStore.userid,
-      "message": this.message,
-      "attachment":"",
-}
-
-if(result[0].postalCode)body['zipcode']=result[0].postalCode
-else body['locality']=result[0].locality
-if(this.message){
-  this.http.sendMessage(body).subscribe(res=>{
-    console.log(res)
-    //
-  })
-}
-else
-{
-  console.log("Cannot send empty message!")
-}
-});
-})
-  })
-
-    console.log(this.message)
+  send()
+  {  
+       this.storage.get('user_store').then(userStore=>{
+        this.storage.get('messegeID').then(messegeID=>{
+        let body={
+          "to":  this.shopData['shop_userId'],
+          "from": userStore.userid,
+          'fromName':this.shopData['shop_name'],
+          'Read':false,
+          "message": this.message,
+          "attachment":"",  
+          }
     
-  }
+    if(messegeID['zipcode'])body['zipcode']=messegeID['zipcode']
+    else body['locality']=messegeID['locality']
+    
+    if(this.message){
+      this.clickStream.next(body);
+    }
+    else
+    {
+      console.log("Cannot send empty message!")
+    }
+    
+      })
+    })
+
+    }
+
+
+    
+  
 
 
 

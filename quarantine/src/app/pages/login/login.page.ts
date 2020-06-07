@@ -26,8 +26,8 @@ export class LoginPage implements OnInit {
   @ViewChild('v5', { static: false }) myInput5;
   @ViewChild('v6', { static: false }) myInput6;
   @ViewChild("mySlider", { static: false }) onboardingSlides: IonSlides;
-
-  languages: string[];
+ 
+  languages: any[];
   login:boolean=false;
   LoginForm:FormGroup;
   languageSelected:boolean;
@@ -88,14 +88,54 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     
     this.languages=[
-      'English',
-      'Hindi',
-      'Bengal',
-      'Gujrati',
-      'Kannada',
-      'Marathi',
-      'Tamil',
-      'Telgu'  ]
+      {
+      'name':'English',
+      'color':'#1261A0'
+
+    },
+    {
+      'name': 'Hindi',
+      'color':'#01796F'
+
+    },
+    {
+      'name': 'Bengali',
+      'color':'#993A16'
+
+    }, {
+      'name': 'Gujrati',
+      'color':'#DAA520'
+
+    }, {
+      'name':'Kannada',
+      'color':'#2E8B57'
+
+    }, {
+      'name': 'Marathi',
+      'color':'#FDA50F'
+
+    }, {
+      'name':'Tamil',
+      'color':'#57A0D3'
+
+    },
+    {
+      'name':   'Telgu',
+      'color':'#708238'
+
+    }
+     ]
+
+  }
+
+  async returnIndex(){
+ if(this.onboardingSlides){
+  let i =  await this.onboardingSlides.getActiveIndex();
+  console.log(i,'idi')
+  return i
+ }else{
+   return 0
+ }
 
   }
 
@@ -201,32 +241,38 @@ export class LoginPage implements OnInit {
 
     } 
     else {
+if(this.emailid){
+  let params = new HttpParams();
+  params = params.append('user_name', ' ');
+  params = params.append('email', this.emailid);
+  params = params.append('attempt', '2');
 
-      let params = new HttpParams();
-      params = params.append('user_name', ' ');
-      params = params.append('email', this.emailid);
-      params = params.append('attempt', '2');
+  this.http.get(
+    'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
+    {params: params, responseType: 'text'}
+  )
+  .pipe(
+    catchError(e => {
+      loading.dismiss()
+      this.showAlert('User Not found');
+      throw new Error(e.error);
+    })
+  )
+  .subscribe(response => {
+    
+    if (response === 'Otp Send') {
+      this.showVC = true;
+      this.openOTPModal();
+      loading.dismiss()
+      
+    }
+  });
 
-      this.http.get(
-        'https://us-central1-quarantine-4a6e8.cloudfunctions.net/verify_code_send',
-        {params: params, responseType: 'text'}
-      )
-      .pipe(
-        catchError(e => {
-          loading.dismiss()
-          this.showAlert('User Not found');
-          throw new Error(e.error);
-        })
-      )
-      .subscribe(response => {
-        
-        if (response === 'Otp Send') {
-          this.showVC = true;
-          this.openOTPModal();
-          loading.dismiss()
-          
-        }
-      });
+}else{
+  loading.dismiss()
+
+}
+
     }
   }
 

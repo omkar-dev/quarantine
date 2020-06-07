@@ -96,8 +96,7 @@ export class NearbyPage implements OnInit {
    
   }
   ngOnInit() {
-    this.getShopDetails();
-
+this.getGeoLoc();
 
 
   
@@ -150,6 +149,8 @@ this.nativeGeocoder.reverseGeocode(lat, long, options)
     this.currentCity = this.locationData.city
     
     this.storage.set('locationData',this.locationData)
+    this.getShopDetails();
+
 
   })
   .catch((error: any) => console.log(error));

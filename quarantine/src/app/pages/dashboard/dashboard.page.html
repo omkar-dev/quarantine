@@ -14,7 +14,7 @@
 </ion-content> -->
 
 <ion-content>
-  <div class="main">
+  <div class="main ">
     <div class="banner">
       <img src="../../../assets/banner.svg" alt="">
     </div>
@@ -60,7 +60,7 @@
       </div>
     </div>
 
-    <div class="blogList">
+    <div class="blogList  animate__animated animate__fadeInLeft">
       <div class="blog" [class.active]="req.show" *ngFor="let req of helpRequestArray; let i=index;" (click)="selectReq(req,i)">
         <img src="../../../assets/{{req.imgUrl}}" alt="">
         <p>{{req.name}}</p>

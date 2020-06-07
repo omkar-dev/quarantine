@@ -115,11 +115,11 @@
 
 
 <!-- SHIVANG CODE -->
-<ion-content>
+<ion-content >
     <div *ngIf="!shopDetails">
         <img class="home-logo" src="../../../assets/logo-home.svg">
     <h5>Who we are</h5>
-    <ion-row>
+    <ion-row class=" animate__animated animate__fadeIn">
       <ion-col size="3" class="active" (click)="selectType('others')" [class.active]="others">
         <div class="img_section">
           <img src="../../../assets/other_ppl.svg" alt="">
@@ -140,7 +140,7 @@
       </ion-col>
     </ion-row>
 
-  <form [formGroup]="signupForm">
+  <form [formGroup]="signupForm" class=" animate__animated animate__fadeIn">
   
     <div class="ion-padding">
       <ion-item class="email-box" lines="none">
@@ -177,7 +177,7 @@
       </ion-button>
   
       <div class="already_sectin">
-        <a href="">Already use Asana? <span>Log In</span></a>
+        <a href="javascript:void(0)" (click)="router.navigate(['/login'])">Already use Asana? <span>Log In</span></a>
       </div>
     </div>
   </form>

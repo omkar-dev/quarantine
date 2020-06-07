@@ -5,6 +5,7 @@ import { HttpService } from 'src/app/services/http.service';
 import { Storage } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderOptions , NativeGeocoderResult} from '@ionic-native/native-geocoder/ngx';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-notification',
@@ -14,6 +15,22 @@ import { NativeGeocoder, NativeGeocoderOptions , NativeGeocoderResult} from '@io
 export class NotificationPage implements OnInit {
   notifications: any = [];
   uID: any;
+
+
+
+  /*
+
+        messege_id:,
+        to: // from: //   message:   attachment:  timestamp:
+
+        const sortedArray = _.orderBy(array, (o: any) => {
+      return moment(o.date.format('YYYYMMDD');
+    }, ['asc']);
+
+
+
+
+  */
   
 
   constructor(private geolocation : Geolocation,private nativeGeocoder : NativeGeocoder,private http : HttpService,private router : Router,private dataService : DataService,private storage : Storage) { }
@@ -23,6 +40,11 @@ export class NotificationPage implements OnInit {
 
   ionViewWillEnter()
   {
+
+
+    this.processMesseges();
+
+
     this.storage.get('user_store').then(userStore=>{
       console.log("userStore",userStore)
       if(userStore.shop=="")
@@ -36,59 +58,92 @@ export class NotificationPage implements OnInit {
         this.uID = userStore['shop']['data']['shop_userId']
       }
 
-      this.geolocation.getCurrentPosition().then((resp) => {
-        console.log("inside get",resp)
-    
-        let options: NativeGeocoderOptions = {
-          useLocale: true,
-          maxResults: 5
-      };
-      
-      this.nativeGeocoder.reverseGeocode( resp.coords.latitude,resp.coords.longitude, options)
-        .then((result: NativeGeocoderResult[]) => {
-  
-  
-  
-         
-      
-          this.storage.get('user_store').then(data=>{
-            this.uID =data['userid']
-            this.http.getMessages(this.uID,result[0].postalCode,result[0].locality
-              ).subscribe(res=>{
-                this.notifications = res['messeges']
 
+    })
+  
+  
+  this.storage.get('user_store').then(data=>{
+    this.storage.get('messegeID').then(messegeID=>{
+      this.uID =data['userid']       
+            this.http.getMessages(this.uID,messegeID['zipcode'],messegeID['locality']
+              ).subscribe(res=>{
+                let responsemssg = res['messeges']? res['messeges']:[]
+                this.storage.get('messeges').then(messege=>{
+                let savearay =  messege?[...messege,...responsemssg]:responsemssg;
+                this.storage.set('messeges',savearay)
+                })
 
             })
-  
-  
-           })
-          console.log("inside nativegeo",result)
-  
-        })
-      })
-
-
-     
-      
     })
+  })    
+      
+
+  
+
     
+
+ 
+      
+  
+    
+  }
+
+  processMesseges(){
+    this.storage.get('user_store').then(userStore=>{
+    this.storage.get('messeges').then(messege=>{
+      let sortedArray = messege.sort((a, b) => moment(a).diff(moment(b)))
+      sortedArray= sortedArray.filter(val=>val['from']== userStore['userid'] &&  val['to']!= userStore['userid'] )
+     
+     console.log(sortedArray)
+     let DistArray=[]
+     let Itaray=[]
+  
+      sortedArray.map(data=>{
+        //console.log(Itaray)
+        if(Itaray.includes(data['from']+data['to'])||Itaray.includes(data['to']+data['from'])){
+          let i =Itaray.indexOf(Itaray.includes(data['from']+data['to'])?data['from']+data['to']:data['to']+data['from']);
+          console.log(i,'outer')
+          DistArray[i].push(data);
+
+        }else{
+          if(data){
+            Itaray.push(data['from']+data['to'])
+            let i = []
+            i.push(data)
+            DistArray.push(i);
+          }
+
+        }
+      })
+console.log( this.notifications,DistArray)
+
+      this.notifications = DistArray
+
+    })
+
+  })
+  }
+      
+
+
+
+  TimeAgo(time){
+   return moment(time).fromNow()
   }
 
   goToChat(data)
   {
     console.log("data",data)
-    if(data.type=='message')
-  {
-    let body = {
-      data : data,
-      from : "notification"
+    console.log( data.some(val=>val['messege_id']))
+    if(data.some(val=>val['messege_id'])){
+      let body = {
+        'from':'notification',
+        'data':data
+      }
+      this.dataService.setData(2,body)
+      this.router.navigateByUrl('chat/2')
     }
-    this.dataService.setData(2,body)
-    this.router.navigateByUrl('chat/2')
-  }
-  else {
-    console.log("This is a notification")
-  }
+
   }
 
 }

@@ -30,7 +30,7 @@
       <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
     </ion-item>
     <h4>{{'I need help for' | translate}}</h4>
-    <div class="blogList">
+    <div  class="blogList animate__animated animate__fadeInLeft">
       <div class="blog" [class.active]="req.show" *ngFor="let req of helpRequestArray; let i=index;" (click)="selectReq(req,i)">
         <img src="../../../assets/{{req.imgUrl}}" alt="">
 
@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <div *ngIf="helpFor!='Job Layoffs'" class="form_system">
+    <div *ngIf="helpFor!='Job Layoffs'" class="form_system nimate__animated animate__fadeInLeft">
       <form [formGroup]="normalForm">
         <div class="col">
         <ion-label>{{'Help Info'|translate}}</ion-label>
@@ -74,7 +74,7 @@
       
     </div>
 
-    <div *ngIf="helpFor=='Job Layoffs'" class="form_system">
+    <div *ngIf="helpFor=='Job Layoffs'" class="form_system animate__animated animate__fadeInLeft">
       
       <form [formGroup]="jobForm">
         <div class="col">

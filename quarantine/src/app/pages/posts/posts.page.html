@@ -18,8 +18,8 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="main">
-     <ion-item *ngFor="let post of postsArray" lines="none">
+  <div class="main" *ngIf="postsArray && postsArray.length>0">
+     <ion-item *ngFor="let post of postsArray"  class="animate__animated animate__fadeInLeft"  lines="none">
       <div slot="start">
         <ion-avatar>
           <img src="../../../assets/kitchen.svg">
@@ -35,58 +35,11 @@
       </ion-label>
     </ion-item> 
 
-    <!-- <ion-item lines="none">
-      <div slot="start">
-        <ion-avatar>
-          <img src="../../../assets/kitchen.svg">
-        </ion-avatar>
-      </div>
-      <ion-label>
-        <h3>Food Requests</h3>
-        <p>Lorem ipsum dolor sit amet</p>
-      </ion-label>
-    </ion-item>
-
-    <ion-item lines="none">
-      <div slot="start">
-        <ion-avatar>
-          <img src="../../../assets/handicaf_1.svg">
-        </ion-avatar>
-      </div>
-      <ion-label>
-        <h3>Handicap</h3>
-        <p>Lorem ipsum dolor sit amet</p>
-      </ion-label>
-    </ion-item>
-
-    <ion-item lines="none">
-      <div slot="start">
-        <ion-avatar>
-          <img src="../../../assets/job_layout.svg">
-        </ion-avatar>
-      </div>
-      <ion-label>
-        <h3>Job Layoffs</h3>
-        <p>Lorem ipsum dolor sit amet</p>
-      </ion-label>
-    </ion-item>
-
-    <ion-item lines="none">
-      <div slot="start">
-        <ion-avatar>
-          <img src="../../../assets/medical_2.svg">
-        </ion-avatar>
-      </div>
-      <ion-label>
-        <h3>Medical Help</h3>
-        <p>Lorem ipsum dolor sit amet</p>
-      </ion-label>
-    </ion-item> -->
   </div>
 
-  <!-- <div class="no_post">
+ <div *ngIf="!postsArray || (postsArray &&postsArray.length==0)"  class="no_post animate__animated animate__fadeInLeft" >
     <img src="../../../assets/no_post.svg" alt="">
     <p>No Post Yet</p>
-  </div> -->
+  </div> 
 </ion-content>
 
