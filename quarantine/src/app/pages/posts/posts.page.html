@@ -9,8 +9,9 @@
 
 
       <ion-title class="ion-text-center">
+          {{'My Posts'|translate}}
         <!-- <img src="../../../assets/post.svg" alt="">  -->
-        My Posts
+       
       </ion-title>
       <!-- <div slot="end">
         <ion-icon src="assets/material-notifications.svg"></ion-icon>
@@ -26,11 +27,15 @@
         </ion-avatar>
       </div>
       <ion-label>
-        <h3>{{post.help_for}}</h3>
+        <h3>{{post.help_for|translate}}</h3>
         <p>{{post.help_info}}</p>
         <div class="btn_group">
-          <ion-button (click)="resolve(post)">Resolve</ion-button>
-          <ion-button (click)="callDelete(post)">Delete</ion-button>
+          <ion-button (click)="resolve(post)">
+              {{'Resolve'|translate}}
+          </ion-button>
+          <ion-button (click)="callDelete(post)">
+              {{'Delete'|translate}}
+            </ion-button>
         </div>
       </ion-label>
     </ion-item> 
@@ -39,7 +44,10 @@
 
  <div *ngIf="!postsArray || (postsArray &&postsArray.length==0)"  class="no_post animate__animated animate__fadeInLeft" >
     <!-- <img src="../../../assets/no_post.svg" alt=""> -->
-    <p>No Post Yet</p>
+    <p>
+        {{'No Post Yet'|translate}}
+
+      </p>
   </div> 
 </ion-content>
 

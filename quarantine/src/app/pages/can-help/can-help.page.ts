@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 import { HttpClient } from '@angular/common/http';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 
 @Component({
@@ -82,6 +83,7 @@ export class CanHelpPage implements OnInit {
   constructor(private callNumber: CallNumber, 
     private storage: Storage,
     private http : HttpClient,
+    private socialSharing: SocialSharing,
     private _location: Location,
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
@@ -123,6 +125,12 @@ export class CanHelpPage implements OnInit {
   }
 
 
+
+  share(){
+    let quarantieUrl='www.google.com'
+    this.socialSharing.share('Quarantine APP',quarantieUrl)
+  
+}
 
   getImagePath(help){
     help=help['help_for'] 

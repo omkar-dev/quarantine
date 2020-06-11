@@ -22,8 +22,9 @@
     </ion-col>
   </ion-row> -->
   <br>
-  <h5>Enter the Verification code we just
-    sent you on your email address</h5>
+  <h5>
+      {{'Enter the Verification code we just sent you on your email address'|translate}}
+    </h5>
     <br>
   <ion-row class="otp_part">
     <ion-col size="2">
@@ -63,9 +64,14 @@
     </ion-col>
   </ion-row>
 
-  <p>If you didn't receive a code! <a href="">Resend</a></p>
+  <p> {{'If you did not receive a code!'|translate}}
+      <a href="">
+      {{'Resend'|translate}}
+      </a></p>
 
-  <ion-button (click)="verifyCode()" expand="block">Log In
+  <ion-button (click)="verifyCode()" expand="block">
+      {{'Log In'|translate}}
+
     <ion-ripple-effect></ion-ripple-effect>
   </ion-button>
 

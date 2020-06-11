@@ -15,7 +15,9 @@
   height: 48px;
   justify-content: center;padding-top:10px;font-size:16px;">
     <ion-icon color="primary" style="font-size:20px;padding-top:2px;" name="refresh-outline"></ion-icon>
- Click here to Refresh
+    {{'Click here to Refresh'|translate}}
+
+
   </div>
 </ion-header>
 
@@ -44,7 +46,7 @@
 </ion-content>
 <ion-footer style="padding-top:10px;" >
   <div class="input">
-    <ion-input placeholder="Type a message" [(ngModel)]="message"></ion-input>
+    <ion-input placeholder="{{'Type a message'|translate}}" [(ngModel)]="message"></ion-input>
     <!-- <ion-icon src="assets/camera.svg"></ion-icon> -->
   </div>
   <ion-icon (click)="send()" style="width:20px;height:20px"  color="primary"  name="send-outline" ></ion-icon>

@@ -8,7 +8,7 @@
          </ion-buttons>
       <ion-title class="ion-text-center">
         <!-- <img src="../../../assets/ios-help-circle.svg" alt="">  -->
-        I Can Help</ion-title>
+        {{'I Can Help'|translate}}</ion-title>
       <!-- <div slot="end">
         <ion-icon src="assets/material-notifications.svg"></ion-icon>
       </div> -->
@@ -18,17 +18,23 @@
   <div class="main">
     <ion-segment [(ngModel)]="isResolved" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="active">
-        <ion-label>Active</ion-label>
+        <ion-label>
+            {{'Active'|translate}}
+          </ion-label>
       </ion-segment-button>
       <ion-segment-button value="resolved">
-        <ion-label>Resolved</ion-label>
+        <ion-label>
+            {{'Resolved'|translate}}
+          </ion-label>
       </ion-segment-button>
     </ion-segment>
-    <h4>Select a Category to Help</h4>
+    <h4>
+        {{'Select a Category to Help'|translate}}
+</h4>
     <div class="blogList animate__animated animate__fadeInLeft">
       <div class="blog" [class.active]="helpType.selected" *ngFor="let helpType of helpTypes" (click)="selectHelpType(helpType)">
         <img src="../../../assets/{{helpType.imgUrl}}" alt=""> 
-        <p>{{helpType.name }}</p>
+        <p>{{helpType.name |translate }}</p>
       </div>
     </div>
 
@@ -47,6 +53,20 @@
           <ion-icon style="margin-top: 6px;"class="ellipsis" name="ellipsis-vertical" (click)="openMenu(req)"></ion-icon>
         </ion-item>
       </div>
+
+
+      <div style="display: flex;flex-direction: column;"*ngIf="filteredReqs.length==0">
+          <span style="align-self: center ;">
+              <h3 >No help requests in your locality</h3>
+          </span>
+          <span style="align-self: center;">
+              <p>Ask people  in your locality to signup</p>
+          </span>
+
+          
+
+          <ion-button class="animate__animated animate__heartBeat  animate__repeat-2"  style="align-self: center;width:140px"  (click)="share()" >share</ion-button>
+        </div>
     
     </div>
   </div>

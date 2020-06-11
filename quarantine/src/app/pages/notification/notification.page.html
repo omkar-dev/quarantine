@@ -35,7 +35,9 @@
 
   </div>
 <div style="display: flex; align-content: center;justify-content: center; padding-top: 20px;font-size:20px">
-  <p   *ngIf="notifications && notifications.length==0">No notifications yet!</p>
+  <p   *ngIf="notifications && notifications.length==0">
+      {{'No notifications yet!'|translate}}
+   </p>
 
 </div>
 </ion-content>
