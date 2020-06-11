@@ -22,6 +22,18 @@ export class PostsPage implements OnInit {
   ngOnInit() {
   }
 
+
+
+  getImagePath(help){
+    help=help['help_for'] 
+    console.log(help)
+if(help=='Job Layoffs') return 'job_layout.svg'
+else if(help=='Food Requests') return 'kitchen.svg'
+else if(help=='Handicap') return 'handicaf_1.svg'
+else if(help=='Medical Help') return 'medical_2.svg'
+else return 'callIcon.svg'
+
+}
   ionViewWillEnter()
   {
 

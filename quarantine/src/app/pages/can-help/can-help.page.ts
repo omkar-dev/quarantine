@@ -110,17 +110,37 @@ export class CanHelpPage implements OnInit {
     //   this.filteredReqs = this.filterRequests(this.isResolved);
     //   data.selected = false;
     // }
+    this.helpTypes.map(help=>help.selected=false);
+    data.selected=true;
+
+    
     let helpType = data.name
     console.log("helpType",helpType)
-    this.filteredReqs = this.filteredReqs.filter(res=>{
+
+    this.filteredReqs =     this.filteredReqs?this.filteredReqs.filter(res=>{
       return res.help_for == helpType
-    })
+    }):[];
   }
+
+
+
+  getImagePath(help){
+    help=help['help_for'] 
+    console.log(help)
+if(help=='Job Layoffs') return 'job_layout.svg'
+else if(help=='Food Requests') return 'kitchen.svg'
+else if(help=='Handicap') return 'handicaf_1.svg'
+else if(help=='Medical Help') return 'medical_2.svg'
+else return 'callIcon.svg'
+
+}
+
 
   ionViewWillEnter()
   {
 
 
+    this.helpTypes.map(help=>help.selected=false);
 
     this.geolocation.getCurrentPosition().then((resp) => {
       console.log("inside get",resp)

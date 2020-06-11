@@ -52,13 +52,6 @@ export class AppComponent {
   ngOnInit(){
 
 
-    this.platform.backButton.subscribe(async () => {
-      console.log(this.router.url, "active url");
-      if ((this.router.url.includes('dashboard')) ){
-
-      }
-    })
-
     this.fcm.onTokenRefresh().subscribe(token => {
       console.log("Refreshed Token is : " + token);
       let postdata = {

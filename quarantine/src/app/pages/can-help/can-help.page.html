@@ -37,7 +37,7 @@
       <div *ngFor="let req of filteredReqs;">
       <ion-item  style="padding:0px"  class="animate__animated animate__fadeInLeft" lines="none"  *ngIf="req.spam.split(',').length <= 2">
           <ion-avatar slot="start">
-            <img [src]="req.avatar">
+              <img src="../../../assets/{{getImagePath(req)}}" alt=""> 
           </ion-avatar>
           <ion-label>
             <h3>{{ req.helpType }}</h3>

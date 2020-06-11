@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { HttpService } from 'src/app/services/http.service';
 import {Location} from '@angular/common';
 import { Storage } from '@ionic/storage';
+import { ModalController, ToastController } from '@ionic/angular';
 
 
 
@@ -37,6 +38,7 @@ export class NeedHelpPage implements OnInit {
   constructor(private http : HttpService,
     private _location: Location,
     private storage: Storage,
+    public toastController : ToastController,
     private formBuilder: FormBuilder,private router : Router,private geolocation : Geolocation, private nativeGeocoder: NativeGeocoder, public loadingCtrl: LoadingController) { 
     this.jobForm = formBuilder.group({
       designation: [this.designation, Validators.compose([Validators.maxLength(100), Validators.pattern('^[\u0600-\u06FFa-zA-Z ]*$'), Validators.required])],
@@ -114,6 +116,9 @@ export class NeedHelpPage implements OnInit {
     show:false
   }
 ]
+
+this.helpRequestArray.map(help=>help.show=false);
+
   }
 
   selectReq(data,index)
@@ -247,18 +252,36 @@ else if(this.helpFor!='Job Layoffs' && this.normalForm.valid)
     this.http.helpPostRequest(body).subscribe(res=>{
       console.log("Success")
       loading.dismiss()
-    })
+      this.presentToast('Help Request Submitted Successfully')
+
+    },
+    err => {  console.log(err);
+      loading.dismiss()
+
+  } 
+    )
   
 } 
 else
 {
   console.log("Please check the input fields")
   loading.dismiss()
+  this.presentToast('Wrong Input')
 }
 
 })
 }
 
+
+async presentToast(message) {
+  let toast = await this.toastController.create({
+    message: message,
+    duration: 2000,
+    position: 'bottom'
+  });
+
+  return await (await toast).present();
+}
 
 
 }

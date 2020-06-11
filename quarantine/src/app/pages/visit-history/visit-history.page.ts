@@ -55,10 +55,20 @@ export class VisitHistoryPage implements OnInit {
 
 startTracking()
   {
-    let startMessage = "Tracking has been started!"
+    let startMessage = "Tracking has been started! with interval of one minute"
     this.presentToast(startMessage)
     // Foreground Tracking
     this.showTrack = false
+    this.watch = this.geolocation.watchPosition();
+  this.subscription = this.watch.subscribe((data) => {
+   this.zone.run(() => {
+        this.lat =  data.coords.latitude
+        this.lng =  data.coords.longitude
+        console.log("watchhhh",this.lat,this.lng);
+        this.getReverseGeoCode(this.lat,this.lng)
+        
+      });
+  });
 this.interval = setInterval(()=>{
   this.watch = this.geolocation.watchPosition();
   this.subscription = this.watch.subscribe((data) => {
@@ -70,7 +80,7 @@ this.interval = setInterval(()=>{
         
       });
   });
-},20000)
+},60000)
 }
 
 
