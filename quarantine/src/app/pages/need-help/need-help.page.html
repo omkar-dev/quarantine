@@ -8,7 +8,7 @@
          </ion-buttons>
       <ion-title class="ion-text-center">
         <!-- <img src="../../../assets/ios-help-circle.svg" alt=""> -->
-        I Need Help
+        I Need Help 
         <!-- {{'Need_Help' | translate}} -->
       </ion-title>
       <!-- <div slot="end">
@@ -29,16 +29,15 @@
       </ion-label>
       <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
     </ion-item>
-    <h4>{{'I need help for' | translate}}</h4>
+    <h4>{{'I need help for' | translate}}  (Select a category) </h4>
     <div  class="blogList animate__animated animate__fadeInLeft">
       <div class="blog" [class.active]="req.show" *ngFor="let req of helpRequestArray; let i=index;" (click)="selectReq(req,i)">
         <img src="../../../assets/{{req.imgUrl}}" alt="">
-
-        <p>{{req.name }}</p>
+        <p>{{req.name}}</p>
       </div>
     </div>
 
-    <div *ngIf="helpFor!='Job Layoffs'" class="form_system nimate__animated animate__fadeInLeft">
+    <div  class="form_system nimate__animated animate__fadeInLeft">
       <form [formGroup]="normalForm">
         <div class="col">
         <ion-label>{{'Help Info'|translate}}</ion-label>
@@ -59,6 +58,7 @@
         </p>
       </div>
       <div class="col">
+
         <ion-label>{{'Where are you located'| translate}}</ion-label>
         <ion-input placeholder="{{'Please type your location' | translate}}" formControlName="location">
           <img    (click)="detectLocation()" src="assets/material-my-location.svg"></ion-input>
@@ -118,7 +118,7 @@
   </div>
   <ion-footer no-padding >
     <ion-toolbar no-padding>
-      <ion-button style="width:100vw;" (click)="submit()">
+      <ion-button style="width:100vw;" (click)="helpFor?submit():selectCategory()">
         Submit</ion-button>
     </ion-toolbar>
   </ion-footer>

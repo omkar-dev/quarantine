@@ -66,6 +66,9 @@ export class LoginPage implements OnInit {
     this.translate.setDefaultLang('en');
     this.translate.use('en');
     router.events.subscribe(event => {
+
+
+
       // if (event instanceof NavigationEnd) {
       //   console.log("eventt",event)
       //   this.previouChecksUrl = event.url;
@@ -174,6 +177,11 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter(){
+
+    this.switchLanguage({
+      'name':'English',
+      'color':'#1261A0'
+    })
     console.log("lang",this.languageSelected)
     console.log("onBoard",this.showOnboard)
     this.storage.get('user_store').then(data=>{

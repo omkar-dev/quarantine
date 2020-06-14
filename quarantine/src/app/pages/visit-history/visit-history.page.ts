@@ -103,17 +103,21 @@ getReverseGeoCode(lat,long)
 
 this.nativeGeocoder.reverseGeocode(lat, long, options)
   .then((result: NativeGeocoderResult[]) => {
-    this.locationData = {
-      lat : result[0].latitude,
-      long :result[0].longitude,
-      country : result[0].countryName,
-      city : result[0].locality,
-      postCode : result[0].postalCode,
-      subLocality : result[0].subLocality,
+
+    if(this.locationsArray[this.locationsArray.length-1]['city']!=result[0].locality){
+      this.locationData = {
+        lat : result[0].latitude,
+        long :result[0].longitude,
+        country : result[0].countryName,
+        city : result[0].locality,
+        postCode : result[0].postalCode,
+        subLocality : result[0].subLocality,
+      }
+      this.locationsArray.push(this.locationData);
+      console.log("LocationsArray",this.locationsArray);
+      this.storage.set("locationsArray",this.locationsArray)
     }
-    this.locationsArray.push(this.locationData);
-    console.log("LocationsArray",this.locationsArray);
-    this.storage.set("locationsArray",this.locationsArray)
+
   })
   .catch((error: any) => console.log(error));
 }

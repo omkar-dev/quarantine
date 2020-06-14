@@ -119,6 +119,8 @@ export class NeedHelpPage implements OnInit {
 
 this.helpRequestArray.map(help=>help.show=false);
 
+
+
   }
 
   selectReq(data,index)
@@ -129,6 +131,9 @@ this.helpRequestArray.map(help=>help.show=false);
     console.log(data,index)
     this.helpFor = data.name
     console.log("helpFor",this.helpFor)
+    this.detectLocation();
+
+
   }
 
 
@@ -148,6 +153,7 @@ loading.dismiss();
 
     }).catch((error) => {
       console.log('Error getting location', error);
+      loading.dismiss();
     });
   }
 
@@ -166,6 +172,8 @@ loading.dismiss();
       }
       console.log("reverseResult",result)
       this.location = result[0].locality
+      this.normalForm.controls['location'].setValue(this.location);
+
       // this.locationData = {
       //   lat : result[0].latitude,
       //   long :result[0].longitude,
@@ -174,7 +182,10 @@ loading.dismiss();
       //   postCode : result[0].postalCode
       // }
     })
-    .catch((error: any) => console.log(error));
+    .catch((error: any) => {
+      console.log(error)
+      this.loadingCtrl.dismiss();
+    });
   }
 
   async presentLoading(loading) {
@@ -196,8 +207,15 @@ loading.dismiss();
     });
   }
 
+
+  selectCategory(){
+    this.presentToast('Please Select an category')
+
+  }
   async submit()
   {
+
+
     const loading = await this.loadingCtrl.create({
       message: 'Submiting details'
     });
