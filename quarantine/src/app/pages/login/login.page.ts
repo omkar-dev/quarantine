@@ -93,39 +93,44 @@ export class LoginPage implements OnInit {
     this.languages=[
       {
       'name':'English',
-      'color':'#1261A0'
+      'color':'#1261A0',
+      'lngCode' : 'en'
 
     },
     {
       'name': 'Hindi',
-      'color':'#01796F'
-
+      'color':'#01796F',
+      'lngCode' : 'hd'
     },
     {
       'name': 'Bengali',
-      'color':'#993A16'
+      'color':'#993A16',
+      'lngCode' : 'bl'
 
     }, {
       'name': 'Gujrati',
-      'color':'#DAA520'
+      'color':'#DAA520',
+      'lngCode' : 'guj'
 
     }, {
       'name':'Kannada',
-      'color':'#2E8B57'
+      'color':'#2E8B57',
+      'lngCode' : 'en'
 
     }, {
       'name': 'Marathi',
-      'color':'#FDA50F'
+      'color':'#FDA50F',
+      'lngCode' : 'ml'
 
     }, {
       'name':'Tamil',
-      'color':'#57A0D3'
-
+      'color':'#57A0D3',
+      'lngCode' : 'tal'
     },
     {
-      'name':   'Telgu',
-      'color':'#708238'
-
+      'name':   'Telugu',
+      'color':'#708238',
+      'lngCode' : 'tl'
     }
      ]
 
@@ -147,6 +152,7 @@ export class LoginPage implements OnInit {
   }
 
   switchLanguage(lang) {
+    console.log("langgg",lang)
     this.languageSelected=true;
     this.StorageLoaded = false;
     // this.storag
@@ -155,7 +161,19 @@ export class LoginPage implements OnInit {
     });
     this.languageSelected = true;
     this.showOnboard = false;
-    this.translate.use(this.lang);
+    this.setLanguage(lang.lngCode)
+  }
+
+  setLanguage(lng) {
+    console.log(lng, 'set language')
+    
+    // document.documentElement.dir = dir;
+    this.translate.use(lng);
+    // this.selected = lng;
+    // this.selectedDir = dir;
+    // this.storage.set(LNG_KEY, lng);
+    // this.storage.set(DIR_KEY, dir);
+    this.storage.set('userLanguage', lng);
   }
 
   
