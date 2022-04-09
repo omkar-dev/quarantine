@@ -58,7 +58,7 @@
     "domsanitizer": "^0.2.2",
     "es6-promise-plugin": "^4.2.2",
     "ionic-selectable": "^4.7.1",
-    "moment": "^2.25.3",
+    "moment": "^2.29.2",
     "mx.ferreyra.callnumber": "0.0.2",
     "rxjs": "~6.5.1",
     "safe-pipe": "^1.0.3",
